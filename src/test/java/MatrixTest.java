@@ -1,15 +1,16 @@
-package myToolBoxMaven;
 
-import org.junit.Test;
+
+
+import org.junit.jupiter.api.Test;
 
 import someMath.DoubleFMT;
 import someMath.Matrix;
 
-public class MatrixTests 
+public class MatrixTest
 {
 
 	@Test
-	public void test() 
+	public void testMatrizen() 
 	{
 	
 		int[]properties = new int[6];

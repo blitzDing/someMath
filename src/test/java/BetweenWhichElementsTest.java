@@ -1,11 +1,17 @@
-package testing;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import org.junit.jupiter.api.Test;
 
-public class TestingBetweenWhichElements 
+import javafx.util.Pair;
+import someMath.CollectionManipulation;
+
+public class BetweenWhichElementsTest 
 {
 
-	/*
-	public static void main(String[] args) 
+	@Test
+	public void testTheLayers() 
 	{
 		List<Pair<Character, Double>> list = new ArrayList<>( Arrays.asList
 			(
@@ -23,8 +29,10 @@ public class TestingBetweenWhichElements
 		
 		
 		List<Double> l2 = CollectionManipulation.getRidOfTheGeneric(list);
-		double z = CollectionManipulation.randomNrBoundBetween(l2);
+		double z = 2.0d;
 		int k = CollectionManipulation.betweenWhichElements(z, list);
+		assert(k==1);
+		
 		List<Double> sumUpToIndex = CollectionManipulation.sumUpToIndex(l2);
 		
 		for(int n=0;n<size;n++)
@@ -37,5 +45,4 @@ public class TestingBetweenWhichElements
 			System.out.println(list.get(n).getKey()+":: " + lowerBound + "-" + upperBound + note);
 		}
 	}
-	*/
 }

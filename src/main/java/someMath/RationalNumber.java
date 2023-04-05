@@ -222,6 +222,7 @@ public class RationalNumber implements DivideableAndAddable<RationalNumber>
 	{
 		return pointVersion.x + "/" + pointVersion.y;
 	}
+	
 	@Override
 	public boolean hasNeutralOne()
 	{
