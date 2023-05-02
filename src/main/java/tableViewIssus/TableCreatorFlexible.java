@@ -2,7 +2,7 @@ package tableViewIssus;
 
 
 import javafx.collections.ObservableList;
-
+import javafx.css.PseudoClass;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -23,6 +23,9 @@ import guiTools.ColorInterface;
 public class TableCreatorFlexible
 {
 
+
+	private PseudoClass childOfSelected = PseudoClass.getPseudoClass("child-of-selected");
+    private PseudoClass parentOfSelected = PseudoClass.getPseudoClass("parent-of-selected");
 
     public static <M> TableView<M>
 
@@ -88,7 +91,8 @@ public class TableCreatorFlexible
                                 (int) (color.getGreen() * 255),
                                 (int) (color.getBlue() * 255));
 
-                        currentRow.setStyle("-fx-background-color: rgba(" + rgb + ", "+d+");");
+                        //currentRow.getStyleClass().add("");
+                        //currentRow.setStyle("-fx-background-color: rgba(" + rgb + ", "+d+");");
 
                     }
                 }
@@ -97,5 +101,6 @@ public class TableCreatorFlexible
         });
 
         return tColumn;
-    }
+    }    
+    
 }
