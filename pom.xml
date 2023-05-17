@@ -29,5 +29,17 @@
 		</dependency>
   
   </dependencies>
+
+  <build>
+	  
+	  <resources>
+     		
+     	<resource>
+			<directory>${project.basedir}/someResources</directory>
+   		</resource>
+   		
+   	  </resources>
+	  
+  </build>
   
 </project>
