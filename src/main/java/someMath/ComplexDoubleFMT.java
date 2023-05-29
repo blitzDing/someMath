@@ -1,5 +1,9 @@
 package someMath;
 
+import java.util.Objects;
+
+import javafx.util.Pair;
+
 public class ComplexDoubleFMT implements MultiplyableAndAddable<ComplexDoubleFMT>
 {
 
@@ -12,6 +16,21 @@ public class ComplexDoubleFMT implements MultiplyableAndAddable<ComplexDoubleFMT
 		this.real = real;
 		this.imaginary = imaginary;
 	}
+	
+	public double argument()
+	{
+		return polarRepresentation().getKey();
+	}
+	
+	public double amount()
+	{
+		return real*real + imaginary*imaginary;
+	}
+	
+	public ComplexDoubleFMT getConjugate()
+	{
+		return new ComplexDoubleFMT(real, -imaginary);
+	}
 
 	@Override
 	public ComplexDoubleFMT multiplyWith(ComplexDoubleFMT e) 
@@ -20,6 +39,17 @@ public class ComplexDoubleFMT implements MultiplyableAndAddable<ComplexDoubleFMT
 				ComplexDoubleFMT(this.real*e.real-this.imaginary*e.imaginary, this.real*e.imaginary+this.imaginary*e.real);
 	}
 
+	public ComplexDoubleFMT divideBy(ComplexDoubleFMT e)
+	{
+
+		ComplexDoubleFMT fresh = this.multiplyWith(e.getConjugate());
+
+		double divisor = e.multiplyWith(e.getConjugate()).real;
+
+		
+		return new ComplexDoubleFMT(fresh.real/divisor, fresh.imaginary/divisor);
+	}
+	
 	@Override
 	public ComplexDoubleFMT addWith(ComplexDoubleFMT e) 
 	{
@@ -66,6 +96,20 @@ public class ComplexDoubleFMT implements MultiplyableAndAddable<ComplexDoubleFMT
 	public ComplexDoubleFMT subtractArg(ComplexDoubleFMT e) 
 	{
 		return new ComplexDoubleFMT(this.real - e.real, this.imaginary - e.imaginary);
+	}
+	
+	public Pair<Double, Double> polarRepresentation()
+	{
+		
+		double alpha = Math.asin(this.imaginary/this.amount());
+		double r = amount();
+		
+		return new Pair<Double, Double>(alpha, r);
+	}
+	
+	public int hashCode()
+	{
+		return Objects.hash(real, imaginary);
 	}
 	
 	public boolean equals(Object obj)
