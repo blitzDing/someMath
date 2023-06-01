@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.function.Consumer;
 
 import javafx.scene.Node;
-import javafx.scene.control.Control;
 
 public class guiUtils 
 {

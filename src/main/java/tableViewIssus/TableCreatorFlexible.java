@@ -2,7 +2,7 @@ package tableViewIssus;
 
 
 import javafx.collections.ObservableList;
-import javafx.css.PseudoClass;
+
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -24,8 +24,6 @@ public class TableCreatorFlexible
 {
 
 
-	private PseudoClass childOfSelected = PseudoClass.getPseudoClass("child-of-selected");
-    private PseudoClass parentOfSelected = PseudoClass.getPseudoClass("parent-of-selected");
 
     public static <M> TableView<M>
 

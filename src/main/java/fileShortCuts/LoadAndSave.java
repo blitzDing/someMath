@@ -75,6 +75,8 @@ public class LoadAndSave
         	counter++;
         }
         
+        fr.close();
+        br.close();
 		return output;
 	}
 }

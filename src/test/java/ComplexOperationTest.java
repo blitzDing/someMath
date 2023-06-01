@@ -20,7 +20,7 @@ public class ComplexOperationTest
 	{
 		for(int n=0;n<listSize;n++)
 		{
-			nrList.add(createRndmCNrQuadBounds(0, 9));
+			nrList.add(createRndmCNrQuadBounds(-5, 5));
 		}
 	}
 	@Test
@@ -40,29 +40,33 @@ public class ComplexOperationTest
 		ComplexDoubleFMT a = nrList.get(0);
 		System.out.println("a: " + a);
 		System.out.println("amount:" + a.amount());
-		System.out.println("argument: " + a.argument() +"\n");
+		System.out.println("argument: " + a.Arg() +"\n");
 		
 		ComplexDoubleFMT b = nrList.get(1);
 		System.out.println("b: " + b);
 		System.out.println("amount:" + b.amount());
-		System.out.println("argument: " + b.argument() +"\n");
+		System.out.println("argument: " + b.Arg() +"\n");
 		
 		ComplexDoubleFMT c = a.multiplyWith(b);
 		System.out.println("(a*b)=c: " + c);
 		System.out.println("amount:" + c.amount());
-		System.out.println("argument: " + c.argument() +"\n");
+		System.out.println("argument: " + c.Arg() +"\n");
 		
 		ComplexDoubleFMT d = c.divideBy(b);
 		System.out.println("(c/b)=d: " + d);
 		System.out.println("amount:" + d.amount());
-		System.out.println("argument: " + d.argument() +"\n");
+		System.out.println("argument: " + d.Arg() +"\n");
 		
 		System.out.println("a-d: " + a.subtractArg(d));
+		System.out.println("Arg(a/d): " + a.divideBy(d).Arg());
 
-		assert(Math.abs( (a.subtractArg(d).amount()) ) < 0.00001);
-		assert(Math.abs( (a.divideBy(d).argument()) ) < 0.00001);
+		double prettySmall = Math.pow(10, -15);
+		System.out.println(prettySmall);
 		
-		System.out.println(a.argument());
+		assert(Math.abs( a.subtractArg(d).amount() )  < prettySmall);
+		assert(Math.abs( a.divideBy(d).Arg() )  < prettySmall);
+		
+		System.out.println(a.Arg());
 		
 	}
 	

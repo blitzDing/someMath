@@ -17,14 +17,16 @@ public class ComplexDoubleFMT implements MultiplyableAndAddable<ComplexDoubleFMT
 		this.imaginary = imaginary;
 	}
 	
-	public double argument()
+	///Written with capital Letter because of Math Standards.
+	//
+	public double Arg()
 	{
-		return polarRepresentation().getKey();
+		return polarRepresentation().getImaginaryPart();
 	}
 	
 	public double amount()
 	{
-		return real*real + imaginary*imaginary;
+		return Math.sqrt(real*real + imaginary*imaginary);
 	}
 	
 	public ComplexDoubleFMT getConjugate()
@@ -98,13 +100,13 @@ public class ComplexDoubleFMT implements MultiplyableAndAddable<ComplexDoubleFMT
 		return new ComplexDoubleFMT(this.real - e.real, this.imaginary - e.imaginary);
 	}
 	
-	public Pair<Double, Double> polarRepresentation()
+	public ComplexDoubleFMT polarRepresentation()
 	{
 		
 		double alpha = Math.asin(this.imaginary/this.amount());
 		double r = amount();
 		
-		return new Pair<Double, Double>(alpha, r);
+		return new ComplexDoubleFMT(r, alpha);
 	}
 	
 	public int hashCode()
