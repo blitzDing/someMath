@@ -6,10 +6,10 @@ import java.util.Set;
 public class PolynomSolver 
 {
 
-	public static Set<ComplexDoubleFMT> quadraticSolver(Double b, Double c)
+	public static Set<ComplexNrDouble> quadraticSolver(Double b, Double c)
 	{
 		
-		Set<ComplexDoubleFMT> set = new HashSet<>();
+		Set<ComplexNrDouble> set = new HashSet<>();
 		double alpha = (b/2);
 		double radicand = (alpha*alpha)-c;
 	
@@ -19,8 +19,8 @@ public class PolynomSolver
 			double realA = -alpha - Math.sqrt(radicand);
 			double realB = -alpha + Math.sqrt(radicand);
 			
-			ComplexDoubleFMT solutionA = new ComplexDoubleFMT(realA, 0.0);
-			ComplexDoubleFMT solutionB = new ComplexDoubleFMT(realB, 0.0);
+			ComplexNrDouble solutionA = new ComplexNrDouble(realA, 0.0);
+			ComplexNrDouble solutionB = new ComplexNrDouble(realB, 0.0);
 			
 			set.add(solutionA);
 			set.add(solutionB);
@@ -31,8 +31,8 @@ public class PolynomSolver
 		double real = alpha;
 		double imaginary = Math.sqrt(-radicand);
 		
-		ComplexDoubleFMT solutionA = new ComplexDoubleFMT(real, imaginary); //conjugated
-		ComplexDoubleFMT solutionB = new ComplexDoubleFMT(real, -imaginary);//conjugated
+		ComplexNrDouble solutionA = new ComplexNrDouble(real, imaginary); //conjugated
+		ComplexNrDouble solutionB = new ComplexNrDouble(real, -imaginary);//conjugated
 		
 		set.add(solutionA);
 		set.add(solutionB);
@@ -40,12 +40,12 @@ public class PolynomSolver
 		return set;
 	}
 	
-	public static Set<ComplexDoubleFMT> quadraticSolver(Double a, Double b, Double c)
+	public static Set<ComplexNrDouble> quadraticSolver(Double a, Double b, Double c)
 	{
 		return quadraticSolver((b/a), (c/a));
 	}
 	
-	public static Set<ComplexDoubleFMT> cubicSolver(Double b, Double c, Double d)
+	public static Set<ComplexNrDouble> cubicSolver(Double b, Double c, Double d)
 	{
 		//TODO:
 		return null;
