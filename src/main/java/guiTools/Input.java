@@ -186,14 +186,6 @@ public class Input
         vBox.getChildren().addAll(intLabel, txtF, okay);
         else vBox.getChildren().addAll(intLabel,txtA,okay);
 
-
-        Consumer<KeyCode> consumer= (kc) ->
-        {
-            if(textAreaInput)chosenOne[0] = txtA.getText();
-            else chosenOne[0] = txtF.getText();
-            input.close();
-        };
-
         okay.setOnAction((event) ->
         {
             if(textAreaInput)chosenOne[0] = txtA.getText();

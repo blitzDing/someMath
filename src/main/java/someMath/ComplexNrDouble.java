@@ -75,19 +75,20 @@ public class ComplexNrDouble implements MultiplyableAndAddable<ComplexNrDouble>
 	public ComplexNrDouble polarRepresentation()
 	{
 		
-		double sinus = (this.imaginary/this.amount());
+		double alpha = 0;
 		
-		double alpha;
-		if(Math.abs(this.amount())>0)alpha= Math.asin(this.imaginary/this.amount());
-		else alpha = 0;
+		
+		if(this.amount()==0)new ComplexNrDouble(0, 0);
+		
+		alpha = Math.asin(this.imaginary/this.amount());
 		
 		double r = this.amount();
 		
-		if(this.imaginary>0&&this.real<0)
-			alpha = Math.toRadians(180-Math.toDegrees(alpha));//2nd Quadrant
-		if(this.imaginary<0&&this.real<0)
-			alpha = Math.toRadians(-180-Math.toDegrees(alpha));//3rd Quadrant
-		
+		if(this.real < 0)//Left half
+		{
+			if(this.imaginary > 0)alpha = Math.toRadians( 180-Math.toDegrees(alpha));//2nd Quadrant
+			if(this.imaginary < 0)alpha = Math.toRadians(-180-Math.toDegrees(alpha));//3rd Quadrant
+		}
 		
 		return new ComplexNrDouble(r, alpha);
 	}
@@ -102,8 +103,6 @@ public class ComplexNrDouble implements MultiplyableAndAddable<ComplexNrDouble>
 		
 		double angle = imaginary;
 		
-		double degrees = Math.toDegrees(angle);
-		
 		double x = real*Math.cos(angle);
 		double y = real*Math.sin(angle);
 		
@@ -114,12 +113,11 @@ public class ComplexNrDouble implements MultiplyableAndAddable<ComplexNrDouble>
 	{
 
 		ComplexNrDouble loga = this.logarithm();
+
 		ComplexNrDouble newExpo = loga.multiplyWith(exponent);
 		
-		System.out.println("New Expo: " + newExpo);
-		
-		double newReal = newExpo.real * Math.cos(newExpo.imaginary);
-		double newAlpha = newExpo.real * Math.sin(newExpo.imaginary);
+		double newReal = Math.pow(Math.E, newExpo.real);
+		double newAlpha = newExpo.imaginary;
 		
 		return new ComplexNrDouble(newReal, newAlpha);
 	}

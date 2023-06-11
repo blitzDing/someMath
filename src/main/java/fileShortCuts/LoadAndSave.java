@@ -21,7 +21,7 @@ public class LoadAndSave
 		
 		File f = new File(path);
 		FileInputStream fis = new FileInputStream(f);
-		@SuppressWarnings("resource")
+		
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		
 		Object o = ois.readObject();
@@ -36,7 +36,7 @@ public class LoadAndSave
 		
 		File f = new File(path);
 		FileOutputStream fos = new FileOutputStream(f);
-		@SuppressWarnings("resource")
+	
 		ObjectOutputStream oss = new ObjectOutputStream(fos);
 		
 		oss.writeObject(o);
