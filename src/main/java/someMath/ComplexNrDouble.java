@@ -93,9 +93,13 @@ public class ComplexNrDouble implements MultiplyableAndAddable<ComplexNrDouble>
 		return new ComplexNrDouble(r, alpha);
 	}
 	
-	public ComplexNrDouble logarithm()
+	//Main branch of the Log function. Capital L because of Math standards.
+	public ComplexNrDouble Log()
 	{
-		return new ComplexNrDouble(Math.log(amount()), Arg());
+		
+		Double loga = Math.log(amount());
+		
+		return new ComplexNrDouble(loga, Arg());
 	}
 	
 	public ComplexNrDouble fromPolarToGaussEbene()
@@ -112,14 +116,14 @@ public class ComplexNrDouble implements MultiplyableAndAddable<ComplexNrDouble>
 	public ComplexNrDouble toThePowerOf(ComplexNrDouble exponent)
 	{
 
-		ComplexNrDouble loga = this.logarithm();
+		ComplexNrDouble loga = this.Log();
 
 		ComplexNrDouble newExpo = loga.multiplyWith(exponent);
 		
-		double newReal = Math.pow(Math.E, newExpo.real);
-		double newAlpha = newExpo.imaginary;
+		double x = Math.exp(newExpo.real)*Math.cos(newExpo.imaginary);
+		double y = Math.exp(newExpo.real)*Math.sin(newExpo.imaginary);
 		
-		return new ComplexNrDouble(newReal, newAlpha);
+		return new ComplexNrDouble(x, y);
 	}
 	
 	@Override

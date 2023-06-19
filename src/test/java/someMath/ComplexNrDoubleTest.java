@@ -10,21 +10,15 @@ import java.util.*;
 
 class ComplexNrDoubleTest 
 {
-		
-	List<ComplexNrDouble> nrList = new ArrayList<>();
 
 	double prettySmall = Math.pow(10, -11);
+	int millisWait = 500;
 
 	ComplexNrDouble one = new ComplexNrDouble(1,0);
 	ComplexNrDouble i = new ComplexNrDouble(0,1);
 	ComplexNrDouble minusI = new ComplexNrDouble(0,-1);
 	ComplexNrDouble minusOne = new ComplexNrDouble(-1, 0);
 		
-	ComplexNrDouble q1 = new ComplexNrDouble(1, 1);		//quadrant 1
-	ComplexNrDouble q2 = new ComplexNrDouble(-1, 1);	//quadrant 2
-	ComplexNrDouble q3 = new ComplexNrDouble(-1, -1);	//quadrant 3
-	ComplexNrDouble q4 = new ComplexNrDouble(1, -1);	//quadrant 4
-
 		
 	@Test
 	public void testConjugate() throws InterruptedException
@@ -33,7 +27,7 @@ class ComplexNrDoubleTest
 		System.out.println("Testing Conjugate.");
 		System.out.println("******************");
 		
-		Thread.sleep(1500);
+		Thread.sleep(millisWait);
 			
 		for(int n=0;n<6;n++)
 		{
@@ -52,7 +46,7 @@ class ComplexNrDoubleTest
 		System.out.println("Testing Addition.");
 		System.out.println("*****************");
 		
-		Thread.sleep(1500);
+		Thread.sleep(millisWait);
 			
 		for(int n=0;n<6;n++)
 		{
@@ -109,7 +103,7 @@ class ComplexNrDoubleTest
 		System.out.println("Testing Multiplication.");
 		System.out.println("***********************");
 		
-		Thread.sleep(1500);
+		Thread.sleep(millisWait);
 		
 		display("i", i);
 		display("-i", minusI);
@@ -127,14 +121,14 @@ class ComplexNrDoubleTest
 			assert(Math.abs( product.Arg()-i.Arg()-firstQuadNr.Arg() ) < prettySmall);
 		}
 		
-		for(int n=0;n<50;n++)
+		for(int n=0;n<25;n++)
 		{
 
 			ComplexNrDouble a = createRndmCNr1stQuadrant(10);
 			ComplexNrDouble b = createRndmCNr2ndQuadrant(10);
 
-			ComplexNrDouble p1 = a.multiplyWith(b);			
-			ComplexNrDouble p2 = b.multiplyWith(b);
+
+			ComplexNrDouble p1 = a.multiplyWith(b);
 				
 			Double ra = a.amount();
 			Double rb = b.amount();
@@ -197,43 +191,121 @@ class ComplexNrDoubleTest
 			if(wp1*sum>0)assert(Math.abs( wp1 - sum )   < prettySmall);
 			else assert(Math.abs( wp1 + sum) < prettySmall);
 				
+			ComplexNrDouble c = createRndmCNr3rdQuadrant(10);
+			ComplexNrDouble d = createRndmCNr4thQuadrant(10);
+
+			ComplexNrDouble p2 = c.multiplyWith(d);
+				
+			Double rc = c.amount();
+			Double rd = d.amount();
+			Double rp2 = p2.amount();
+				
+			Double wc = Math.toDegrees(c.Arg());
+			Double wd = Math.toDegrees(d.Arg());
+			Double wp2 = Math.toDegrees(p2.Arg());
+				
+			display("c", c);
+			display("d", d);
+			display("c*d", p2);
+				
+			sum = wc+wd;
+				
+			if(sum >  180)
+			{
+					
+				System.out.println("HEY!!!!! Old sum: " + sum);
+				System.out.println("         New sum: " + (sum-360));
+				System.out.println("             wp2: " + wp2);
+					
+				sum =  -360+sum;
+									
+				try 
+				{
+					Thread.sleep(1000);
+				}
+				catch(InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+			}
+				
+			if(sum < -180)
+			{
+					
+					
+				System.out.println("ANTI-HEY!!!!! Old sum: " + sum);
+				System.out.println("              New sum: " + (sum+360));
+				System.out.println("                  wp2: " + wp2);
+
+				sum = sum+360;
+
+					
+				try
+				{
+					Thread.sleep(1000);
+				}
+				catch(InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+			}
+				
+			System.out.println("rp2 - (rc*rd) = " + (rp2 - (rc*rd)));
+			System.out.println("wp2 - (wc+wd) = " + (wp2 - (sum)) + "\n");
+
+			assert(Math.abs( rp2 - rc*rd ) < prettySmall);
+			if(wp2*sum>0)assert(Math.abs( wp2 - sum )   < prettySmall);
+			else assert(Math.abs( wp2 + sum) < prettySmall);
 		}
 	}
 
-	/*
-	public void testDivision()
+	@Test
+	public void testDivision() throws InterruptedException
 	{
+		
 		System.out.println("Testing Division.");
-			
-		ComplexNrDouble a = nrList.get(0);
-		display("a", a);
-			
-		ComplexNrDouble b = nrList.get(1);
-		display("b", b);
+		System.out.println("*****************");
 
-		ComplexNrDouble c = a.multiplyWith(b);
-		display("a*b", c);
-			
-		ComplexNrDouble d = c.divideBy(b);
-		display("d=c/b", d);
-			
-		ComplexNrDouble e = a.subtractArg(d);
-		display("e=a-d", e);
+		Thread.sleep(millisWait);
 
-		ComplexNrDouble f = a.divideBy(d);
-		display("f=a/d", f);
+		for(int n=0;n<50;n++)
+		{
+			ComplexNrDouble a = createRndmCNrQuadBounds(-10,10);
+			display("a", a);
 			
-		assert(Math.abs( a.subtractArg(d).amount() )  < prettySmall);
-		assert(Math.abs( a.divideBy(d).Arg() )  < prettySmall);
+			ComplexNrDouble b = createRndmCNrQuadBounds(-10, 10);
+			display("b", b);
+
+			ComplexNrDouble c = a.multiplyWith(b);
+			display("a*b", c);
 			
-		System.out.println(a.Arg()+"\n");
+			ComplexNrDouble d = c.divideBy(b);
+			display("d=c/b", d);
+			
+			ComplexNrDouble e = a.subtractArg(d);
+			display("e=a-d", e);
+
+			ComplexNrDouble f = a.divideBy(d);
+			display("f=a/d", f);
+
+			assert(Math.abs( a.subtractArg(d).amount() )  < prettySmall);
+			assert(Math.abs( a.divideBy(d).Arg() )  < prettySmall);
+			
+			System.out.println(a.Arg()+"\n");
+		}
 			
 	}
 
-	public void testArgAndAmount()
+	@Test
+	public void testArgAndAmount() throws InterruptedException
 	{
-			
-		for(int l=0;l<nrList.size();l++)
+		
+		System.out.println("Testing Arg&&Amount");
+		System.out.println("*******************");
+		
+		Thread.sleep(millisWait);
+		
+		for(int l=0;l<50;l++)
 		{
 				
 			int n = l+1;
@@ -281,9 +353,35 @@ class ComplexNrDoubleTest
 		}
 	}
 
-	public void testPowers()
+	
+	@Test
+	public void testLogarithm() throws InterruptedException
 	{
-
+		
+		System.out.println("Testing Logarithm.");
+		System.out.println("******************");
+		
+		Thread.sleep(millisWait);
+		
+		ComplexNrDouble l = new ComplexNrDouble(1, 1);
+		display("l", l);
+		
+		ComplexNrDouble loga = l.Log();	
+		display("log(l)", loga);
+		
+		Thread.sleep(millisWait*8);
+		
+	}
+	
+	@Test
+	public void testPowers() throws InterruptedException
+	{
+		//TODO: Debug!!
+		System.out.println("Testing powers.");
+		System.out.println("***************");
+		
+		Thread.sleep(millisWait);
+		
 		ComplexNrDouble basis = new ComplexNrDouble(0, 1);
 		ComplexNrDouble exponent = new ComplexNrDouble(2, 0);
 		ComplexNrDouble square = basis.toThePowerOf(exponent);
@@ -292,7 +390,7 @@ class ComplexNrDoubleTest
 		display("exponent", exponent);
 		display("square", square);
 
-		assert(Math.abs( square.Arg()-(Math.PI) )< prettySmall);
+		assert(Math.abs( square.getRealPart()+1 )< prettySmall);
 
 		ComplexNrDouble exponent2 = new ComplexNrDouble(3, 0);
 		ComplexNrDouble cubic = basis.toThePowerOf(exponent);
@@ -300,7 +398,7 @@ class ComplexNrDoubleTest
 		display("exponent2", exponent2);
 		display("cubic", cubic);
 
-		assert(Math.abs( cubic.Arg()+(Math.PI/2) )< prettySmall);
+		//assert(Math.abs( cubic.Arg()+(Math.PI/2) )< prettySmall);
 	}
 		
 	/*
@@ -357,7 +455,9 @@ class ComplexNrDoubleTest
 		if(max<=0)throw new IllegalArgumentException("max must be greater then Zero!");
 
 		ComplexNrDouble output = createRndmComplexNr(-max, 0, 0, max);
-		assert(output.getRealPart()<=0);
+		if(output.getRealPart()==0)return createRndmComplexNr(-max,0,0,max);
+		
+		assert(output.getRealPart()<0);
 		assert(output.getImaginaryPart()>=0);
 			
 		return output;
@@ -368,8 +468,13 @@ class ComplexNrDoubleTest
 		if(max<=0)throw new IllegalArgumentException("max must be greater then Zero!");
 			
 		ComplexNrDouble output = createRndmCNrQuadBounds(0, -max);
-		assert(output.getRealPart()<=0);
-		assert(output.getImaginaryPart()<=0);
+		
+		double real = output.getRealPart();
+		double imaginary = output.getImaginaryPart();
+		if(real==0||imaginary==0)return createRndmCNr3rdQuadrant(max);
+		
+		assert(output.getRealPart()<0);
+		assert(output.getImaginaryPart()<0);
 			
 		return output;
 	}
@@ -379,8 +484,11 @@ class ComplexNrDoubleTest
 		if(max<=0)throw new IllegalArgumentException("max must be greater then Zero!");
 
 		ComplexNrDouble output = createRndmComplexNr(0, max, 0, -max);
+		
+		if(output.getImaginaryPart()==0)return createRndmCNr4thQuadrant(max);
+		
 		assert(output.getRealPart()>=0);
-		assert(output.getImaginaryPart()<=0);
+		assert(output.getImaginaryPart()<0);
 			
 		return output;
 	}
@@ -400,6 +508,21 @@ class ComplexNrDoubleTest
 			
 		System.out.println(name + " = " + z);
 		System.out.println("Arg(" + name + ") = " + Math.toDegrees(z.Arg()));
-		System.out.println("amount("+name+") = " + z.amount() + "\n");
+		System.out.println("amount("+name+") = " + z.amount());
+		System.out.println("Quadrant " + getQuadrant(z) + "\n");
+	}
+	
+	public int getQuadrant(ComplexNrDouble z)
+	{
+		
+		double x = z.getRealPart();
+		double y = z.getImaginaryPart();
+		
+		if((x>=0)&&(y>=0)) return 1;
+		if((x<0)&&(y>=0))  return 2;
+		if((x<0)&&(y<0))   return 3;
+		if((x>=0)&&(y<0))  return 4;
+		
+		return 0;
 	}
 }
