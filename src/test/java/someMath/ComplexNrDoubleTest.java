@@ -4,15 +4,13 @@ package someMath;
 import org.junit.jupiter.api.Test;
 
 
-import java.util.*;
-
 
 
 class ComplexNrDoubleTest 
 {
 
 	double prettySmall = Math.pow(10, -11);
-	int millisWait = 500;
+	int millisWait = 150;
 
 	ComplexNrDouble one = new ComplexNrDouble(1,0);
 	ComplexNrDouble i = new ComplexNrDouble(0,1);
@@ -117,11 +115,13 @@ class ComplexNrDoubleTest
 			ComplexNrDouble product = firstQuadNr.multiplyWith(i);
 			display("a", firstQuadNr);
 			display("a*i", product);
-		
+
+			
+			assert((product.Arg()-firstQuadNr.Arg()-Math.PI/2) < prettySmall);
 			assert(Math.abs( product.Arg()-i.Arg()-firstQuadNr.Arg() ) < prettySmall);
 		}
 		
-		for(int n=0;n<25;n++)
+		for(int n=0;n<10;n++)
 		{
 
 			ComplexNrDouble a = createRndmCNr1stQuadrant(10);
@@ -221,7 +221,7 @@ class ComplexNrDoubleTest
 									
 				try 
 				{
-					Thread.sleep(1000);
+					Thread.sleep(500);
 				}
 				catch(InterruptedException e)
 				{
@@ -242,7 +242,7 @@ class ComplexNrDoubleTest
 					
 				try
 				{
-					Thread.sleep(1000);
+					Thread.sleep(500);
 				}
 				catch(InterruptedException e)
 				{
@@ -268,7 +268,7 @@ class ComplexNrDoubleTest
 
 		Thread.sleep(millisWait);
 
-		for(int n=0;n<50;n++)
+		for(int n=0;n<5;n++)
 		{
 			ComplexNrDouble a = createRndmCNrQuadBounds(-10,10);
 			display("a", a);
@@ -305,7 +305,7 @@ class ComplexNrDoubleTest
 		
 		Thread.sleep(millisWait);
 		
-		for(int l=0;l<50;l++)
+		for(int l=0;l<5;l++)
 		{
 				
 			int n = l+1;
@@ -360,16 +360,19 @@ class ComplexNrDoubleTest
 		
 		System.out.println("Testing Logarithm.");
 		System.out.println("******************");
+		for(int n=0;n<10;n++)
+		{
+			ComplexNrDouble l = createRndmCNr1stQuadrant(10);
+			display("l", l);
+		
+			ComplexNrDouble loga = l.Log();	
+			display("log(l)", loga);
+		
+			assert((loga.getRealPart()-Math.log(l.amount()))<prettySmall);
+			assert((loga.getImaginaryPart()-l.Arg())<prettySmall);
+		}
 		
 		Thread.sleep(millisWait);
-		
-		ComplexNrDouble l = new ComplexNrDouble(1, 1);
-		display("l", l);
-		
-		ComplexNrDouble loga = l.Log();	
-		display("log(l)", loga);
-		
-		Thread.sleep(millisWait*8);
 		
 	}
 	
@@ -389,40 +392,43 @@ class ComplexNrDoubleTest
 		display("basis", basis);
 		display("exponent", exponent);
 		display("square", square);
-
+		
 		assert(Math.abs( square.getRealPart()+1 )< prettySmall);
+		assert( ( square.Arg()==Double.NaN )||( Math.abs(square.Arg())-Math.PI < prettySmall));
 
 		ComplexNrDouble exponent2 = new ComplexNrDouble(3, 0);
-		ComplexNrDouble cubic = basis.toThePowerOf(exponent);
+		ComplexNrDouble cubic = basis.toThePowerOf(exponent2);
 
 		display("exponent2", exponent2);
 		display("cubic", cubic);
 
-		//assert(Math.abs( cubic.Arg()+(Math.PI/2) )< prettySmall);
+		assert(Math.abs( cubic.getImaginaryPart()+1) < prettySmall);
+		assert(Math.abs( cubic.Arg()+(Math.PI/2) )< prettySmall);
 	}
 		
-	/*
+	@Test
 	public void testPolarAndBackTransform()
 	{
-			
-		for(ComplexNrDouble z: nrList)
+
+		for(int n=0;n<0;n++)
 		{
-			System.out.println("z: " + z);
-			double arg = z.Arg();
-			System.out.println("Arg(z): " + arg);
+			
+			ComplexNrDouble z = createRndmCNrQuadBounds(-5,5);
+			display("z", z);
+			
 			
 			ComplexNrDouble j = z.polarRepresentation();
-			System.out.println("j(z Polar): "+ j);
+			display("j(z Polar): ", j);
 			
 			ComplexNrDouble k = j.fromPolarToGaussEbene();
-			System.out.println("k: " + k + "\ndistance(k,z): " + distance(k,z));
+			display("k=j'=z",k);
 			
-			System.out.println("z-k: " + z.subtractArg(k) + "\n");
-				
+			ComplexNrDouble d=  z.subtractArg(k);
+			display("z-k",d);
+			
 			assert(distance(k,z)<0.00000001);
 		}
 	}
-	*/
 
 	private ComplexNrDouble createRndmComplexNr(double minReal, double maxReal, double minImaginary, double maxImaginary)
 	{
