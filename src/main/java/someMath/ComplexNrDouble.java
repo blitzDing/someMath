@@ -75,8 +75,9 @@ public class ComplexNrDouble implements MultiplyableAndAddable<ComplexNrDouble>
 	public ComplexNrDouble polarRepresentation()
 	{
 		
-		double alpha = 0;
+		if(real<0&&imaginary==0)return new ComplexNrDouble(Double.NaN, -real);
 		
+		double alpha = 0;
 		
 		if(this.amount()==0)new ComplexNrDouble(0, 0);
 		
