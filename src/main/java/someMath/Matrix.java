@@ -102,12 +102,12 @@ public class Matrix <E extends MultiplyableAndAddable<E>> implements Multiplyabl
 		
 		String output = "";
 		
-		int [] longesValue = new int[1];
-		longesValue[0]= 1;
+		int [] longestValue = new int[1];
+		longestValue[0]= 1;
 		BiConsumer<Integer, Integer> bic = (n,m)->
 		{
 			int valueLength = valArr[n][m].toString().length();
-			if(valueLength>longesValue[0])longesValue[0]=valueLength; 
+			if(valueLength>longestValue[0])longestValue[0]=valueLength; 
 		};
 		MatrixOps.walkThrouMatrix(this, bic);
 		
@@ -117,7 +117,7 @@ public class Matrix <E extends MultiplyableAndAddable<E>> implements Multiplyabl
 			{
 				
 				int l = valArr[n][m].toString().length();
-				int d = longesValue[0]-l+1;
+				int d = longestValue[0]-l+1;
 				String whiteSpace = StringManipulation.customWhiteSpace(d);
 				
 				output = output.concat(whiteSpace+valArr[n][m].toString());

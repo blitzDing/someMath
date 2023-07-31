@@ -11,13 +11,6 @@ public class DoubleFMT implements MultiplyableAndAddable<DoubleFMT>
 		this.value = value;
 	}
 
-
-	public String toString()
-	{
-		return value.toString();
-	}
-
-
 	@Override
 	public boolean hasNeutralOne() 
 	{
@@ -73,5 +66,10 @@ public class DoubleFMT implements MultiplyableAndAddable<DoubleFMT>
 	    if(!(other.value== this.value))return false;
 	
 	    return true;
+	}
+	
+	public String toString()
+	{
+		return value.toString();
 	}
 }
