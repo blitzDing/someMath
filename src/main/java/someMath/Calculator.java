@@ -150,7 +150,7 @@ public class Calculator
 				mathExpression.substring(indexOfCorrospondingOpening, firstIndexOfCloseing+1);
 		parenthesisContents.put(indexOfCorrospondingOpening, firstIndexOfCloseing+1);
 		
-		String filler = StringManipulation.customWhiteSpace(parenthesisString.length());
+		String filler = StringManipulation.customMonoRepeatChar(' ',parenthesisString.length());
 		
 		String smaller = mathExpression.replace(parenthesisString, filler);
 	

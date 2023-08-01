@@ -118,7 +118,7 @@ public class Matrix <E extends MultiplyableAndAddable<E>> implements Multiplyabl
 				
 				int l = valArr[n][m].toString().length();
 				int d = longestValue[0]-l+1;
-				String whiteSpace = StringManipulation.customWhiteSpace(d);
+				String whiteSpace = StringManipulation.customMonoRepeatChar(' ',d);
 				
 				output = output.concat(whiteSpace+valArr[n][m].toString());
 			}
