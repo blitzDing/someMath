@@ -21,16 +21,15 @@ class StringMatrixTest
 		
 		List<String> K = Arrays.asList("Robocop", "Vintage", "80's");
 
-		List<String> M = Arrays.asList("Terminator",  "mild Cult", "This decade.");
+		List<String> M = Arrays.asList("Terminator",  "mild Cult in times of Dispair there is air", "This decade.");
 
 		List<String> L = Arrays.asList("Wall-E", "cuteButRude", "2010's");
 		
 		List<List<String>> values = Arrays.asList(K, M, L);
 		
-        TerminalTableDisplay show = new TerminalTableDisplay(headers, values);
-		
-		System.out.println(show);
-		
-		assert(true);
+        TerminalTableDisplay show = new TerminalTableDisplay(headers, values, '|');
+        System.out.println(show);
+        
+        assert(true);
 	}
 }
