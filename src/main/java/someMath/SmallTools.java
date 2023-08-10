@@ -104,4 +104,45 @@ public class SmallTools
 	{
 		return (a*b)/gcd(a,b);
 	}
+	
+	public static <T extends DivideableAndAddable<T>> T getNthPotenz(T basis, int exponent)
+	{
+		
+		if(exponent<0)
+			throw new IllegalArgumentException("Can't do exponents smaller than Zero yet.");
+		
+		T potenz = basis.getNeutralOne();
+		
+		if(exponent == 0)return potenz;
+		if(exponent == 1)return basis;
+		
+		for(int n=0;n<exponent;n++)
+		{
+			potenz = basis.multiplyWith(potenz);
+		}
+		
+		return potenz;
+	}
+	
+	public static <T extends DivideableAndAddable<T>> T getNthRoot(T basis, int root)
+	{
+		if(!basis.hasNeutralOne())throw new IllegalArgumentException("Can't do root without a neutral One.");
+		if(root==0)throw new IllegalArgumentException("Can't do Zero's root.");
+		if(root<0)throw new IllegalArgumentException("Can't do roots smaller then Zero yet.");
+		
+		T potenz =  basis.getNeutralOne();
+		if(root==1)return basis;
+		
+		T ainz = basis.getNeutralOne();
+		T two = ainz.addWith(ainz);
+		T half = ainz.divideBy(two);
+
+		for(int n=0;n<40;n++)
+		{
+			potenz = half.multiplyWith(potenz.addWith
+					(basis.divideBy(getNthPotenz(potenz, root-1))));
+		}
+		
+		return potenz;
+	}
 }

@@ -7,7 +7,7 @@ import java.util.function.BiConsumer;
 //It is important that the values of Type E have a good overwritten toString Method. 
 //and the Type E must overwrite equals Too.
 //I'm looking for a way to enforce that E is of Type: "Mathematical Body."
-public class Matrix <E extends MultiplyableAndAddable<E>> implements MultiplyableAndAddable<Matrix<E>>
+public class Matrix <E extends DivideableAndAddable<E>> implements DivideableAndAddable<Matrix<E>>
 {
 
 	private final E valArr [][];
@@ -135,6 +135,15 @@ public class Matrix <E extends MultiplyableAndAddable<E>> implements Multiplyabl
 	}
 
 	@Override
+	public Matrix<E> divideBy(Matrix<E> t) 
+	{
+		E e = valArr[0][0];//half dummy half neutralZero.
+		if(t==null||MatrixOps.getDeterminant(t)==e.getNeutralZero())throw new IllegalArgumentException("This Matrix can't be used to divide by.");
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public Matrix<E> multiplyWith(Matrix<E> a)
 	{
 		
@@ -235,6 +244,22 @@ public class Matrix <E extends MultiplyableAndAddable<E>> implements Multiplyabl
 		E e = MatrixOps.rowAsList(this,0).get(0);
 		
 		return (Class<E>) e.getClass();
+	}
+	
+	public E getEigenvalues()
+	{
+		
+		if(!this.isQuadratic||this.rows!=2) throw new IllegalArgumentException("Can only calculate Eigenvalues for 2 by 2 Matrizies.");
+		
+		E ainz = valArr[0][0].getNeutralOne();
+		
+		E a = valArr[0][0];
+		E d = valArr[1][1];
+		E two = ainz.addWith(ainz);
+		
+		E k = (a.addWith(d)).divideBy(two);
+		//TODO: Need to be able to take the squareRoot. See -> SmallTools.
+		return null;
 	}
 	
 	

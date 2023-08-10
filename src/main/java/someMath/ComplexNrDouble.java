@@ -3,7 +3,7 @@ package someMath;
 import java.util.Objects;
 
 
-public class ComplexNrDouble implements MultiplyableAndAddable<ComplexNrDouble>
+public class ComplexNrDouble implements DivideableAndAddable<ComplexNrDouble>
 {
 
 	private final double real;

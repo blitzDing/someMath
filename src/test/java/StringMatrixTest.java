@@ -27,7 +27,7 @@ class StringMatrixTest
 		
 		List<List<String>> values = Arrays.asList(K, M, L);
 		
-        TerminalTableDisplay show = new TerminalTableDisplay(headers, values, '|');
+        TerminalTableDisplay show = new TerminalTableDisplay(headers, values, '|',12);
         System.out.println(show);
         
         assert(true);

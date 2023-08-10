@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.Year;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Input
@@ -25,20 +26,27 @@ public class Input
 	final static int minMinute = 0;
 	final static int maxMinute = 59;
 	
-	public static int getNrInput(String qPhrase, int startOfValideInput, int range) throws IOException
+	public static String getString(String qPhrase)
 	{
 		
 		Scanner scanner = new Scanner(System.in);
 		
-		if(range<=0)
-		{
-			scanner.close();
-			throw new IllegalArgumentException("Sorry range must be greater than Zero.");		
-		}
 		
-		System.out.println(qPhrase+"("+startOfValideInput+"-" + (startOfValideInput+range) + ")");
-		int n = scanner.nextInt();
-		scanner.close();
+		System.out.print(qPhrase);
+		String s =	scanner.nextLine();
+		
+		return s;
+	}
+
+	public static int getNrInput(String qPhrase, int startOfValideInput, int range) throws IOException, InputMismatchException
+	{
+		
+		Scanner scanner = new Scanner(System.in);
+		
+		
+		System.out.print(qPhrase);
+		String s =	scanner.nextLine();//Better this Method never use other.
+		int n = Integer.parseInt(s);
 		
 		return n;
 	}

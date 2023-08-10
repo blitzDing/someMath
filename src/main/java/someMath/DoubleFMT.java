@@ -1,7 +1,7 @@
 package someMath;
 
            //FMT=ForMathTools
-public class DoubleFMT implements MultiplyableAndAddable<DoubleFMT>
+public class DoubleFMT implements DivideableAndAddable<DoubleFMT>
 {
 	
 	public final Double value;
@@ -71,5 +71,11 @@ public class DoubleFMT implements MultiplyableAndAddable<DoubleFMT>
 	public String toString()
 	{
 		return value.toString();
+	}
+
+	@Override
+	public DoubleFMT divideBy(DoubleFMT t) 
+	{
+		return new DoubleFMT(value/t.value);
 	}
 }

@@ -11,14 +11,16 @@ public class TerminalTableDisplay
 	private final List<List<String>> cellValues;
 	private int columns = 0;
 	private int rows = 0;
-	private final int cellWidth = 20;
+	private final int cellWidth;
 	private final Cell [][]cell;
 	private final char delimiter;
 	private final int dL = 1; //delimiterLength = 1;
 	
-	public TerminalTableDisplay(List<String> headers, List<List<String>> cellValues, char delimiter)
+	public TerminalTableDisplay(List<String> headers, List<List<String>> cellValues, char delimiter, int cellWidth)
 	{
 		this.delimiter = delimiter;
+		this.cellWidth = cellWidth;
+		
 		List<List<String>> newCellValues = new ArrayList<>();
 		newCellValues.add(headers);
 		newCellValues.addAll(cellValues);
@@ -26,8 +28,6 @@ public class TerminalTableDisplay
 		this.cellValues = newCellValues;
 		this.rows = this.cellValues.size();
 		this.columns = headers.size();
-		System.out.println(Math.floorDiv(102, 5));
-		System.out.println("columns: "+columns+" rows: "+rows);
 		
 		cell = new Cell[rows][columns];
 
@@ -46,8 +46,6 @@ public class TerminalTableDisplay
 				}
 
 				cell[n][m] = new Cell(breakupContent(s));
-				System.out.println("row: " + n +" column: " + m);
-				System.out.println(cell[n][m]);
 			}
 		}
 	}
@@ -84,8 +82,6 @@ public class TerminalTableDisplay
 				a = String.valueOf(copy)+StringManipulation.customMonoRepeatChar(' ', r);
 			}
 
-			System.out.println("Line: " + a + ". Length: " + a.length() + ".");
-
 			if(copy.length()>=cellWidth)copy = copy.substring(cellWidth, copy.length());
 
 			lines[n]=delimiter + a;
@@ -116,7 +112,7 @@ public class TerminalTableDisplay
 		{
 			List<String> row = this.cellValues.get(n);
 			int maxRow = mostLinesInThatRow(n);
-			System.out.println("Max lines in row " + n + " is:" + maxRow);
+		
 			for(int l=0;l<maxRow;l++)
 			{
 				
