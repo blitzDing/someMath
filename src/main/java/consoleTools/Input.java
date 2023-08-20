@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.Year;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Input
@@ -26,6 +27,27 @@ public class Input
 	final static int minMinute = 0;
 	final static int maxMinute = 59;
 	
+	/*
+	 * I do not close scanner in any input Method. Because
+	 * it's tied to System.in. If i would System.in would
+	 * be closed to and never be opened again in the 
+	 * running JVM. 
+	 */
+	public static boolean getYesOrNo(String qPhrase) throws IOException, InputMismatchException
+	{
+
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.print(qPhrase);
+		String answer =	scanner.nextLine();
+		String s = answer.toLowerCase().trim();
+		
+		if(s.equals("y")||s.equals("yes")) return true;
+		if(s.equals("n")||s.equals("no")) return false;
+		
+		throw new InputMismatchException("Don't understand your answer.");
+	}
+	
 	public static String getString(String qPhrase)
 	{
 		
@@ -38,17 +60,36 @@ public class Input
 		return s;
 	}
 
-	public static int getNrInput(String qPhrase, int startOfValideInput, int range) throws IOException, InputMismatchException
+	public static int getNrInput(String qPhrase, int startOfValideInput, int range)
 	{
 		
 		Scanner scanner = new Scanner(System.in);
-		
+		int max = startOfValideInput+range;
 		
 		System.out.print(qPhrase);
-		String s =	scanner.nextLine();//Better this Method never use other.
-		int n = Integer.parseInt(s);
+		String s =	scanner.nextLine();
+		int n = 0;
+		if(s.trim().matches("//d+"))n=Integer.parseInt(s);
+		else throw new IllegalArgumentException("That's no Number");
 		
-		return n;
+		if(n>=startOfValideInput&&n<=max) return n;
+		else throw new IllegalArgumentException("Answer not inside Intervall.");
+	}
+	
+	public static String getAnswerOutOfList(List<String> answerList) throws InputMismatchException, IOException
+	{
+
+		if(answerList.isEmpty()||answerList.contains(null))throw new IllegalArgumentException("answer List Bad.");
+		
+		int size = answerList.size();
+		
+		for(int n=1;n<size;n++)
+		{
+			System.out.println(n + ".) " + answerList.get(n-1));
+		}
+		
+		int n = getNrInput("Choose a Number: ", 1, (size-1));
+		return answerList.get(n);
 	}
 	
 	public static LocalDate getDate(String qPhrase, int yearOffset, int yearRange, int monthOffset, int dayOffset) throws IOException
