@@ -10,6 +10,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import allgemein.LittleTimeTools;
+
 public class Input
 {
 
@@ -69,27 +71,29 @@ public class Input
 		System.out.print(qPhrase);
 		String s =	scanner.nextLine();
 		int n = 0;
-		if(s.trim().matches("//d+"))n=Integer.parseInt(s);
+		if(s.trim().matches("[0-9]+"))n=Integer.parseInt(s.trim());
 		else throw new IllegalArgumentException("That's no Number");
 		
 		if(n>=startOfValideInput&&n<=max) return n;
 		else throw new IllegalArgumentException("Answer not inside Intervall.");
 	}
 	
-	public static String getAnswerOutOfList(List<String> answerList) throws InputMismatchException, IOException
+	public static String getAnswerOutOfList(String phrase, List<String> answerList) throws InputMismatchException, IOException
 	{
 
 		if(answerList.isEmpty()||answerList.contains(null))throw new IllegalArgumentException("answer List Bad.");
 		
 		int size = answerList.size();
 		
-		for(int n=1;n<size;n++)
+		System.out.println(phrase);
+		for(int n=1;n<size+1;n++)
 		{
 			System.out.println(n + ".) " + answerList.get(n-1));
 		}
 		
-		int n = getNrInput("Choose a Number: ", 1, (size-1));
-		return answerList.get(n);
+		int n = getNrInput("Choose a Number: ", 1, size);
+		
+		return answerList.get(n-1);
 	}
 	
 	public static LocalDate getDate(String qPhrase, int yearOffset, int yearRange, int monthOffset, int dayOffset) throws IOException
@@ -132,9 +136,10 @@ public class Input
 		int hour = getNrInput("Which hour?",minHour,maxHour);
 		int minute = getNrInput("Which minute?",minMinute,maxMinute);
 		
-		LocalTime lt = LocalTime.of(hour, minute);
-		if(offsetTime.isBefore(lt))return lt;
-		else throw new IllegalArgumentException("Time is before or at Offset Time.");
+		LocalTime gatheredTime = LocalTime.of(hour, minute);
+		
+		if(gatheredTime.isBefore(offsetTime))throw new IllegalArgumentException("Gathered Time is before or at Offset Time.");
+		return gatheredTime;
 	}
 	
 	public static LocalDateTime getDateTime(String qPhrase, int yearOffset, int yearRange, int monthOffset, int dayOffset, int hourOffset, int minuteOffset) throws IOException
@@ -148,7 +153,8 @@ public class Input
 
 		LocalDateTime ldtOffset = LocalDateTime.of(yearOffset, monthOffset, dayOffset, hourOffset, minuteOffset);
 		
-		LocalTime lt = getTime("Time please.", hourOffset, minuteOffset);
+		System.out.println(qPhrase);
+		LocalTime lt = getTime("Time please.", minHour, minMinute);//special Offset!!
 		LocalDate ld = getDate("Date please.", yearOffset, yearRange, monthOffset, dayOffset);
 		
 		LocalDateTime ldt = LocalDateTime.of(ld, lt);
