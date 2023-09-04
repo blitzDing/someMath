@@ -96,6 +96,11 @@ public class Input
 		return answerList.get(n-1);
 	}
 	
+	public static LocalDate getDate(String qPhrase, LocalDate ld, int yearRange) throws IOException
+	{
+		return getDate(qPhrase, ld.getYear(), yearRange, ld.getMonthValue(), ld.getDayOfMonth());
+	}
+	
 	public static LocalDate getDate(String qPhrase, int yearOffset, int yearRange, int monthOffset, int dayOffset) throws IOException
 	{
 		if(yearOffset<minYear)throw new IllegalArgumentException("Year isn't correct.");		
@@ -124,6 +129,11 @@ public class Input
 		else throw new IllegalArgumentException("This month doesn't have this day.");
 	}
 	
+	public static LocalTime getTime(String qPhrase, LocalTime lt) throws IOException
+	{
+		return getTime(qPhrase, lt.getHour(), lt.getMinute());
+	}
+	
 	public static LocalTime getTime(String qPhrase, int hourOffset, int minuteOffset) throws IOException
 	{
 		if(hourOffset<minHour||hourOffset>maxHour)throw new IllegalArgumentException("hour isn't correct.");
@@ -140,6 +150,16 @@ public class Input
 		
 		if(gatheredTime.isBefore(offsetTime))throw new IllegalArgumentException("Gathered Time is before or at Offset Time.");
 		return gatheredTime;
+	}
+
+	public static LocalDateTime getDateTime(String qPhrase, LocalDate ld, LocalTime lt, int yearRange) throws IOException
+	{
+		return getDateTime(qPhrase, LocalDateTime.of(ld, lt), yearRange);
+	}
+	
+	public static LocalDateTime getDateTime(String qPhrase, LocalDateTime ldt, int yearRange) throws IOException
+	{
+		return getDateTime(qPhrase, ldt.getYear(), yearRange, ldt.getMonthValue(), ldt.getDayOfMonth(), ldt.getHour(), ldt.getMinute());
 	}
 	
 	public static LocalDateTime getDateTime(String qPhrase, int yearOffset, int yearRange, int monthOffset, int dayOffset, int hourOffset, int minuteOffset) throws IOException
