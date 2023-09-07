@@ -152,6 +152,18 @@ public class Input
 		return gatheredTime;
 	}
 
+	public static LocalDateTime getDateTime(String qPhrase, LocalDateTime after, LocalDateTime before) throws IOException
+	{
+
+		if(after.isAfter(before))throw new IllegalArgumentException("'After'-DateTime is before 'Before'-DateTime");
+
+		int yearRange = after.getYear()-before.getYear()+1;
+		LocalDateTime output = getDateTime(qPhrase, after, yearRange);
+		
+		if(output.isAfter(after)&&output.isBefore(before))return output;
+		else throw new IllegalArgumentException("DateTime out of Bounds.");
+	}
+	
 	public static LocalDateTime getDateTime(String qPhrase, LocalDate ld, LocalTime lt, int yearRange) throws IOException
 	{
 		return getDateTime(qPhrase, LocalDateTime.of(ld, lt), yearRange);
