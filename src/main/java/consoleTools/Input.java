@@ -1,6 +1,7 @@
 package consoleTools;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -9,8 +10,6 @@ import java.time.Year;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-
-import allgemein.LittleTimeTools;
 
 public class Input
 {
@@ -29,59 +28,93 @@ public class Input
 	final static int minMinute = 0;
 	final static int maxMinute = 59;
 	
+	final static String yes = "yes";
+	final static char ja = 'y';
+
+	final static String no = "no";
+	final static char nein = 'n';
+	
+	final static String dontUnderstandTheAnswer = "I' don't Understand the answer.";
+	
+	final static String noNumber = "That's no Number";
+
+	final static String answerOutOfBounds = "Answer out of Bounds.";
+	
+	final static String answerListBad = "Answer List Bad.(null or Empty)";
+	
+	final static String chooseANumber = "Choose a Number: ";
+	
+	final static int minNrForOutOfList = 1;
+	
+	final static String whichYear = "Which Year?: "; 
+	final static String whichMonth = "Which Month?: ";
+	final static String whichDay = "Which Day?: ";
+	
+	final static String whichHour = "Which Hour?: ";
+	final static String whichMinute = "Which Minute?: ";
+	
+	final static String gatheredTimeOutOfBounds = "Gathered out of Bounds.";
+	
+	final static String timePlease = "Time Please.";
+	final static String datePlease = "Date Please.";
+	
+	final static String dateTimeOutOfBounds = "Date out of Bounds.";
+	
 	/*
 	 * I do not close scanner in any input Method. Because
 	 * it's tied to System.in. If i would System.in would
 	 * be closed to and never be opened again in the 
 	 * running JVM. 
 	 */
-	public static boolean getYesOrNo(String qPhrase) throws IOException, InputMismatchException
+	
+	public static boolean getYesOrNo(InputStream is, String qPhrase) throws IOException, InputMismatchException
 	{
 
-		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(is);
 
 		System.out.print(qPhrase);
-		String answer =	scanner.nextLine();
+		String answer = scanner.nextLine();
 		String s = answer.toLowerCase().trim();
 		
-		if(s.equals("y")||s.equals("yes")) return true;
-		if(s.equals("n")||s.equals("no")) return false;
+		if(s.equals(ja+"")||s.equals(yes)) return true;
+		if(s.equals(nein+"")||s.equals(no)) return false;
 		
-		throw new InputMismatchException("Don't understand your answer.");
+		throw new InputMismatchException(dontUnderstandTheAnswer);
 	}
 	
-	public static String getString(String qPhrase)
+	public static String getString(InputStream is, String qPhrase)
 	{
 		
-		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(is);
 		
 		
 		System.out.print(qPhrase);
-		String s =	scanner.nextLine();
+		String s = scanner.nextLine();
 		
 		return s;
 	}
 
-	public static int getNrInput(String qPhrase, int startOfValideInput, int range)
+	public static int getNrInput(InputStream is, String qPhrase, int startOfValideInput, int range)
 	{
 		
-		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(is);
 		int max = startOfValideInput+range;
 		
 		System.out.print(qPhrase);
-		String s =	scanner.nextLine();
+		String s = scanner.nextLine();
+		
 		int n = 0;
 		if(s.trim().matches("[0-9]+"))n=Integer.parseInt(s.trim());
-		else throw new IllegalArgumentException("That's no Number");
+		else throw new IllegalArgumentException(noNumber);
 		
 		if(n>=startOfValideInput&&n<=max) return n;
-		else throw new IllegalArgumentException("Answer not inside Intervall.");
+		else throw new IllegalArgumentException(answerOutOfBounds);
 	}
 	
-	public static String getAnswerOutOfList(String phrase, List<String> answerList) throws InputMismatchException, IOException
+	public static String getAnswerOutOfList(InputStream is, String phrase, List<String> answerList) throws InputMismatchException, IOException
 	{
 
-		if(answerList.isEmpty()||answerList.contains(null))throw new IllegalArgumentException("answer List Bad.");
+		if(answerList.isEmpty()||answerList.contains(null))throw new IllegalArgumentException(answerListBad);
 		
 		int size = answerList.size();
 		
@@ -91,106 +124,71 @@ public class Input
 			System.out.println(n + ".) " + answerList.get(n-1));
 		}
 		
-		int n = getNrInput("Choose a Number: ", 1, size);
+		int n = getNrInput(is,chooseANumber, minNrForOutOfList, size);
 		
 		return answerList.get(n-1);
 	}
 	
-	public static LocalDate getDate(String qPhrase, LocalDate ld, int yearRange) throws IOException
-	{
-		return getDate(qPhrase, ld.getYear(), yearRange, ld.getMonthValue(), ld.getDayOfMonth());
-	}
 	
-	public static LocalDate getDate(String qPhrase, int yearOffset, int yearRange, int monthOffset, int dayOffset) throws IOException
+	public static LocalDate getDate(InputStream is, String qPhrase, LocalDate begin, LocalDate end) throws IOException
 	{
-		if(yearOffset<minYear)throw new IllegalArgumentException("Year isn't correct.");		
-		if(monthOffset<minMonth||monthOffset>maxMonth)throw new IllegalArgumentException("Month isn't correct.");
-		if(dayOffset<minDay||dayOffset>maxDay)throw new IllegalArgumentException("Day isn't correct.");
-		if(dayOffset>Month.of(monthOffset).length(Year.isLeap(yearOffset)))throw new IllegalArgumentException("Day isn't correct.");
 		
-		LocalDate offsetDate = LocalDate.of(yearOffset, monthOffset, dayOffset);
 		
 		System.out.println(qPhrase);
 		
-		int year = getNrInput("Which Year?", yearOffset, yearRange);
-		int month = getNrInput("Which Month?",minMonth,maxMonth);
-		int day = getNrInput("Which Day?",minDay,maxDay);
+		int yearBegin = begin.getYear();
+		int yearEnd = end.getYear();
+		
+		int year = getNrInput(is, whichYear, yearBegin, yearEnd);
+		int month = getNrInput(is, whichMonth,minMonth,maxMonth);
 	
 		boolean leapYear = Year.isLeap(year);
 		Month m = Month.of(month);
 		int maxDays = m.length(leapYear);
 					
-		if(day<=maxDays)
-		{
-			LocalDate ld = LocalDate.of(year, month, day);
-			if(offsetDate.isBefore(ld))return ld;
-			else throw new IllegalArgumentException("Date is befor or at Offset Date.");
-		}
-		else throw new IllegalArgumentException("This month doesn't have this day.");
+		int day = getNrInput(is, whichDay, minDay, maxDays);
+
+		LocalDate ld = LocalDate.of(year, month, day);
+		
+		return ld;
 	}
 	
-	public static LocalTime getTime(String qPhrase, LocalTime lt) throws IOException
+	public static LocalTime getTime(InputStream is, String qPhrase, LocalTime begin, LocalTime end) throws IOException
 	{
-		return getTime(qPhrase, lt.getHour(), lt.getMinute());
-	}
-	
-	public static LocalTime getTime(String qPhrase, int hourOffset, int minuteOffset) throws IOException
-	{
-		if(hourOffset<minHour||hourOffset>maxHour)throw new IllegalArgumentException("hour isn't correct.");
-		if(minuteOffset<minMinute||minuteOffset>maxMinute)throw new IllegalArgumentException("minute isn't correct.");
+		
 		
 		System.out.println(qPhrase);
-		
-		LocalTime offsetTime = LocalTime.of(hourOffset, minuteOffset);
-		
-		int hour = getNrInput("Which hour?",minHour,maxHour);
-		int minute = getNrInput("Which minute?",minMinute,maxMinute);
+				
+		int hour = getNrInput(is, whichHour, minHour, maxHour);
+		int minute = getNrInput(is, whichMinute, minMinute, maxMinute);
 		
 		LocalTime gatheredTime = LocalTime.of(hour, minute);
 		
-		if(gatheredTime.isBefore(offsetTime))throw new IllegalArgumentException("Gathered Time is before or at Offset Time.");
+		if(gatheredTime.isBefore(begin))throw new IllegalArgumentException(gatheredTimeOutOfBounds);
+		
+		if(gatheredTime.isAfter(end))throw new IllegalArgumentException(gatheredTimeOutOfBounds);
+		
 		return gatheredTime;
 	}
-
-	public static LocalDateTime getDateTime(String qPhrase, LocalDateTime after, LocalDateTime before) throws IOException
+			
+	public static LocalDateTime getDateTime(InputStream is, String qPhrase, LocalDateTime begin, LocalDateTime end) throws IOException
 	{
 
-		if(after.isAfter(before))throw new IllegalArgumentException("'After'-DateTime is before 'Before'-DateTime");
-
-		int yearRange = after.getYear()-before.getYear()+1;
-		LocalDateTime output = getDateTime(qPhrase, after, yearRange);
-		
-		if(output.isAfter(after)&&output.isBefore(before))return output;
-		else throw new IllegalArgumentException("DateTime out of Bounds.");
-	}
-	
-	public static LocalDateTime getDateTime(String qPhrase, LocalDate ld, LocalTime lt, int yearRange) throws IOException
-	{
-		return getDateTime(qPhrase, LocalDateTime.of(ld, lt), yearRange);
-	}
-	
-	public static LocalDateTime getDateTime(String qPhrase, LocalDateTime ldt, int yearRange) throws IOException
-	{
-		return getDateTime(qPhrase, ldt.getYear(), yearRange, ldt.getMonthValue(), ldt.getDayOfMonth(), ldt.getHour(), ldt.getMinute());
-	}
-	
-	public static LocalDateTime getDateTime(String qPhrase, int yearOffset, int yearRange, int monthOffset, int dayOffset, int hourOffset, int minuteOffset) throws IOException
-	{
-		if(yearOffset<minYear)throw new IllegalArgumentException("Year isn't correct.");
-		if(monthOffset<minMonth||monthOffset>maxMonth)throw new IllegalArgumentException("Month isn't correct.");
-		if(dayOffset<minDay||dayOffset>maxDay)throw new IllegalArgumentException("Day isn't correct.");
-		if(dayOffset>Month.of(monthOffset).length(Year.isLeap(yearOffset)))throw new IllegalArgumentException("Day isn't correct.");
-		if(hourOffset<minHour||hourOffset>maxHour)throw new IllegalArgumentException("hour isn't correct.");
-		if(minuteOffset<minMinute||minuteOffset>maxMinute)throw new IllegalArgumentException("minute isn't correct.");
-
-		LocalDateTime ldtOffset = LocalDateTime.of(yearOffset, monthOffset, dayOffset, hourOffset, minuteOffset);
 		
 		System.out.println(qPhrase);
-		LocalTime lt = getTime("Time please.", minHour, minMinute);//special Offset!!
-		LocalDate ld = getDate("Date please.", yearOffset, yearRange, monthOffset, dayOffset);
+		LocalTime beginOfTheDay = LocalTime.of(minHour, minMinute);
+		LocalTime endOfTheDay = LocalTime.of(maxHour, maxMinute);
+		
+		LocalTime lt = getTime(is, timePlease, beginOfTheDay, endOfTheDay);
+		
+		LocalDate dateBegin = begin.toLocalDate();
+		LocalDate dateEnd = end.toLocalDate();
+		
+		LocalDate ld = getDate(is, datePlease, dateBegin, dateEnd);
 		
 		LocalDateTime ldt = LocalDateTime.of(ld, lt);
-		if(ldtOffset.isBefore(ldt))return ldt;
-		else throw new IllegalArgumentException("Date Time can't be before Offset DateTime.");
+		if(ldt.isBefore(begin)|| ldt.isAfter(end))throw new IllegalArgumentException(dateTimeOutOfBounds);
+	
+		return ldt;
 	}
 }

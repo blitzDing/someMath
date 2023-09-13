@@ -10,7 +10,7 @@ class ComplexNrDoubleTest
 {
 
 	double prettySmall = Math.pow(10, -11);
-	int millisWait = 150;
+	int millisWait = 0;
 
 	ComplexNrDouble one = new ComplexNrDouble(1,0);
 	ComplexNrDouble i = new ComplexNrDouble(0,1);
@@ -152,15 +152,6 @@ class ComplexNrDoubleTest
 				System.out.println("             wp1: " + wp1);
 					
 				sum =  -360+sum;
-									
-				try 
-				{
-					Thread.sleep(1000);
-				}
-				catch(InterruptedException e)
-				{
-					e.printStackTrace();
-				}
 			}
 				
 			if(sum < -180)
@@ -172,18 +163,8 @@ class ComplexNrDoubleTest
 				System.out.println("                  wp1: " + wp1);
 
 				sum = sum+360;
-
-					
-				try
-				{
-					Thread.sleep(1000);
-				}
-				catch(InterruptedException e)
-				{
-					e.printStackTrace();
-				}
 			}
-				
+
 			System.out.println("rp1 - (ra*rb) = " + (rp1 - (ra*rb)));
 			System.out.println("wp1 - (wa+wb) = " + (wp1 - (sum)) + "\n");
 
@@ -218,15 +199,6 @@ class ComplexNrDoubleTest
 				System.out.println("             wp2: " + wp2);
 					
 				sum =  -360+sum;
-									
-				try 
-				{
-					Thread.sleep(500);
-				}
-				catch(InterruptedException e)
-				{
-					e.printStackTrace();
-				}
 			}
 				
 			if(sum < -180)
@@ -239,17 +211,8 @@ class ComplexNrDoubleTest
 
 				sum = sum+360;
 
-					
-				try
-				{
-					Thread.sleep(500);
-				}
-				catch(InterruptedException e)
-				{
-					e.printStackTrace();
-				}
 			}
-				
+
 			System.out.println("rp2 - (rc*rd) = " + (rp2 - (rc*rd)));
 			System.out.println("wp2 - (wc+wd) = " + (wp2 - (sum)) + "\n");
 
