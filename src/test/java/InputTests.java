@@ -1,6 +1,9 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import allgemein.LittleTimeTools;
+
 import org.junit.jupiter.api.BeforeEach;
 
 import consoleTools.Input;
@@ -15,36 +18,49 @@ import java.time.LocalTime;
 class InputTests 
 {
 
-	private final String gruß = "Hi";
+	
 	LocalDateTime ancient;
 	
 	@BeforeEach
 	void prepare()
 	{
 		
-		ancient = LocalDateTime.of(LocalDate.of(0, 1, 1), LocalTime.of(0, 0));
+		ancient = LocalDateTime.of(LocalDate.of(2, 1, 1), LocalTime.of(0, 0));
+		System.out.println("Ancient: " + LittleTimeTools.timeString(ancient));
+		System.out.println("Ancient: " + LittleTimeTools.timeString(ancient.plusDays(8)));
+		
 	}
 	
 	@Test
 	void testGetString() 
 	{
+		
+		String gruß = "Hi";
 		ByteArrayInputStream is = new ByteArrayInputStream(gruß.getBytes());
+		Input inTaker = new Input(is);
 
-		String greetings = Input.getString(is, "Hi u");
+		String greetings = inTaker.getString("Hi u");
 		
 		assert(greetings.equals(gruß));
 	}
 	
 	@Test
-	void testGetTime()
+	void testGetDateTime()
 	{
+		int hour = 0;
+		int minute = 0;
+		int year = 2;
+		int month = 1;
+		int day = 6;
+		String lines = hour+"\n"+minute+"\n"+year+"\n"+month+"\n"+day+"\n";
 		
-		ByteArrayInputStream is = new ByteArrayInputStream("0\n1\n1\n0\n7\n".getBytes());
-		
+		ByteArrayInputStream is = new ByteArrayInputStream(lines.getBytes());
+		Input inTaker = new Input(is);
+
 		LocalDateTime ldt;
 		try
 		{
-			ldt = Input.getDateTime(is, "hi", ancient, ancient.plusDays(8));
+			ldt = inTaker.getDateTime("hi", ancient, ancient.plusDays(8));
 			assert(ldt.isAfter(ancient)&&ldt.isBefore(ancient.plusDays(8)));
 		}
 		catch(IOException e)
