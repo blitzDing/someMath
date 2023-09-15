@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 import allgemein.LittleTimeTools;
 
-public class Input
+public class InputStreamSession
 {
 
 	final static int minYear = 0;
@@ -72,7 +72,7 @@ public class Input
 	private final InputStream is;
 	private final Scanner scanner; 
 
-	public Input(InputStream is)
+	public InputStreamSession(InputStream is)
 	{
 		this.is = is;
 		scanner = new Scanner(is);
@@ -81,7 +81,7 @@ public class Input
 	public boolean getYesOrNo(String qPhrase) throws IOException, InputMismatchException
 	{
 
-		System.out.print("\n" + qPhrase);
+		System.out.println(qPhrase);
 		String answer = scanner.nextLine();
 		String s = answer.toLowerCase().trim();
 		
@@ -94,7 +94,7 @@ public class Input
 	public String getString(String qPhrase)
 	{
 	
-		System.out.print("\n" + qPhrase);
+		System.out.println(qPhrase);
 		String s = scanner.nextLine();
 		
 		return s;
@@ -105,7 +105,7 @@ public class Input
 		
 		int max = startOfValideInput+range;
 		
-		System.out.print("\n" + qPhrase);
+		System.out.println(qPhrase);
 		String s = scanner.nextLine();
 		
 		int n = 0;
@@ -135,7 +135,7 @@ public class Input
 	}
 	
 	
-	public LocalDate getDate(InputStream is, String qPhrase, LocalDate begin, LocalDate end) throws IOException
+	public LocalDate getDate(String qPhrase, LocalDate begin, LocalDate end) throws IOException
 	{
 		
 		
@@ -189,7 +189,7 @@ public class Input
 		LocalDate dateBegin = begin.toLocalDate();
 		LocalDate dateEnd = end.toLocalDate();
 		
-		LocalDate ld = getDate(is, datePlease, dateBegin, dateEnd);
+		LocalDate ld = getDate(datePlease, dateBegin, dateEnd);
 		
 		String beginStr = LittleTimeTools.timeString(begin);
 		String endStr = LittleTimeTools.timeString(end);

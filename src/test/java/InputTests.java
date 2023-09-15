@@ -6,7 +6,7 @@ import allgemein.LittleTimeTools;
 
 import org.junit.jupiter.api.BeforeEach;
 
-import consoleTools.Input;
+import consoleTools.InputStreamSession;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -37,7 +37,7 @@ class InputTests
 		
 		String gruß = "Hi";
 		ByteArrayInputStream is = new ByteArrayInputStream(gruß.getBytes());
-		Input inTaker = new Input(is);
+		InputStreamSession inTaker = new InputStreamSession(is);
 
 		String greetings = inTaker.getString("Hi u");
 		
@@ -55,7 +55,7 @@ class InputTests
 		String lines = hour+"\n"+minute+"\n"+year+"\n"+month+"\n"+day+"\n";
 		
 		ByteArrayInputStream is = new ByteArrayInputStream(lines.getBytes());
-		Input inTaker = new Input(is);
+		InputStreamSession inTaker = new InputStreamSession(is);
 
 		LocalDateTime ldt;
 		try

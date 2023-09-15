@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import consoleTools.Input;
+import consoleTools.InputStreamSession;
 
 class InputConsoleTest {
 
