@@ -63,7 +63,7 @@ public class DoubleFMT implements DivideableAndAddable<DoubleFMT>
 	    if (!(obj instanceof DoubleFMT)) return false;
 	    DoubleFMT other = (DoubleFMT)obj;
 	    
-	    if(!(other.value== this.value))return false;
+	    if(!(other.value.equals(this.value)))return false;
 	
 	    return true;
 	}

@@ -1,7 +1,7 @@
 package someMath;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 //It is important that the values of Type E have a good overwritten toString Method. 
@@ -246,7 +246,7 @@ public class Matrix <E extends DivideableAndAddable<E>> implements DivideableAnd
 		return (Class<E>) e.getClass();
 	}
 	
-	public E getEigenvalues()
+	public Set<E> getEigenvalues()
 	{
 		
 		if(!this.isQuadratic||this.rows!=2) throw new IllegalArgumentException("Can only calculate Eigenvalues for 2 by 2 Matrizies.");
@@ -255,11 +255,18 @@ public class Matrix <E extends DivideableAndAddable<E>> implements DivideableAnd
 		
 		E a = valArr[0][0];
 		E d = valArr[1][1];
-		E two = ainz.addWith(ainz);
 		
-		E k = (a.addWith(d)).divideBy(two);
-		//TODO: Need to be able to take the squareRoot. See -> SmallTools.
-		return null;
+		E two = ainz.addWith(ainz);
+		E s = (a.addWith(d)).divideBy(two);
+		E r = s.multiplyWith(s).subtractArg(MatrixOps.getDeterminant(this));
+		
+		E x1 = (s.addWith(SmallTools.getNthRoot(r, 2)));
+		E x2 = (s.subtractArg(SmallTools.getNthRoot(r, 2)));
+		Set<E> set = new HashSet<>();
+		set.add(x1);
+		set.add(x2);
+		
+		return set;
 	}
 	
 	
