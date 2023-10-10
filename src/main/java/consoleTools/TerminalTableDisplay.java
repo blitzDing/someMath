@@ -1,12 +1,15 @@
 package consoleTools;
 
-import java.util.Collection;
-import java.util.*;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import someMath.StringManipulation;
 
+
 public class TerminalTableDisplay 
 {
+
 	private final List<String> headers;
 	private final List<List<String>> cellValues;
 	private int columns = 0;
@@ -18,13 +21,14 @@ public class TerminalTableDisplay
 	
 	public TerminalTableDisplay(List<String> headers, List<List<String>> cellValues, char delimiter, int cellWidth)
 	{
+		
+		this.headers = headers;
 		this.delimiter = delimiter;
 		this.cellWidth = cellWidth;
 		
 		List<List<String>> newCellValues = new ArrayList<>();
-		newCellValues.add(headers);
+		newCellValues.add(this.headers);
 		newCellValues.addAll(cellValues);
-		this.headers = headers;
 		this.cellValues = newCellValues;
 		this.rows = this.cellValues.size();
 		this.columns = headers.size();
@@ -110,7 +114,7 @@ public class TerminalTableDisplay
 		
 		for(int n=0;n<rows;n++)
 		{
-			List<String> row = this.cellValues.get(n);
+			//List<String> row = this.cellValues.get(n);
 			int maxRow = mostLinesInThatRow(n);
 		
 			for(int l=0;l<maxRow;l++)

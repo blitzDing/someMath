@@ -69,12 +69,10 @@ public class InputStreamSession
 	 * running JVM. 
 	 */
 	
-	private final InputStream is;
 	private final Scanner scanner; 
 
 	public InputStreamSession(InputStream is)
 	{
-		this.is = is;
 		scanner = new Scanner(is);
 	}
 	

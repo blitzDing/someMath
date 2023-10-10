@@ -89,8 +89,8 @@ public class TableCreatorFlexible
                                 (int) (color.getGreen() * 255),
                                 (int) (color.getBlue() * 255));
 
-                        //currentRow.getStyleClass().add("");
-                        //currentRow.setStyle("-fx-background-color: rgba(" + rgb + ", "+d+");");
+                        currentRow.getStyleClass().add("");
+                        currentRow.setStyle("-fx-background-color: rgba(" + rgb + ", "+d+");");
 
                     }
                 }

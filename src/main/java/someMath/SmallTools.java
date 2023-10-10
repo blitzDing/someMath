@@ -50,6 +50,30 @@ public class SmallTools
 		return dest;
 	}
 	
+	public static Set<Set<Character>> createFamilie(Set<Set<Character>> origin)
+	{
+		Set<Set<Character>> output = new HashSet<>(origin);
+		
+		for(Set<Character> e1: origin)
+		{
+			
+			for(Set<Character> e2: origin)
+			{
+				if(e1.equals(e2))continue;
+				else
+				{
+					Set<Character> a = new HashSet<>();
+					a.addAll(e1);
+					a.addAll(e2);
+					output.add(a);
+				}
+			}
+		}
+		
+		if(!origin.equals(output)) return createFamilie(output);
+
+		return output;
+	}
 
 	public static boolean isInteger(String s)
 	{
