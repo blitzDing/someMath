@@ -12,6 +12,12 @@ public class LittleTimeTools
 
     public static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     
+    public static final String futureString = "In the Future: ";
+    private static final int fStrLength = futureString.length();
+    
+    public static final String pastString = "In the Past: ";
+    private static final int pStrLength = pastString.length();
+
     public static String timeString(LocalDateTime ldt)
     {
     	
@@ -100,6 +106,8 @@ public class LittleTimeTools
     	if(seconds>0&&output.length()>0)output = output + ", Seconds: " + seconds;
     	if(seconds>0&&output.length()==0)output = output + "Seconds: " + seconds;
 
-    	return output;
+    	if(output.trim().equals(""))return pastString + fullLDTBetweenLDTs(toDateTime, fromDateTime).substring(fStrLength);
+    	
+    	return futureString + output;
     }
 }
