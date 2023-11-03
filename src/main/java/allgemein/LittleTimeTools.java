@@ -66,7 +66,7 @@ public class LittleTimeTools
     	return output;
     }
 
-    public static String fullLDTBetweenLDTs(LocalDateTime fromDateTime, LocalDateTime toDateTime)
+    public static String fullLDTBetweenLDTs(LocalDateTime toDateTime, LocalDateTime fromDateTime)
     {
     	/*
 			Nikolai Shevchenko's Code. StackOverFlow.
@@ -106,7 +106,7 @@ public class LittleTimeTools
     	if(seconds>0&&output.length()>0)output = output + ", Seconds: " + seconds;
     	if(seconds>0&&output.length()==0)output = output + "Seconds: " + seconds;
 
-    	if(output.trim().equals(""))return pastString + fullLDTBetweenLDTs(toDateTime, fromDateTime).substring(fStrLength);
+    	if(output.trim().equals(""))return pastString + fullLDTBetweenLDTs(fromDateTime, toDateTime).substring(fStrLength);
     	
     	return futureString + output;
     }
