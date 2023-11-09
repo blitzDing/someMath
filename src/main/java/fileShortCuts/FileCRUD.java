@@ -52,9 +52,9 @@ public class FileCRUD
 		fos.close();
 	}
 	
-	public static void saveText(String dir, String fileName, String textPayload) throws IOException
+	public static void saveText(String pathStr , String textPayload) throws IOException
 	{
-		File f = new File(dir+'/'+fileName);
+		File f = new File(pathStr);
 		FileWriter fw = new FileWriter(f);
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(textPayload);
@@ -64,10 +64,10 @@ public class FileCRUD
 		
 	}
 	
-	public static String loadText(String dir, String fileName) throws IOException
+	public static String loadText(String pathStr) throws IOException
 	{
 		
-		File f = new File(dir+'/'+fileName);
+		File f = new File(pathStr);
 		FileReader fr = new FileReader(f);
 		BufferedReader br = new BufferedReader(fr);
         
