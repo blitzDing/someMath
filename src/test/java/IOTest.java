@@ -1,5 +1,3 @@
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
@@ -38,8 +36,8 @@ class IOTest
 
 		System.out.println("Old Text: "+oldText);
 			
-		FileCRUD.saveText(dir, fileName1, oldText+'1');
-		String newText = FileCRUD.loadText(dir, fileName1);
+		FileCRUD.saveText(dir + fileName1, oldText+'1');
+		String newText = FileCRUD.loadText(dir + fileName1);
 			
 		System.out.println("New Text: "+newText);
 			
@@ -62,9 +60,9 @@ class IOTest
 		/* */assert(!file.exists());      /* */
 		/* ***********************************/
 		
-		FileCRUD.saveText(dir, fileName2, oldText+'2');
-		FileCRUD.saveText(dir, fileName3, oldText+'3');
-		FileCRUD.saveText(dir, fileName4, oldText+'4');
+		FileCRUD.saveText(dir + fileName2, oldText+'2');
+		FileCRUD.saveText(dir + fileName3, oldText+'3');
+		FileCRUD.saveText(dir + fileName4, oldText+'4');
 
 		Set<String> someFileNames = FileCRUD.areThereFilesOfThisSchema(dir, "^(" + fileNamePreFix+").*$");
 				

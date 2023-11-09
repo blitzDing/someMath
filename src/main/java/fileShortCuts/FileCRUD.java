@@ -16,8 +16,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /** The Goal is to make File Operations more readable. And if possible more concise */
 public class FileCRUD 
@@ -58,12 +56,16 @@ public class FileCRUD
 		FileWriter fw = new FileWriter(f);
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(textPayload);
-		
+
 		bw.close();
 		fw.close();
-		
 	}
-	
+
+	public static void saveText(Path path, String textPayload) throws IOException 
+	{
+		saveText(path.toAbsolutePath().toString(), textPayload);
+	}
+
 	public static String loadText(String pathStr) throws IOException
 	{
 		

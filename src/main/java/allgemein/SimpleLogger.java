@@ -10,25 +10,21 @@ import fileShortCuts.FileCRUD;
 public class SimpleLogger 
 {
 	
-	private final Path fileNameAndPath;
-	private final String fileName;
-	private final String fileDir;
+	private final Path path;
 	
 	private String sessionString = "";
 	
-	public SimpleLogger(Path fileNameAndPath) throws IOException
+	public SimpleLogger(Path path) throws IOException
 	{
 		
-		boolean isFile = fileNameAndPath.toFile().isFile();
+		boolean isFile = path.toFile().isFile();
 		if(!isFile)throw new IOException("This is not a file Path.");
 		
-		Path p = fileNameAndPath.getParent().toAbsolutePath();
+		Path p = path.getParent().toAbsolutePath();
 		if(p==null)throw new IOException("Argument got no Parent.");
 		if(!FileCRUD.isThereThisFolder(p))throw new IOException("No Folder of that Path");
 		
-		this.fileNameAndPath = fileNameAndPath;
-		this.fileName = fileNameAndPath.getFileName().toString();
-		this.fileDir = fileNameAndPath.getParent().toString();
+		this.path = path;
 	}
 	
 	public SimpleLogger(String fileNameAndPathStr) throws IOException
@@ -51,6 +47,6 @@ public class SimpleLogger
 	
 	public void saveLog() throws IOException
 	{
-		FileCRUD.saveText(fileDir, fileName, sessionString);;
+		FileCRUD.saveText(path, sessionString);;
 	}
 }
