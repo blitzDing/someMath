@@ -3,18 +3,39 @@ package allgemein;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-import fileShortCuts.LoadAndSave;
+import java.nio.file.Path;
+
+import fileShortCuts.FileCRUD;
 
 public class SimpleLogger 
 {
 	
+	private final Path fileNameAndPath;
 	private final String fileName;
+	private final String fileDir;
 	
-	String sessionString = "";
+	private String sessionString = "";
 	
-	public SimpleLogger(String fileName)
+	public SimpleLogger(Path fileNameAndPath) throws IOException
 	{
-		this.fileName = fileName;
+		
+		boolean isFile = fileNameAndPath.toFile().isFile();
+		if(!isFile)throw new IOException("This is not a file Path.");
+		
+		Path p = fileNameAndPath.getParent().toAbsolutePath();
+		if(p==null)throw new IOException("Argument got no Parent.");
+		if(!FileCRUD.isThereThisFolder(p))throw new IOException("No Folder of that Path");
+		
+		this.fileNameAndPath = fileNameAndPath;
+		this.fileName = fileNameAndPath.getFileName().toString();
+		this.fileDir = fileNameAndPath.getParent().toString();
+	}
+	
+	public SimpleLogger(String fileNameAndPathStr) throws IOException
+	{
+		
+		this(Path.of(fileNameAndPathStr));
+		
 		logNow("Log of LocalDateTime");
 	}
 	
@@ -28,8 +49,8 @@ public class SimpleLogger
 		log(msg, LocalDateTime.now());
 	}
 	
-	public void saveLog(String filePath) throws IOException
+	public void saveLog() throws IOException
 	{
-		LoadAndSave.saveText(filePath, fileName, sessionString);
+		FileCRUD.saveText(fileDir, fileName, sessionString);;
 	}
 }

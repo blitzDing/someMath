@@ -1,4 +1,4 @@
-package prototypeBasis;
+package javaFXTools;
 
 
 import javafx.scene.canvas.*;

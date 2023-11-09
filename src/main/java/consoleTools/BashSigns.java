@@ -1,4 +1,4 @@
-package jborg.gtdForBash;
+package consoleTools;
 
 public class BashSigns 
 {
