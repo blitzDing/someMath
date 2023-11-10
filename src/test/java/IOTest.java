@@ -6,7 +6,7 @@ import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 
-import fileShortCuts.FileCRUD;
+import fileShortCuts.TextAndObjSaveAndLoad;
 
 
 
@@ -26,8 +26,8 @@ class IOTest
 
 		System.out.println("Old Text: "+oldText);
 			
-		FileCRUD.saveText(dir + fileName1, oldText);
-		String newText = FileCRUD.loadText(dir + fileName1);
+		TextAndObjSaveAndLoad.saveText(dir + fileName1, oldText);
+		String newText = TextAndObjSaveAndLoad.loadText(dir + fileName1);
 			
 		System.out.println("New Text: "+newText);
 			

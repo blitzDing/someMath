@@ -16,7 +16,7 @@ import java.nio.file.Path;
 
 
 /** The Goal is to make File Operations more readable. And if possible more concise */
-public class FileCRUD 
+public class TextAndObjSaveAndLoad 
 {
 
 	public static Object loadObject(String pathStr) throws IOException, ClassNotFoundException

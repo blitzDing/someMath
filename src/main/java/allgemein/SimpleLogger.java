@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import fileShortCuts.FileCRUD;
+import fileShortCuts.TextAndObjSaveAndLoad;
 
 public class SimpleLogger 
 {
@@ -14,25 +14,20 @@ public class SimpleLogger
 	
 	private String sessionString = "";
 	
-	public SimpleLogger(Path path) throws IOException
+	public SimpleLogger(Path path, String msgHeadOfFile) throws IOException
 	{
-		
-		boolean isFile = path.toFile().isFile();
-		if(!isFile)throw new IOException("This is not a file Path.");
 		
 		Path p = path.getParent().toAbsolutePath();
 		if(p==null)throw new IOException("Argument got no Parent.");
 		if(!Files.exists(p))throw new IOException("No Folder of that Path");
 		
 		this.path = path;
+		logNow(msgHeadOfFile + "\nLog of LocalDateTime");
 	}
 	
-	public SimpleLogger(String fileNameAndPathStr) throws IOException
+	public SimpleLogger(String fileNameAndPathStr, String msgHeadOfFile) throws IOException
 	{
-		
-		this(Path.of(fileNameAndPathStr));
-		
-		logNow("Log of LocalDateTime");
+		this(Path.of(fileNameAndPathStr), msgHeadOfFile);
 	}
 	
 	public void log(String msg, LocalDateTime timeStamp)
@@ -47,6 +42,11 @@ public class SimpleLogger
 	
 	public void saveLog() throws IOException
 	{
-		FileCRUD.saveText(path, sessionString);;
+		TextAndObjSaveAndLoad.saveText(path, sessionString);;
+	}
+	
+	public String getSessionString()
+	{
+		return sessionString;
 	}
 }
