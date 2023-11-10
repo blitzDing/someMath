@@ -34,6 +34,11 @@ public class TextAndObjSaveAndLoad
 		return o;
 	}
 	
+	public static Object loadObject(Path path) throws IOException, ClassNotFoundException
+	{
+		return loadObject(path.toFile().getAbsolutePath());
+	}
+	
 	public static <O> void saveObject(String pathStr, O o) throws IOException
 	{
 		
@@ -46,6 +51,11 @@ public class TextAndObjSaveAndLoad
 		
 		oss.close();
 		fos.close();
+	}
+	
+	public static <O> void saveObject(Path path, O o) throws IOException
+	{
+		saveObject(path.toFile().getAbsolutePath(), o);
 	}
 	
 	public static void saveText(String pathStr , String textPayload) throws IOException
@@ -87,4 +97,9 @@ public class TextAndObjSaveAndLoad
         
         return output;
     }
+	
+	public static String loadText(Path path) throws IOException
+	{
+		return loadText(path.toFile().getAbsolutePath());
+	}
 }
