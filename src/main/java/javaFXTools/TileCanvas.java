@@ -41,4 +41,14 @@ public class TileCanvas
     public Canvas getCanvas(){return canvas;}
 
     public int getTileNr(){return tileNr;}
+    
+    public int getTileNrHorizontal()
+    {
+    	return tileNrHorizontal;
+    }
+    
+    public int getTileNrVertical()
+    {
+    	return tileNrVertical;
+    }
 }

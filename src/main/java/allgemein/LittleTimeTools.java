@@ -16,7 +16,7 @@ public class LittleTimeTools
     private static final int fStrLength = futureString.length();
     
     public static final String pastString = "In the Past: ";
-    private static final int pStrLength = pastString.length();
+    //private static final int pStrLength = pastString.length();
 
     public static String timeString(LocalDateTime ldt)
     {

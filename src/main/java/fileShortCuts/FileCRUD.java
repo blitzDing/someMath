@@ -3,7 +3,6 @@ package fileShortCuts;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -11,11 +10,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.file.Files;
+
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.Set;
+
+
 
 /** The Goal is to make File Operations more readable. And if possible more concise */
 public class FileCRUD 
@@ -86,91 +84,7 @@ public class FileCRUD
         
         fr.close();
         br.close();
-		return output;
-	}
-	
-	public static boolean isThereThisFile(Path path)
-	{
-		if(Files.exists(path) && (!Files.isDirectory(path)))return true;
-    	else return false;
-	}
-	
-	public static boolean isThereThisFile(String pathStr)
-    {
-          Path path = Paths.get(pathStr);
-          return isThereThisFile(path);
-    }
-
-	public static boolean isThereThisFolder(Path path)
-    {
-    	if(Files.exists(path) && Files.isDirectory(path))return true;
-    	else return false;
-    }
-    
-	public static boolean isThereThisFolder(String dir)
-    {
-		Path path = Paths.get(dir);
-		return isThereThisFolder(path);
-    }
-
-    public static boolean eraseFile(Path path) throws IOException
-    {
-    	if(Files.exists(path) && (!Files.isDirectory(path)))
-    	{
-    		Files.delete(path);
-    		return true;
-    	}
-    	else return false;
-    }
-
-    public static boolean eraseFile(String pathStr) throws IOException
-    {
-    	Path path = Paths.get(pathStr);
-    	return eraseFile(path);
-    }
-    
-    public static boolean eraseFolder(Path path) throws IOException
-    {
-    	if(Files.exists(path) && Files.isDirectory(path))
-    	{
-    		Files.delete(path);
-    		return true;
-    	}
-    	else return false;
-    }
-
-    public static boolean eraseFolder(String dir) throws IOException
-    {
-    	Path path = Paths.get(dir);
-    	return eraseFolder(path);
-    }
-    
-    public static Set<String> areThereFilesOfThisSchema(String dir, String regEx) throws IOException
-    {
-    	Path path = Paths.get(dir);
-    	return areThereFilesOfThisSchema(path, regEx);
-    }
-    
-    public static Set<String> areThereFilesOfThisSchema(Path path, String regEx) throws IOException
-    {
-    	Set<String> fileNames = new HashSet<>();
         
-        if(!(Files.exists(path) && Files.isDirectory(path))) throw new IOException("Folder doesn't exist. Or isn't a Folder!");
-
-        // Create a FileFilter using the provided regex pattern
-        FileFilter fileFilter = (file)->
-        {
-        	
-        	String fileName = file.getName();
-        	//Matcher matcher = pattern.matcher(file.getName());      
-        	if(fileName.toString().matches(regEx))fileNames.add(fileName);
-
-        	return true;
-        };
-        
-        // Get a list of files that match the regex pattern
-        path.toFile().listFiles(fileFilter);
-
-    	return fileNames;
+        return output;
     }
 }

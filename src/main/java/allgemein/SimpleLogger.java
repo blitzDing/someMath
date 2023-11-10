@@ -2,7 +2,7 @@ package allgemein;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import fileShortCuts.FileCRUD;
@@ -22,7 +22,7 @@ public class SimpleLogger
 		
 		Path p = path.getParent().toAbsolutePath();
 		if(p==null)throw new IOException("Argument got no Parent.");
-		if(!FileCRUD.isThereThisFolder(p))throw new IOException("No Folder of that Path");
+		if(!Files.exists(p))throw new IOException("No Folder of that Path");
 		
 		this.path = path;
 	}

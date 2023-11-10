@@ -5,7 +5,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -18,7 +17,6 @@ import java.time.LocalTime;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -238,12 +236,6 @@ public class Input
         vBox.getChildren().addAll(textLabel, cbx, okay);
         vBox.getStyleClass().add(styleClassNodeAlpha);
         
-        Consumer<KeyCode> consumer= (kc) ->
-        {
-            chosenOne[0] = cbx.getValue();
-            input.close();
-        };
-
         okay.setOnAction((event) ->
         {
             chosenOne[0] = cbx.getValue();
