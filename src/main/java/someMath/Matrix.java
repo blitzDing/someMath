@@ -7,7 +7,7 @@ import java.util.function.BiConsumer;
 //It is important that the values of Type E have a good overwritten toString Method. 
 //and the Type E must overwrite equals Too.
 //I'm looking for a way to enforce that E is of Type: "Mathematical Body."
-public class Matrix <E extends DivideableAndAddable<E>> implements DivideableAndAddable<Matrix<E>>
+public class Matrix<E extends SubtractableAndDivideable<E>> implements SubtractableAndDivideable<Matrix<E>>
 {
 
 	private final E valArr [][];
@@ -133,18 +133,9 @@ public class Matrix <E extends DivideableAndAddable<E>> implements DivideableAnd
 	{
 		return isQuadratic;
 	}
-
-	@Override
-	public Matrix<E> divideBy(Matrix<E> t) 
-	{
-		E e = valArr[0][0];//half dummy half neutralZero.
-		if(t==null||MatrixOps.getDeterminant(t)==e.getNeutralZero())throw new IllegalArgumentException("This Matrix can't be used to divide by.");
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	@Override
-	public Matrix<E> multiplyWith(Matrix<E> a)
+	public Matrix<E> multiplyWith(Matrix<E> a) throws InterfaceNumberException
 	{
 		
 		if(!(this.columns==a.rows)) throw new IllegalArgumentException("Can't Multiply these Matrixes.");
@@ -181,8 +172,15 @@ public class Matrix <E extends DivideableAndAddable<E>> implements DivideableAnd
 		
 		BiConsumer<Integer, Integer> bic = (n,m)->
 		{
-			if(n==m)listOfValues.add(someValue.getNeutralOne());
-			else listOfValues.add(someValue.getNeutralZero());
+			try
+			{
+				if(n==m)listOfValues.add(someValue.getNeutralOne());
+				else listOfValues.add(someValue.getNeutralZero());
+			}
+			catch (InterfaceNumberException e)
+			{
+				e.printStackTrace();
+			}
 		};
 		MatrixOps.walkThrouMatrix(this, bic); 
 		
@@ -204,8 +202,18 @@ public class Matrix <E extends DivideableAndAddable<E>> implements DivideableAnd
 		E[][] newValArr;
 		newValArr = (E[][]) new MultiplyableAndAddable[rows][columns];
 		
-		BiConsumer<Integer, Integer> bic = (n,m)-> 
-		newValArr[n][m] = valArr[n][m].addWith(a.valArr[n][m]);
+		BiConsumer<Integer, Integer> bic = (n,m)->
+		{
+			try
+			{
+				newValArr[n][m] = valArr[n][m].addWith(a.valArr[n][m]);
+			}
+			catch(InterfaceNumberException inexc)
+			{
+				inexc.printStackTrace();
+			}
+		};
+		
 		MatrixOps.walkThrouMatrix(this, bic);
 	
 		return new Matrix<E>(newValArr);
@@ -217,7 +225,17 @@ public class Matrix <E extends DivideableAndAddable<E>> implements DivideableAnd
 		List<E> listOfValues = new ArrayList<>();
 		E someValue = MatrixOps.rowAsList(this, 0).get(0);//I just need a value. Doesn't matter its State as long it isn't Null.
 		
-		BiConsumer<Integer, Integer> bic = (n,m)->listOfValues.add(someValue.getNeutralZero());
+		BiConsumer<Integer, Integer> bic = (n,m)->
+		{
+			try
+			{
+			listOfValues.add(someValue.getNeutralZero());
+			}
+			catch(InterfaceNumberException inexc)
+			{
+				inexc.printStackTrace();
+			}
+		};
 		MatrixOps.walkThrouMatrix(this, bic);
 
 		return new Matrix<E>(rows, columns, listOfValues);
@@ -225,13 +243,13 @@ public class Matrix <E extends DivideableAndAddable<E>> implements DivideableAnd
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Matrix<E> subtractArg(Matrix<E> a) 
+	public Matrix<E> subtract(Matrix<E> a)
 	{
 		E[][] newValArr;
 		newValArr = (E[][]) new MultiplyableAndAddable[rows][columns];
 		
 		BiConsumer<Integer, Integer> bic = (n,m)-> 
-		newValArr[n][m] = valArr[n][m].subtractArg(a.valArr[n][m]);
+		newValArr[n][m] = valArr[n][m].subtract(a.valArr[n][m]);
 		MatrixOps.walkThrouMatrix(this, bic);
 	
 		return new Matrix<E>(newValArr);
@@ -246,7 +264,7 @@ public class Matrix <E extends DivideableAndAddable<E>> implements DivideableAnd
 		return (Class<E>) e.getClass();
 	}
 	
-	public Set<E> getEigenvalues()
+	public Set<E> getEigenvalues() throws InterfaceNumberException
 	{
 		
 		if(!this.isQuadratic||this.rows!=2) throw new IllegalArgumentException("Can only calculate Eigenvalues for 2 by 2 Matrizies.");
@@ -258,10 +276,10 @@ public class Matrix <E extends DivideableAndAddable<E>> implements DivideableAnd
 		
 		E two = ainz.addWith(ainz);
 		E s = (a.addWith(d)).divideBy(two);
-		E r = s.multiplyWith(s).subtractArg(MatrixOps.getDeterminant(this));
+		E r = s.multiplyWith(s).subtract(MatrixOps.getDeterminant(this));
 		
 		E x1 = (s.addWith(SmallTools.getNthRoot(r, 2)));
-		E x2 = (s.subtractArg(SmallTools.getNthRoot(r, 2)));
+		E x2 = (s.subtract(SmallTools.getNthRoot(r, 2)));
 		Set<E> set = new HashSet<>();
 		set.add(x1);
 		set.add(x2);
@@ -294,5 +312,15 @@ public class Matrix <E extends DivideableAndAddable<E>> implements DivideableAnd
 	    MatrixOps.walkThrouMatrix(this, bic);
 	    
 	    return check[0];
+	}
+
+	@Override
+	public Matrix<E> divideBy(Matrix<E> t) throws InterfaceNumberException
+	{
+		
+		E e = (E) valArr[0][0];//half dummy half neutralZero.
+		if(t==null||MatrixOps.getDeterminant(t)==e.getNeutralZero())throw new IllegalArgumentException("This Matrix can't be used to divide by.");
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

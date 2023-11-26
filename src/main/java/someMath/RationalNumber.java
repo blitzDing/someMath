@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RationalNumber implements DivideableAndAddable<RationalNumber>
+public class RationalNumber implements Divideable<RationalNumber>, Subtractable<RationalNumber>
 {
 
 	public final int numerator;
@@ -309,7 +309,7 @@ public class RationalNumber implements DivideableAndAddable<RationalNumber>
 	}
 
 	@Override
-	public RationalNumber subtractArg(RationalNumber e) 
+	public RationalNumber subtract(RationalNumber e) 
 	{
 		
 		return new RationalNumber(!e.sign, e.integerPart, e.numerator, e.denominator);

@@ -1,7 +1,7 @@
 package someMath;
 
            //FMT=ForMathTools
-public class DoubleFMT implements DivideableAndAddable<DoubleFMT>
+public class DoubleFMT implements SubtractableAndDivideable<DoubleFMT>
 {
 	
 	public final Double value;
@@ -49,7 +49,7 @@ public class DoubleFMT implements DivideableAndAddable<DoubleFMT>
 
 
 	@Override
-	public DoubleFMT subtractArg(DoubleFMT e) 
+	public DoubleFMT subtract(DoubleFMT e) 
 	{
 		
 		return new DoubleFMT(this.value - e.value);

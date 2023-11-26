@@ -81,14 +81,14 @@ class ComplexNrDoubleTest
 		for(int n=0;n<6;n++)
 		{
 			ComplexNrDouble c = createRndmCNrQuadBounds(-3,3);
-			ComplexNrDouble d = c.subtractArg(c);
+			ComplexNrDouble d = c.subtract(c);
 			display("c", c);
 			display("c-c", d);
 					
 			assert(d.equals(c.getNeutralZero()));
 			
 			ComplexNrDouble ur = new ComplexNrDouble(0,0);
-			ComplexNrDouble minusC = ur.subtractArg(c);
+			ComplexNrDouble minusC = ur.subtract(c);
 			
 			assert(minusC.amount()==c.amount());
 		}
@@ -245,13 +245,13 @@ class ComplexNrDoubleTest
 			ComplexNrDouble d = c.divideBy(b);
 			display("d=c/b", d);
 			
-			ComplexNrDouble e = a.subtractArg(d);
+			ComplexNrDouble e = a.subtract(d);
 			display("e=a-d", e);
 
 			ComplexNrDouble f = a.divideBy(d);
 			display("f=a/d", f);
 
-			assert(Math.abs( a.subtractArg(d).amount() )  < prettySmall);
+			assert(Math.abs( a.subtract(d).amount() )  < prettySmall);
 			assert(Math.abs( a.divideBy(d).Arg() )  < prettySmall);
 			
 			System.out.println(a.Arg()+"\n");
@@ -386,7 +386,7 @@ class ComplexNrDoubleTest
 			ComplexNrDouble k = j.fromPolarToGaussEbene();
 			display("k=j'=z",k);
 			
-			ComplexNrDouble d=  z.subtractArg(k);
+			ComplexNrDouble d=  z.subtract(k);
 			display("z-k",d);
 			
 			assert(distance(k,z)<0.00000001);

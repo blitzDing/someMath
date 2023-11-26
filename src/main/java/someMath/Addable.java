@@ -11,9 +11,7 @@ public interface Addable<E>
 	
 	public boolean hasNeutralZero();
 	
-	public E addWith(E e);
+	public E addWith(E e) throws InterfaceNumberException;
 	
-	public E subtractArg(E e);//Careful if u have no inverse for every E.
-	
-	public E getNeutralZero();
+	public E getNeutralZero() throws InterfaceNumberException;
 }

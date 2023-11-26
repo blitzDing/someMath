@@ -129,7 +129,7 @@ public class SmallTools
 		return (a*b)/gcd(a,b);
 	}
 	
-	public static <T extends DivideableAndAddable<T>> T getNthPotenz(T basis, int exponent)
+	public static <T extends SubtractableAndDivideable<T>> T getNthPotenz(T basis, int exponent) throws InterfaceNumberException
 	{
 		
 		if(exponent<0)
@@ -148,7 +148,7 @@ public class SmallTools
 		return potenz;
 	}
 	
-	public static <T extends DivideableAndAddable<T>> T getNthRoot(T basis, int root)
+	public static <T extends SubtractableAndDivideable<T>> T getNthRoot(T basis, int root) throws InterfaceNumberException
 	{
 		if(!basis.hasNeutralOne())throw new IllegalArgumentException("Can't do root without a neutral One.");
 		if(root==0)throw new IllegalArgumentException("Can't do Zero's root.");

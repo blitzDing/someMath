@@ -7,7 +7,7 @@ import java.util.function.BiConsumer;
 public class MatrixOps 
 {
 
-	public static <A extends DivideableAndAddable<A>> void walkThrouMatrix(Matrix<A> matrix, BiConsumer<Integer, Integer> bic)
+	public static <A extends SubtractableAndDivideable<A>> void walkThrouMatrix(Matrix<A> matrix, BiConsumer<Integer, Integer> bic)
 	{
 		
 		for(int n=0;n<matrix.getRows();n++)
@@ -19,8 +19,7 @@ public class MatrixOps
 		}
 	}
 	
-	public static <A extends DivideableAndAddable<A>> 
-	Matrix<A> subMatrixOfElement(Matrix<A> matrix, int row, int column)
+	public static <A extends SubtractableAndDivideable<A>> Matrix<A> subMatrixOfElement(Matrix<A> matrix, int row, int column)
 	{
 		
 		List<A> list = new ArrayList<>();
@@ -30,14 +29,13 @@ public class MatrixOps
 		return new Matrix<A>(matrix.getRows()-1,matrix.getColumns()-1,list);
 	}
 	
-	private static <A extends DivideableAndAddable<A>> 
-	A developeDet(Matrix<A> matrix, int i, boolean doDevelopeByRow)
+	private static <A extends SubtractableAndDivideable<A>> A developeDet(Matrix<A> matrix, int i, boolean doDevelopeByRow) throws InterfaceNumberException
 	{
 
 		List<A> list = rowAsList(matrix, i);;
 		
 		A a = CollectionManipulation.catchRandomElementOfList(list);
-		A value = a.getNeutralZero();
+		A value = (A) a.getNeutralZero();
 		A factor;
 
 		if(doDevelopeByRow)//develops By Row i.
@@ -47,7 +45,7 @@ public class MatrixOps
 				
 				Matrix<A> subM = subMatrixOfElement(matrix, i, n);
 
-				if((n+i)%2==1)factor= a.getNeutralZero().subtractArg(a.getNeutralOne());
+				if((n+i)%2==1)factor= a.getNeutralZero().subtract(a.getNeutralOne());
 				else factor = a.getNeutralOne();
 				
 				value = value
@@ -65,7 +63,7 @@ public class MatrixOps
 
 				Matrix<A> subM = subMatrixOfElement(matrix, m,i);
 
-				if((m+i)%2==1)factor= a.getNeutralZero().subtractArg(a.getNeutralOne());
+				if((m+i)%2==1)factor= a.getNeutralZero().subtract(a.getNeutralOne());
 				else factor = a.getNeutralOne();
 				
 				value = value.addWith(factor.multiplyWith(list.get(m).multiplyWith(getDeterminant(subM))));
@@ -74,7 +72,7 @@ public class MatrixOps
 		return value;
 	}
 
-	public static <A extends DivideableAndAddable<A>> List<A> columnAsList(Matrix<A> matrix, int i)
+	public static <A extends SubtractableAndDivideable<A>> List<A> columnAsList(Matrix<A> matrix, int i)
 	{
 		
 
@@ -87,7 +85,7 @@ public class MatrixOps
 		return list;
 	}
 
-	public static <A extends DivideableAndAddable<A>> List<A> rowAsList(Matrix<A> matrix, int i)
+	public static <A extends SubtractableAndDivideable<A>> List<A> rowAsList(Matrix<A> matrix, int i)
 	{
 		
 		List<A> list = new ArrayList<>();
@@ -99,7 +97,7 @@ public class MatrixOps
 		return list;
 	}
 
-	public static <E extends DivideableAndAddable<E>> Matrix<E> swapedRows(Matrix<E> matrix, int a, int b)
+	public static <E extends SubtractableAndDivideable<E>> Matrix<E> swapedRows(Matrix<E> matrix, int a, int b)
 	{
 		
 		int rows = matrix.getRows();
@@ -119,7 +117,7 @@ public class MatrixOps
 		return new Matrix<E>(newValArr);
 	}
 	
-	public static <E extends DivideableAndAddable<E>> Matrix<E> swapedColumns(Matrix<E> matrix, int a, int b)
+	public static <E extends SubtractableAndDivideable<E>> Matrix<E> swapedColumns(Matrix<E> matrix, int a, int b)
 	{
 		
 		int rows = matrix.getRows();
@@ -140,7 +138,7 @@ public class MatrixOps
 	}
 
 
-	public static <E extends DivideableAndAddable<E>> Matrix<E> transponedMatrix(Matrix<E> matrix)
+	public static <E extends SubtractableAndDivideable<E>> Matrix<E> transponedMatrix(Matrix<E> matrix)
 	{	
 		//Switched indices in 2 lines here.
 	
@@ -162,7 +160,7 @@ public class MatrixOps
 		return new Matrix<E>(newValArr);		
 	}
 
-	public static <X extends DivideableAndAddable<X>> X getDeterminant(Matrix<X> matrix)
+	public static <X extends SubtractableAndDivideable<X>> X getDeterminant(Matrix<X> matrix) throws InterfaceNumberException
 	{
 		
 		int rows = matrix.getRows();
@@ -180,7 +178,7 @@ public class MatrixOps
 			X d1 = a.multiplyWith(d);
 			X d2 = b.multiplyWith(c);
 			
-			return d1.subtractArg(d2);
+			return d1.subtract(d2);
 		}
 
 		if(rows>2)

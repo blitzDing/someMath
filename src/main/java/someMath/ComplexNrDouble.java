@@ -3,7 +3,7 @@ package someMath;
 import java.util.Objects;
 
 
-public class ComplexNrDouble implements DivideableAndAddable<ComplexNrDouble>
+public class ComplexNrDouble implements SubtractableAndDivideable<ComplexNrDouble>
 {
 
 	private final double real;
@@ -66,7 +66,7 @@ public class ComplexNrDouble implements DivideableAndAddable<ComplexNrDouble>
 	public double getImaginaryPart() {return imaginary;}
 	
 	@Override
-	public ComplexNrDouble subtractArg(ComplexNrDouble e) 
+	public ComplexNrDouble subtract(ComplexNrDouble e) 
 	{
 		
 		return new ComplexNrDouble(this.real - e.real, this.imaginary - e.imaginary);

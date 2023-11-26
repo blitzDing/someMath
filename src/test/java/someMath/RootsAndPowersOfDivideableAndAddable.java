@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class RootsAndPowersOfDivideableAndAddable {
 
 	@Test
-	void test() 
+	void test() throws InterfaceNumberException 
 	{
 		ComplexNrDouble cnd = new ComplexNrDouble(0, 1);
 		ComplexNrDouble t = SmallTools.getNthPotenz(cnd, 2);
