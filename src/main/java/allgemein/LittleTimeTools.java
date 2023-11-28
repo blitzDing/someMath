@@ -3,9 +3,9 @@ package allgemein;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Period;
+
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+
 
 public class LittleTimeTools 
 {
@@ -13,10 +13,6 @@ public class LittleTimeTools
     public static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     
     public static final String futureString = "In the Future: ";
-    private static final int fStrLength = futureString.length();
-    
-    public static final String pastString = "In the Past: ";
-    //private static final int pStrLength = pastString.length();
 
     public static String timeString(LocalDateTime ldt)
     {

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+
+import javafx.util.Pair;
 import someMath.*;
 
 /**
@@ -158,88 +160,52 @@ public class ExactPeriode
 		return new ExactPeriode(fromLDT, newToLDT);
 	}
 		
-	public int getAbsoluteDays()
+	public int getAbsoluteDays() throws InterfaceNumberException
 	{
-		LocalDateTime fromLDTTemp;
-		LocalDateTime toLDTTemp;
-		
-		if(fromLDT.isBefore(toLDT)) 
-		{
-			fromLDTTemp = fromLDT;
-			toLDTTemp = toLDT;
-		}
-		else
-		{
-			
-			toLDTTemp = fromLDT;
-			fromLDTTemp = toLDT;
-		}
+		Pair<LocalDateTime, LocalDateTime> pair = flipWhenNegative(fromLDT, toLDT);
+		LocalDateTime fromLDTTemp = pair.getKey();
+		LocalDateTime toLDTTemp = pair.getValue();
 			
 		return (int) fromLDTTemp.until( toLDTTemp, ChronoUnit.DAYS );
 
 	}
 	
-	public int getAbsoluteHours()
+	public int getAbsoluteHours() throws InterfaceNumberException
 	{
 
-		LocalDateTime fromLDTTemp;
-		LocalDateTime toLDTTemp;
 		
-		if(fromLDT.isBefore(toLDT)) 
-		{
-			fromLDTTemp = fromLDT;
-			toLDTTemp = toLDT;
-		}
-		else
-		{
-			
-			toLDTTemp = fromLDT;
-			fromLDTTemp = toLDT;
-		}
+		Pair<LocalDateTime, LocalDateTime> pair = flipWhenNegative(fromLDT, toLDT);
+		LocalDateTime fromLDTTemp = pair.getKey();
+		LocalDateTime toLDTTemp = pair.getValue();
 
 		
 		return (int) fromLDTTemp.until( toLDTTemp, ChronoUnit.HOURS );
 	}
 	
-	public int getAbsoluteMinutes()
+	public int getAbsoluteMinutes() throws InterfaceNumberException
 	{
-		LocalDateTime fromLDTTemp;
-		LocalDateTime toLDTTemp;
-		
-		if(fromLDT.isBefore(toLDT)) 
-		{
-			fromLDTTemp = fromLDT;
-			toLDTTemp = toLDT;
-		}
-		else
-		{
-			
-			toLDTTemp = fromLDT;
-			fromLDTTemp = toLDT;
-		}
+		Pair<LocalDateTime, LocalDateTime> pair = flipWhenNegative(fromLDT, toLDT);
+		LocalDateTime fromLDTTemp = pair.getKey();
+		LocalDateTime toLDTTemp = pair.getValue();
 
 		
 		return (int) fromLDTTemp.until( toLDTTemp, ChronoUnit.MINUTES );
 	}
 	
-	public int getAbsoluteSeconds()
+	public int getAbsoluteSeconds() throws InterfaceNumberException
 	{
-		LocalDateTime fromLDTTemp;
-		LocalDateTime toLDTTemp;
 		
-		if(fromLDT.isBefore(toLDT)) 
-		{
-			fromLDTTemp = fromLDT;
-			toLDTTemp = toLDT;
-		}
-		else
-		{
-			
-			toLDTTemp = fromLDT;
-			fromLDTTemp = toLDT;
-		}
-
+		Pair<LocalDateTime, LocalDateTime> pair = flipWhenNegative(fromLDT, toLDT);
+		LocalDateTime fromLDTTemp = pair.getKey();
+		LocalDateTime toLDTTemp = pair.getValue();
+		
 		return (int) fromLDTTemp.until( toLDTTemp, ChronoUnit.SECONDS );
+	}
+	
+	public Pair<LocalDateTime, LocalDateTime> flipWhenNegative(LocalDateTime fromLDT, LocalDateTime toLDT) throws InterfaceNumberException
+	{
+		if(new ExactPeriode(fromLDT, toLDT).isNegative)return new Pair<LocalDateTime, LocalDateTime>(toLDT, fromLDT);
+		else return new Pair<LocalDateTime, LocalDateTime>(fromLDT, toLDT);
 	}
 	
 	public NaturalNumber getYears()

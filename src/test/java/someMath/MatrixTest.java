@@ -9,10 +9,6 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import someMath.DoubleFMT;
-import someMath.Matrix;
-import someMath.MatrixOps;
-
 public class MatrixTest
 {
 
