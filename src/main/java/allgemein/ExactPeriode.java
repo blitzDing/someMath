@@ -34,12 +34,19 @@ public class ExactPeriode
 	public ExactPeriode(LocalDateTime fromLDT, LocalDateTime toLDT) throws InterfaceNumberException
 	{
 
-		this.fromLDT = fromLDT;
-		this.toLDT = toLDT;
+		LocalDate fromLD = fromLDT.toLocalDate();
+		LocalTime fromTime = fromLDT.toLocalTime();
+		
+		this.fromLDT = LocalDateTime.of(fromLD, fromTime);//To ensure Immutability.
+		
+		LocalDate toLD = toLDT.toLocalDate();
+		LocalTime toTime = toLDT.toLocalTime();
+		
+		this.toLDT = LocalDateTime.of(toLD, toTime);//To ensure Immutability.
 		
     	/*
 			Nikolai Shevchenko's Code. StackOverFlow.
-			Little Modification. No Zero's.
+			Among other Modifications: No Zero's.
 		*/
     	
     	LocalDateTime fromLDTTemp;
