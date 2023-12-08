@@ -6,6 +6,7 @@ import allgemein.LittleTimeTools;
 
 import org.junit.jupiter.api.BeforeEach;
 
+import consoleTools.InputArgumentException;
 import consoleTools.InputStreamSession;
 
 import java.io.ByteArrayInputStream;
@@ -45,7 +46,7 @@ class InputTests
 	}
 	
 	@Test
-	void testGetDateTime()
+	void testGetDateTime() throws InputArgumentException
 	{
 		int hour = 0;
 		int minute = 0;

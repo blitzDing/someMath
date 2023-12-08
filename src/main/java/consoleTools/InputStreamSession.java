@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.Year;
-import java.util.InputMismatchException;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -76,7 +76,7 @@ public class InputStreamSession
 		scanner = new Scanner(is);
 	}
 	
-	public boolean getYesOrNo(String qPhrase) throws IOException, InputMismatchException
+	public boolean getYesOrNo(String qPhrase) throws IOException, InputArgumentException
 	{
 
 		System.out.println(qPhrase);
@@ -86,7 +86,7 @@ public class InputStreamSession
 		if(s.equals(ja+"")||s.equals(yes)) return true;
 		if(s.equals(nein+"")||s.equals(no)) return false;
 		
-		throw new InputMismatchException(dontUnderstandTheAnswer);
+		throw new InputArgumentException(dontUnderstandTheAnswer);
 	}
 	
 	public String getString(String qPhrase)
@@ -98,7 +98,7 @@ public class InputStreamSession
 		return s;
 	}
 
-	public int getNrInput(String qPhrase, int startOfValideInput, int range)
+	public int getNrInput(String qPhrase, int startOfValideInput, int range) throws InputArgumentException
 	{
 		
 		int max = startOfValideInput+range;
@@ -108,13 +108,13 @@ public class InputStreamSession
 		
 		int n = 0;
 		if(s.trim().matches("[0-9]+"))n=Integer.parseInt(s.trim());
-		else throw new IllegalArgumentException(noNumber);
+		else throw new InputArgumentException(noNumber);
 		
 		if(n>=startOfValideInput&&n<=max) return n;
-		else throw new IllegalArgumentException(answerOutOfBounds);
+		else throw new InputArgumentException(answerOutOfBounds);
 	}
 	
-	public String getAnswerOutOfList(String phrase, List<String> answerList) throws InputMismatchException, IOException
+	public String getAnswerOutOfList(String phrase, List<String> answerList) throws IOException, InputArgumentException
 	{
 
 		if(answerList.isEmpty()||answerList.contains(null))throw new IllegalArgumentException(answerListBad);
@@ -133,7 +133,7 @@ public class InputStreamSession
 	}
 	
 	
-	public LocalDate getDate(String qPhrase, LocalDate begin, LocalDate end) throws IOException
+	public LocalDate getDate(String qPhrase, LocalDate begin, LocalDate end) throws IOException, InputArgumentException
 	{
 		
 		
@@ -156,7 +156,7 @@ public class InputStreamSession
 		return ld;
 	}
 	
-	public LocalTime getTime(String qPhrase, LocalTime begin, LocalTime end) throws IOException
+	public LocalTime getTime(String qPhrase, LocalTime begin, LocalTime end) throws IOException, InputArgumentException
 	{
 		
 		
@@ -167,14 +167,14 @@ public class InputStreamSession
 		
 		LocalTime gatheredTime = LocalTime.of(hour, minute);
 		
-		if(gatheredTime.isBefore(begin))throw new IllegalArgumentException(gatheredTimeOutOfBounds);
+		if(gatheredTime.isBefore(begin))throw new InputArgumentException(gatheredTimeOutOfBounds);
 		
-		if(gatheredTime.isAfter(end))throw new IllegalArgumentException(gatheredTimeOutOfBounds);
+		if(gatheredTime.isAfter(end))throw new InputArgumentException(gatheredTimeOutOfBounds);
 		
 		return gatheredTime;
 	}
 			
-	public LocalDateTime getDateTime(String qPhrase, LocalDateTime begin, LocalDateTime end) throws IOException
+	public LocalDateTime getDateTime(String qPhrase, LocalDateTime begin, LocalDateTime end) throws IOException, InputArgumentException
 	{
 
 		
@@ -193,7 +193,7 @@ public class InputStreamSession
 		String endStr = LittleTimeTools.timeString(end);
 		
 		LocalDateTime ldt = LocalDateTime.of(ld, lt);
-		if(ldt.isBefore(begin)|| ldt.isAfter(end))throw new IllegalArgumentException(beginStr + " to " + endStr + dateTimeOutOfBounds);
+		if(ldt.isBefore(begin)|| ldt.isAfter(end))throw new InputArgumentException(beginStr + " to " + endStr + dateTimeOutOfBounds);
 	
 		return ldt;
 	}
