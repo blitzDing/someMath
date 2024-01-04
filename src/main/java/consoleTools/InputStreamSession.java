@@ -18,7 +18,7 @@ import allgemein.LittleTimeTools;
 public class InputStreamSession
 {
 
-	Map<String, Month> monthMap = Map.ofEntries(
+	public static final Map<String, Month> monthMap = Map.ofEntries(
 			  new AbstractMap.SimpleEntry<String, Month>("JAN", Month.JANUARY),
 			  new AbstractMap.SimpleEntry<String, Month>("FEB", Month.FEBRUARY),
 			  new AbstractMap.SimpleEntry<String, Month>("MAR", Month.MARCH),
