@@ -7,14 +7,31 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.Year;
-
+import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import allgemein.LittleTimeTools;
 
 public class InputStreamSession
 {
+
+	Map<String, Month> monthMap = Map.ofEntries(
+			  new AbstractMap.SimpleEntry<String, Month>("JAN", Month.JANUARY),
+			  new AbstractMap.SimpleEntry<String, Month>("FEB", Month.FEBRUARY),
+			  new AbstractMap.SimpleEntry<String, Month>("MAR", Month.MARCH),
+			  new AbstractMap.SimpleEntry<String, Month>("APR", Month.APRIL),
+			  new AbstractMap.SimpleEntry<String, Month>("MAY", Month.MAY),
+			  new AbstractMap.SimpleEntry<String, Month>("JUN", Month.JUNE),
+			  new AbstractMap.SimpleEntry<String, Month>("JUL", Month.JULY),
+			  new AbstractMap.SimpleEntry<String, Month>("AUG", Month.AUGUST),
+			  new AbstractMap.SimpleEntry<String, Month>("SEP", Month.SEPTEMBER),
+			  new AbstractMap.SimpleEntry<String, Month>("OCT", Month.OCTOBER),
+			  new AbstractMap.SimpleEntry<String, Month>("NOV", Month.NOVEMBER),
+			  new AbstractMap.SimpleEntry<String, Month>("DEC", Month.DECEMBER)				  
+			);
 
 	final static int minYear = 0;
 	
@@ -197,4 +214,49 @@ public class InputStreamSession
 	
 		return ldt;
 	}
+	
+	public LocalDateTime getDateTimeInOneLine(String phrase, LocalDateTime begin, LocalDateTime end) throws InputArgumentException
+	{
+		
+		
+		LocalDateTime ldt = null;
+		String answer = getString(phrase);
+		answer = answer.trim();
+		String pattern = "(\\d+){2}([A-Z]+){3}(\\d+){4}T(\\d+){2}\\:(\\d+){2}";
+		if(!answer.matches(pattern))throw new InputArgumentException("That answer doesn't fit pattern: DDMMMYYYYTHH:MM");
+		
+		String dayNr = answer.substring(0, 2);
+		if(dayNr.startsWith("0"))dayNr = dayNr.substring(1);
+		
+		int day = Integer.parseInt(dayNr);
+		if(day>31)throw new InputArgumentException("UnknownDay of Month.");
+		
+		String month = answer.substring(2, 5);
+		if(!monthMap.containsKey(month))throw new InputArgumentException("Unknown Month.");
+		Month m = monthMap.get(month);
+		
+		String year = answer.substring(5, 9);
+		while(year.startsWith("0"))year = year.substring(1);
+		int jahr = Integer.parseInt(year);
+		
+		String hour = answer.substring(10, 12);
+		if(hour.startsWith("0"))hour = hour.substring(1);
+		int stunde = Integer.parseInt(hour);
+		if(stunde>23)throw new InputArgumentException("Unknown Hour.");
+		
+		String minute = answer.substring(13, 15);
+		if(minute.startsWith("0"))minute = minute.substring(1);
+		int minuteMinute = Integer.parseInt(minute);
+		if(minuteMinute>59)throw new InputArgumentException("Unknown Minute.");
+		
+		LocalDate ld = LocalDate.of(jahr, m, day);
+		LocalTime lt = LocalTime.of(stunde, minuteMinute);
+		ldt = LocalDateTime.of(ld, lt);
+		
+		return ldt;
+	}
+	
+	
+	
+	
 }

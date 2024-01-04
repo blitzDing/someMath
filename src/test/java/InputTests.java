@@ -69,4 +69,23 @@ class InputTests
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	void testGetDateTimeInOneLine() throws InputArgumentException
+	{
+		int hour = 0;
+		int minute = 0;
+		String year = "0002";
+		String month = "JAN";
+		int day = 6;
+		String lines = "0" + day + month + year + "T" + "00" + ":" + "00"+ "\n";
+		
+		ByteArrayInputStream is = new ByteArrayInputStream(lines.getBytes());
+		InputStreamSession inTaker = new InputStreamSession(is);
+
+		LocalDateTime ldt;
+		ldt = inTaker.getDateTimeInOneLine("hi", ancient, ancient.plusDays(8));
+		assert(ldt.isAfter(ancient)&&ldt.isBefore(ancient.plusDays(8)));
+	}
+
 }
