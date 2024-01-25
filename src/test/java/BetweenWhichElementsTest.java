@@ -5,13 +5,14 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import javafx.util.Pair;
+import someMath.CollectionException;
 import someMath.CollectionManipulation;
 
 public class BetweenWhichElementsTest 
 {
 
 	@Test
-	public void testTheLayers() 
+	public void testTheLayers() throws CollectionException 
 	{
 		List<Pair<Character, Double>> list = new ArrayList<>( Arrays.asList
 			(

@@ -2,6 +2,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import someMath.CollectionException;
 import someMath.CollectionManipulation;
 import someMath.ComplexNrDouble;
 import someMath.PolynomSolver;
@@ -10,7 +11,7 @@ public class PolynomSolverTest
 {
 
 	@Test
-	public void testSolver()
+	public void testSolver() throws CollectionException
 	{
 		
 		//equals x²+2 = 0.

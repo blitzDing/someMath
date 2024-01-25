@@ -264,7 +264,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 		return (Class<E>) e.getClass();
 	}
 	
-	public Set<E> getEigenvalues() throws InterfaceNumberException
+	public Set<E> getEigenvalues() throws InterfaceNumberException, CollectionException
 	{
 		
 		if(!this.isQuadratic||this.rows!=2) throw new IllegalArgumentException("Can only calculate Eigenvalues for 2 by 2 Matrizies.");
@@ -315,7 +315,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 	}
 
 	@Override
-	public Matrix<E> divideBy(Matrix<E> t) throws InterfaceNumberException
+	public Matrix<E> divideBy(Matrix<E> t) throws InterfaceNumberException, CollectionException
 	{
 		
 		E e = (E) valArr[0][0];//half dummy half neutralZero.

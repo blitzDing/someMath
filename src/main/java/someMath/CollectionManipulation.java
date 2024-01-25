@@ -11,8 +11,11 @@ import javafx.util.Pair;
 public class CollectionManipulation 
 {
 
-	public static List<Double> sumUpToIndex(List<Double> layers)
+	public static List<Double> sumUpToIndex(List<Double> layers) throws CollectionException
 	{
+
+		if(layers==null)throw new CollectionException("List is empty.");
+
 		int nrOfLayers = layers.size();
 		List<Double> sumList = new ArrayList<>();
 		sumList.add(layers.get(0));
@@ -26,15 +29,19 @@ public class CollectionManipulation
 		return sumList;
 	}
 	
-	public static double randomNrBoundBetween(List<Double> layers)
+	public static double randomNrBoundBetween(List<Double> layers) throws CollectionException
 	{
+		if(layers==null)throw new CollectionException("List is empty.");
+
 		double sum = layers.stream().reduce(0.0, Double::sum);
 		
 		return Math.random()*sum;
 	}
 	
-	public static <A> int  betweenWhichElements(double betweener, List<Pair<A, Double>> layers)
+	public static <A> int  betweenWhichElements(double betweener, List<Pair<A, Double>> layers) throws CollectionException
 	{
+		
+		if(layers==null)throw new CollectionException("List is empty.");
 		
 		int nrOfLayers = layers.size();
 		if(betweener<=0)return -1;//Before the first Layer.
@@ -57,8 +64,10 @@ public class CollectionManipulation
 		throw new IllegalArgumentException("Something is Wrong.");
 	}
 	
-	public static <A> List<Double> getRidOfTheGeneric(List<Pair<A, Double>> layers)
+	public static <A> List<Double> getRidOfTheGeneric(List<Pair<A, Double>> layers) throws CollectionException
 	{
+		
+		if(layers==null)throw new CollectionException("List is Null.");
 		
 		int nrOfLayers = layers.size();
 		
@@ -71,16 +80,20 @@ public class CollectionManipulation
 		return upStacking;
 	}
 
-	public static <T> T catchRandomElementOfSet(Set<T> set)
+	public static <T> T catchRandomElementOfSet(Set<T> set) throws CollectionException
 	{
+		
+		if(set==null||set.isEmpty())throw new CollectionException("Set is empty or Null.");
 		
 		List<T> list = new ArrayList<>(set);
 		
 		return catchRandomElementOfList(list);
 	}
 	
-	public static <T> T catchRandomElementOfList(List<T> list)
+	public static <T> T catchRandomElementOfList(List<T> list) throws CollectionException
 	{
+		
+		if(list==null||list.isEmpty())throw new CollectionException("List is empty or Null.");
 		
 		int n = list.size();
 		int r = (int)(Math.random()*n);
@@ -88,9 +101,11 @@ public class CollectionManipulation
 		return list.get(r);
 	}
 	
-	public static <T> Set<List<T>> cartesianProduct(List<Set<T>> input)
+	public static <T> Set<List<T>> cartesianProduct(List<Set<T>> input) throws CollectionException
 	{
 		
+		if(input==null)throw new CollectionException("List is Null.");
+
 		Set<List<T>> output = new HashSet<>();
 		int s = input.size();
 		

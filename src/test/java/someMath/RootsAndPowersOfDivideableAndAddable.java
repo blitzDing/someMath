@@ -3,10 +3,11 @@ package someMath;
 
 import org.junit.jupiter.api.Test;
 
-class RootsAndPowersOfDivideableAndAddable {
+class RootsAndPowersOfDivideableAndAddable
+{
 
 	@Test
-	void test() throws InterfaceNumberException 
+	void test() throws InterfaceNumberException, CollectionException 
 	{
 		ComplexNrDouble cnd = new ComplexNrDouble(0, 1);
 		ComplexNrDouble t = SmallTools.getNthPotenz(cnd, 2);

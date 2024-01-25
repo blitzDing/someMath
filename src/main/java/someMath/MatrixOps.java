@@ -29,7 +29,7 @@ public class MatrixOps
 		return new Matrix<A>(matrix.getRows()-1,matrix.getColumns()-1,list);
 	}
 	
-	private static <A extends SubtractableAndDivideable<A>> A developeDet(Matrix<A> matrix, int i, boolean doDevelopeByRow) throws InterfaceNumberException
+	private static <A extends SubtractableAndDivideable<A>> A developeDet(Matrix<A> matrix, int i, boolean doDevelopeByRow) throws InterfaceNumberException, CollectionException
 	{
 
 		List<A> list = rowAsList(matrix, i);;
@@ -160,7 +160,7 @@ public class MatrixOps
 		return new Matrix<E>(newValArr);		
 	}
 
-	public static <X extends SubtractableAndDivideable<X>> X getDeterminant(Matrix<X> matrix) throws InterfaceNumberException
+	public static <X extends SubtractableAndDivideable<X>> X getDeterminant(Matrix<X> matrix) throws InterfaceNumberException, CollectionException
 	{
 		
 		int rows = matrix.getRows();

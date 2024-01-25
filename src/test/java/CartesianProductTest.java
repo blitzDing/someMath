@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
+import someMath.CollectionException;
 import someMath.CollectionManipulation;
 
 
@@ -12,7 +13,7 @@ public class CartesianProductTest
 {
 
 	@Test
-	public void testProducts() 
+	public void testProducts() throws CollectionException 
 	{
 		
 
