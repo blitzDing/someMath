@@ -7,7 +7,7 @@ class RootsAndPowersOfDivideableAndAddable
 {
 
 	@Test
-	void test() throws InterfaceNumberException, CollectionException 
+	void test() throws Exception 
 	{
 		ComplexNrDouble cnd = new ComplexNrDouble(0, 1);
 		ComplexNrDouble t = SmallTools.getNthPotenz(cnd, 2);

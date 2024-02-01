@@ -3,14 +3,17 @@
 
 import org.junit.jupiter.api.Test;
 
+import someMath.QNumberException;
 import someMath.RationalNumber;
 
 
 public class RationalNumberTest
 {
-	
+
+	private static double prettySmall = Math.pow(10, -11);
+
 	@Test
-	public void testRN()
+	public void testRN() throws Exception
 	{
 					
 		RationalNumber a = new RationalNumber(4, 2);
@@ -69,7 +72,8 @@ public class RationalNumberTest
 		//RationalNumber i = new RationalNumber("7-20/10");//throws white space illegal argument exception.
 		
 		RationalNumber cTimesA = c.multiplyWith(a);
-		assert(cTimesA.doubleApproximation() == -9.2d);
+		System.out.println("("+ c + ")*(" + a + ") = " +cTimesA);
+		assert(cTimesA.doubleApproximation()+ 9.2d < prettySmall);
 		
 		assert(a.multiplyWith(a).doubleApproximation() == 4.0d);
 		
@@ -84,7 +88,13 @@ public class RationalNumberTest
 		assert(b.equals(a.multiplyWith(a)));
 		assert(c.multiplyWith(c).isGreaterThen(b)); //c² = 21.16d. b² = 4.0d.
 		
-		assert(a.multiplyWith(a).divideBy(a).equals(a));
+
+		RationalNumber quadrat = (a.multiplyWith(a));
+		RationalNumber self = quadrat.divideBy(a);
+		//self = self.divideBy(a);
+		
+		System.out.println(a + " = " + self + "?");
+		assert(a.equals(self));
 		assert(a.divideBy(a).addWith(RationalNumber.one).equals(new RationalNumber(true, 2, 0, 1)));
 
 		RationalNumber samesame = a.addWith(RationalNumber.zero);

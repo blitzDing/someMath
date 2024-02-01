@@ -148,7 +148,7 @@ public class SmallTools
 		return potenz;
 	}
 	
-	public static <T extends SubtractableAndDivideable<T>> T getNthRoot(T basis, int root) throws InterfaceNumberException, CollectionException
+	public static <T extends SubtractableAndDivideable<T>> T getNthRoot(T basis, int root) throws Exception
 	{
 		if(!basis.hasNeutralOne())throw new IllegalArgumentException("Can't do root without a neutral One.");
 		if(root==0)throw new IllegalArgumentException("Can't do Zero's root.");

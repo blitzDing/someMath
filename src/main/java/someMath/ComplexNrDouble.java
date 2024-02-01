@@ -43,6 +43,7 @@ public class ComplexNrDouble implements SubtractableAndDivideable<ComplexNrDoubl
 		return new ComplexNrDouble(newReal, newImaginary);
 	}
 
+	@Override
 	public ComplexNrDouble divideBy(ComplexNrDouble e)
 	{
 

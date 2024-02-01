@@ -13,7 +13,7 @@ public class MatrixTest
 {
 
 	@Test
-	public void testMatrizen() throws InterfaceNumberException, CollectionException 
+	public void testMatrizen() throws Exception 
 	{
 	
 		DoubleFMT[][]fValues = new DoubleFMT[2][2];

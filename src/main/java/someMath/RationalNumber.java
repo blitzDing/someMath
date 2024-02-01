@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RationalNumber implements Divideable<RationalNumber>, Subtractable<RationalNumber>
+public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 {
 
 	public final int numerator;
@@ -232,22 +232,34 @@ public class RationalNumber implements Divideable<RationalNumber>, Subtractable<
 	@Override
 	public RationalNumber multiplyWith(RationalNumber e)
 	{
-		int expandedNumerator  = (integerPart * denominator) + numerator;
-		int expandedNumerator2 = (e.integerPart * e.denominator) + e.numerator;
 		
-		boolean sign = (this.sign==e.sign);
-				
-		return new RationalNumber(sign, expandedNumerator*expandedNumerator2, denominator*e.denominator);
+		int expandedNumeratorThis = (integerPart*denominator)+numerator;
+		int expandedNumeratorE    = (e.integerPart*e.denominator)+e.numerator;
+		
+		boolean bothNegative = (!e.sign&&!this.sign);
+		boolean bothPositive = e.sign&&this.sign;
+		
+		boolean sign = (bothNegative||bothPositive);
+		
+		int productOfNumerators = expandedNumeratorThis*expandedNumeratorE;
+		
+		return new RationalNumber(sign, productOfNumerators, denominator*e.denominator);
 	}
 
-	public RationalNumber divideBy(RationalNumber e)
+	public RationalNumber divideBy(RationalNumber e) throws DivisionByZeroException
 	{
 		
-		Point origin = e.expandedVersion();
+		if(e.equals(zero))throw new DivisionByZeroException();
+		
+		if(this.equals(zero))return zero;
+		
+		int expandedNumerator = (e.integerPart*e.denominator)+e.numerator;
 		boolean signOfE = e.sign;
 		
-		RationalNumber reciprocal = new RationalNumber(signOfE, origin.y, origin.x);
-		return this.multiplyWith(reciprocal);
+		RationalNumber reciprocal = new RationalNumber(signOfE, e.denominator, expandedNumerator);
+		RationalNumber output = this.multiplyWith(reciprocal);
+		
+		return output;
 	}
 	
 	@Override
