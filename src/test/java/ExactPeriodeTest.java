@@ -6,14 +6,15 @@ import org.junit.jupiter.api.Test;
 
 import allgemein.ExactPeriode;
 import allgemein.LittleTimeTools;
-import someMath.InterfaceNumberException;
+import someMath.NaturalNumberException;
 import someMath.NaturalNumber;
+import static someMath.NaturalNumber.*;
 
 class ExactPeriodeTest
 {
 
 	@Test
-	void epTest() throws InterfaceNumberException
+	void epTest() throws NaturalNumberException
 	{
 		
 		LocalDateTime fromLDT = LocalDateTime.of(2023, 2, 27, 0, 0);//The funny February.
@@ -37,12 +38,12 @@ class ExactPeriodeTest
 		System.out.println("Orignal toLDT:    " + LittleTimeTools.timeString(toLDT));
 		System.out.println("New ExactPeriode: " + ep4);
 		
-		assert(ep4.getYears().getNumberCore()==0);
-		assert(ep4.getMonths().getNumberCore()==2);
-		assert(ep4.getDays().getNumberCore()==0);
-		assert(ep4.getHours().getNumberCore()==0);
-		assert(ep4.getMinutes().getNumberCore()==0);
-		assert(ep4.getSeconds().getNumberCore()==0);
+		assert(ep4.getYears().equals(zero));
+		assert(ep4.getMonths().equals(new NaturalNumber(2)));
+		assert(ep4.getDays().equals(zero));
+		assert(ep4.getHours().equals(zero));
+		assert(ep4.getMinutes().equals(zero));
+		assert(ep4.getSeconds().equals(zero));
 
 	}
 }

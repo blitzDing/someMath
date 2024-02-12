@@ -17,6 +17,11 @@ import someMath.*;
  * ldt's to relate to. So i don't have it. In The Periode class of 
  * the SDK there are such Methods like ofXXX(params).
  */
+
+	/*
+	 * TODO: Still Refactoring!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 */
+
 public class ExactPeriode 
 {
 
@@ -31,7 +36,9 @@ public class ExactPeriode
 	private final LocalDateTime toLDT;
 	private final boolean isNegative;
 	
-	public ExactPeriode(LocalDateTime fromLDT, LocalDateTime toLDT) throws InterfaceNumberException
+	NaturalNumber max = new NaturalNumber(Integer.MAX_VALUE);
+
+	public ExactPeriode(LocalDateTime fromLDT, LocalDateTime toLDT) throws NaturalNumberException
 	{
 
 		LocalDate fromLD = fromLDT.toLocalDate();
@@ -66,108 +73,182 @@ public class ExactPeriode
     	}
 
     	years = new NaturalNumber((int) fromLDTTemp.until( toLDTTemp, ChronoUnit.YEARS ));
-    	fromLDTTemp = fromLDTTemp.plusYears( years.getNumberCore() );
+    	fromLDTTemp = fromLDTTemp.plusYears( years.getNumberCore().longValue() );
     	
     	months = new NaturalNumber((int) fromLDTTemp.until( toLDTTemp, ChronoUnit.MONTHS ));
-    	fromLDTTemp = fromLDTTemp.plusMonths( months.getNumberCore() );
+    	fromLDTTemp = fromLDTTemp.plusMonths( months.getNumberCore().longValue() );
     	
     	days = new NaturalNumber((int) fromLDTTemp.until( toLDTTemp, ChronoUnit.DAYS ));
-    	fromLDTTemp = fromLDTTemp.plusDays( days.getNumberCore() );
+    	fromLDTTemp = fromLDTTemp.plusDays( days.getNumberCore().longValue() );
 
     	hours = new NaturalNumber((int) fromLDTTemp.until( toLDTTemp, ChronoUnit.HOURS ));
-    	fromLDTTemp = fromLDTTemp.plusHours( hours.getNumberCore() );
+    	fromLDTTemp = fromLDTTemp.plusHours( hours.getNumberCore().longValue() );
     	
     	minutes = new NaturalNumber((int) fromLDTTemp.until( toLDTTemp, ChronoUnit.MINUTES ));
-    	fromLDTTemp = fromLDTTemp.plusMinutes( minutes.getNumberCore() );
+    	fromLDTTemp = fromLDTTemp.plusMinutes( minutes.getNumberCore().longValue() );
 
     	seconds = new NaturalNumber((int) fromLDTTemp.until( toLDTTemp, ChronoUnit.SECONDS ));
 	}
 
-	public ExactPeriode plusYears(NaturalNumber yearsPlus) throws InterfaceNumberException
+	public ExactPeriode plusYears(NaturalNumber yearsPlus) throws NaturalNumberException
 	{
 		
-		LocalDateTime newToLDT = this.toLDT.plusYears(yearsPlus.getNumberCore());
+		LocalDateTime newToLDT;
+
+		for(int n=0;yearsPlus.isGreaterThen(max);n++)
+		{
+			newToLDT = this.getToLDT().plusYears(max.getNumberCore().longValue());
+			yearsPlus.subtract(max);
+		}
+		
+		newToLDT = this.toLDT.plusYears(yearsPlus.getNumberCore().longValue());
+		
 		return new ExactPeriode(fromLDT, newToLDT);
 	}
 
-	public ExactPeriode plusMonth(NaturalNumber monthPlus) throws InterfaceNumberException
+	public ExactPeriode plusMonth(NaturalNumber monthPlus) throws NaturalNumberException
 	{
 
-		LocalDateTime newToLDT = this.toLDT.plusMonths(monthPlus.getNumberCore());
+		if(monthPlus.isGreaterThen(max))
+		{
+			this.toLDT.plusMonths(max.getNumberCore().longValue());
+			return plusMonth(monthPlus.subtract(max));
+		}
+
+		LocalDateTime newToLDT = this.toLDT.plusMonths(monthPlus.getNumberCore().longValue());
 		return new ExactPeriode(fromLDT, newToLDT);
 	}
 	
-	public ExactPeriode plusDays(NaturalNumber daysPlus) throws InterfaceNumberException
+	public ExactPeriode plusDays(NaturalNumber daysPlus) throws NaturalNumberException
 	{
 		
-		LocalDateTime newToLDT = this.toLDT.plusDays(daysPlus.getNumberCore());
+		if(daysPlus.isGreaterThen(max))
+		{
+			this.toLDT.plusDays(max.getNumberCore().longValue());
+			return plusDays(daysPlus.subtract(max));
+		}
+		
+		LocalDateTime newToLDT = this.toLDT.plusDays(daysPlus.getNumberCore().longValue());
 		return new ExactPeriode(fromLDT, newToLDT);
 	}
 	
-	public ExactPeriode plusHours(NaturalNumber hoursPlus) throws InterfaceNumberException
-	{
-
-		LocalDateTime newToLDT = this.toLDT.plusHours(hoursPlus.getNumberCore());
-		return new ExactPeriode(fromLDT, newToLDT);
-	}
-	
-	public ExactPeriode plusMinutes(NaturalNumber minutesPlus) throws InterfaceNumberException
-	{
-
-		LocalDateTime newToLDT = this.toLDT.plusMinutes(minutesPlus.getNumberCore());
-		return new ExactPeriode(fromLDT, newToLDT);
-	}
-	
-	public ExactPeriode plusSeconds(NaturalNumber secondsPlus) throws InterfaceNumberException
-	{
-
-		LocalDateTime newToLDT = this.toLDT.plusSeconds(secondsPlus.getNumberCore());
-		return new ExactPeriode(fromLDT, newToLDT);
-	}
-
-	public ExactPeriode minusYears(NaturalNumber yearsMinus) throws InterfaceNumberException
+	public ExactPeriode plusHours(NaturalNumber hoursPlus) throws NaturalNumberException
 	{
 		
-		LocalDateTime newToLDT = this.toLDT.minusYears(yearsMinus.getNumberCore());
-		return new ExactPeriode(fromLDT, newToLDT);
-	}
+		if(hoursPlus.isGreaterThen(max))
+		{
+			this.toLDT.plusHours(max.getNumberCore().longValue());
+			return plusHours(hoursPlus.subtract(max));
+		}
 
-	public ExactPeriode minusMonth(NaturalNumber monthMinus) throws InterfaceNumberException
-	{
-
-		LocalDateTime newToLDT = this.toLDT.minusMonths(monthMinus.getNumberCore());
+		LocalDateTime newToLDT = this.toLDT.plusHours(hoursPlus.getNumberCore().longValue());
 		return new ExactPeriode(fromLDT, newToLDT);
 	}
 	
-	public ExactPeriode minusDays(NaturalNumber daysMinus) throws InterfaceNumberException
+	public ExactPeriode plusMinutes(NaturalNumber minutesPlus) throws NaturalNumberException
+	{
+
+		if(minutesPlus.isGreaterThen(max))
+		{
+			this.toLDT.plusMinutes(max.getNumberCore().longValue());
+			return plusMinutes(minutesPlus.subtract(max));
+		}
+		
+		LocalDateTime newToLDT = this.toLDT.plusMinutes(minutesPlus.getNumberCore().longValue());
+		return new ExactPeriode(fromLDT, newToLDT);
+	}
+	
+	public ExactPeriode plusSeconds(NaturalNumber secondsPlus) throws NaturalNumberException
+	{
+
+		if(secondsPlus.isGreaterThen(max))
+		{
+			this.toLDT.plusSeconds(max.getNumberCore().longValue());
+			return plusSeconds(secondsPlus.subtract(max));
+		}
+		
+		LocalDateTime newToLDT = this.toLDT.plusSeconds(secondsPlus.getNumberCore().longValue());
+		return new ExactPeriode(fromLDT, newToLDT);
+	}
+
+	public ExactPeriode minusYears(NaturalNumber yearsMinus) throws NaturalNumberException
 	{
 		
-		LocalDateTime newToLDT = this.toLDT.minusDays(daysMinus.getNumberCore());
+		if(yearsMinus.isGreaterThen(max))
+		{
+			this.toLDT.minusYears(max.getNumberCore().longValue());
+			return minusYears(yearsMinus.subtract(max));
+		}
+		
+		LocalDateTime newToLDT = this.toLDT.minusYears(yearsMinus.getNumberCore().longValue());
+		return new ExactPeriode(fromLDT, newToLDT);
+	}
+
+	public ExactPeriode minusMonth(NaturalNumber monthMinus) throws NaturalNumberException
+	{
+
+		if(monthMinus.isGreaterThen(max))
+		{
+			this.toLDT.minusMonths(max.getNumberCore().longValue());
+			return minusMonth(monthMinus.subtract(max));
+		}
+		LocalDateTime newToLDT = this.toLDT.minusMonths(monthMinus.getNumberCore().longValue());
 		return new ExactPeriode(fromLDT, newToLDT);
 	}
 	
-	public ExactPeriode minusHours(NaturalNumber hoursMinus) throws InterfaceNumberException
+	public ExactPeriode minusDays(NaturalNumber daysMinus) throws NaturalNumberException
 	{
-
-		LocalDateTime newToLDT = this.toLDT.minusHours(hoursMinus.getNumberCore());
+		
+		if(daysMinus.isGreaterThen(max))
+		{
+			this.toLDT.minusDays(max.getNumberCore().longValue());
+			return minusDays(daysMinus.subtract(max));
+		}
+		
+		LocalDateTime newToLDT = this.toLDT.minusDays(daysMinus.getNumberCore().longValue());
 		return new ExactPeriode(fromLDT, newToLDT);
 	}
 	
-	public ExactPeriode minusMinutes(NaturalNumber minutesMinus) throws InterfaceNumberException
+	public ExactPeriode minusHours(NaturalNumber hoursMinus) throws NaturalNumberException
 	{
 
-		LocalDateTime newToLDT = this.toLDT.minusMinutes(minutesMinus.getNumberCore());
+		if(hoursMinus.isGreaterThen(max))
+		{
+			this.toLDT.minusHours(max.getNumberCore().longValue());
+			return minusHours(hoursMinus.subtract(max));
+		}
+		LocalDateTime newToLDT = this.toLDT.minusHours(hoursMinus.getNumberCore().longValue());
 		return new ExactPeriode(fromLDT, newToLDT);
 	}
 	
-	public ExactPeriode minusSeconds(NaturalNumber secondsMinus) throws InterfaceNumberException
+	public ExactPeriode minusMinutes(NaturalNumber minutesMinus) throws NaturalNumberException
 	{
 
-		LocalDateTime newToLDT = this.toLDT.minusSeconds(secondsMinus.getNumberCore());
+		if(minutesMinus.isGreaterThen(max))
+		{
+			this.toLDT.minusMinutes(max.getNumberCore().longValue());
+			return minusMinutes(minutesMinus.subtract(max));
+		}
+		
+		LocalDateTime newToLDT = this.toLDT.minusMinutes(minutesMinus.getNumberCore().longValue());
+		return new ExactPeriode(fromLDT, newToLDT);
+	}
+	
+	public ExactPeriode minusSeconds(NaturalNumber secondsMinus) throws NaturalNumberException
+	{
+
+		LocalDateTime newToLDT;
+		if(secondsMinus.isGreaterThen(max))
+		{
+			newToLDT = this.toLDT.minusSeconds(max.getNumberCore().longValue());
+			return minusSeconds(secondsMinus.subtract(max));
+		}
+		newToLDT = this.toLDT.minusSeconds(secondsMinus.getNumberCore().longValue());
+		
 		return new ExactPeriode(fromLDT, newToLDT);
 	}
 		
-	public int getAbsoluteDays() throws InterfaceNumberException
+	public int getAbsoluteDays() throws NaturalNumberException
 	{
 		Pair<LocalDateTime, LocalDateTime> pair = flipWhenNegative(fromLDT, toLDT);
 		LocalDateTime fromLDTTemp = pair.getKey();
@@ -177,7 +258,7 @@ public class ExactPeriode
 
 	}
 	
-	public int getAbsoluteHours() throws InterfaceNumberException
+	public int getAbsoluteHours() throws NaturalNumberException
 	{
 
 		
@@ -189,7 +270,7 @@ public class ExactPeriode
 		return (int) fromLDTTemp.until( toLDTTemp, ChronoUnit.HOURS );
 	}
 	
-	public int getAbsoluteMinutes() throws InterfaceNumberException
+	public int getAbsoluteMinutes() throws NaturalNumberException
 	{
 		Pair<LocalDateTime, LocalDateTime> pair = flipWhenNegative(fromLDT, toLDT);
 		LocalDateTime fromLDTTemp = pair.getKey();
@@ -199,7 +280,7 @@ public class ExactPeriode
 		return (int) fromLDTTemp.until( toLDTTemp, ChronoUnit.MINUTES );
 	}
 	
-	public int getAbsoluteSeconds() throws InterfaceNumberException
+	public int getAbsoluteSeconds() throws NaturalNumberException
 	{
 		
 		Pair<LocalDateTime, LocalDateTime> pair = flipWhenNegative(fromLDT, toLDT);
@@ -209,7 +290,7 @@ public class ExactPeriode
 		return (int) fromLDTTemp.until( toLDTTemp, ChronoUnit.SECONDS );
 	}
 	
-	public Pair<LocalDateTime, LocalDateTime> flipWhenNegative(LocalDateTime fromLDT, LocalDateTime toLDT) throws InterfaceNumberException
+	public Pair<LocalDateTime, LocalDateTime> flipWhenNegative(LocalDateTime fromLDT, LocalDateTime toLDT) throws NaturalNumberException
 	{
 		if(new ExactPeriode(fromLDT, toLDT).isNegative)return new Pair<LocalDateTime, LocalDateTime>(toLDT, fromLDT);
 		else return new Pair<LocalDateTime, LocalDateTime>(fromLDT, toLDT);

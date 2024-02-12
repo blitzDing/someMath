@@ -11,7 +11,7 @@ public interface Addable<E>
 	
 	public boolean hasNeutralZero();
 	
-	public E addWith(E e) throws InterfaceNumberException;
+	public E addWith(E e) throws NaturalNumberException, RNumException, CloneNotSupportedException;
 	
-	public E getNeutralZero() throws InterfaceNumberException;
+	public E getNeutralZero() throws NaturalNumberException;
 }

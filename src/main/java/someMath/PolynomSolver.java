@@ -6,6 +6,7 @@ import java.util.Set;
 public class PolynomSolver 
 {
 
+	/*
 	public static Set<ComplexNrDouble> quadraticSolver(RationalNumber koeffizent, RationalNumber koeffizent2) throws Exception
 	{
 		
@@ -71,4 +72,6 @@ public class PolynomSolver
 		//TODO:
 		return null;
 	}
+	*/
+	
 }

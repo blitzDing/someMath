@@ -1,15 +1,38 @@
 package someMath;
 
-public class NaturalNumber implements Addable<NaturalNumber>, Multiplyable<NaturalNumber> 
+import java.math.BigInteger;
+import java.util.Objects;
+
+//Even so it implements addition, subtraction, multiplication and division this is
+// NOT a mathematical Group!!!!
+public class NaturalNumber implements SubtractableAndDivideable<NaturalNumber> 
 {
 
-	final int numberCore;
+	private final BigInteger numberCore;
 	
-	public NaturalNumber(int numberCore) throws InterfaceNumberException
+	public static final BigInteger biZero = new BigInteger("0");
+	public static final BigInteger biOne = new BigInteger("1");
+	
+	public static final NaturalNumber zero = new NaturalNumber("0");
+	public static final NaturalNumber one = new NaturalNumber("1");
+	
+	public NaturalNumber(BigInteger numberCore) throws NaturalNumberException
 	{
-		if(numberCore<0)throw new InterfaceNumberException("Can't work with negative Integers.");
-				
+		if(numberCore.compareTo(biZero)<0)throw new NaturalNumberException("Can't work with negative Integers.");
+
 		this.numberCore = numberCore;
+	}
+
+	public NaturalNumber(int numberCore) throws NaturalNumberException
+	{
+		if(numberCore<0)throw new NaturalNumberException("Can't work with negative Integers.");
+				
+		this.numberCore = new BigInteger(""+numberCore);
+	}
+	
+	private NaturalNumber(String s)
+	{
+		this.numberCore = new BigInteger(s);
 	}
 
 	@Override
@@ -25,40 +48,131 @@ public class NaturalNumber implements Addable<NaturalNumber>, Multiplyable<Natur
 	}
 
 	@Override
-	public NaturalNumber getNeutralZero() throws InterfaceNumberException
+	public NaturalNumber getNeutralZero() throws NaturalNumberException
 	{
 		return new NaturalNumber(0);
 	}
 
 	@Override
-	public NaturalNumber getNeutralOne() throws InterfaceNumberException
+	public NaturalNumber getNeutralOne() throws NaturalNumberException
 	{
 		return new NaturalNumber(1);
 	}
 
 	@Override
-	public NaturalNumber multiplyWith(NaturalNumber e) throws InterfaceNumberException
+	public NaturalNumber multiplyWith(NaturalNumber e) throws NaturalNumberException
 	{
-		int p = numberCore*e.getNumberCore();
+		
+		if(this.equals(zero)||e.equals(zero))return zero;
+		BigInteger p = numberCore.multiply(e.getNumberCore());
 		
 		return new NaturalNumber(p);
 	}
 
 	@Override
-	public NaturalNumber addWith(NaturalNumber e) throws InterfaceNumberException 
+	public NaturalNumber addWith(NaturalNumber e) throws NaturalNumberException 
 	{
-		int s = numberCore + e.getNumberCore();
+		BigInteger s = numberCore.add(e.getNumberCore());
 		
 		return new NaturalNumber(s);
 	}
 	
-	public int getNumberCore()
+	public NaturalNumber subtract(NaturalNumber e) throws NaturalNumberException
+	{
+		
+		BigInteger s = numberCore.subtract(e.getNumberCore());
+		
+		return new NaturalNumber(s);//Throws Exception if e is greater Then this.
+	}
+	
+	/**Careful is rounded down like integer division.*/
+	@Override
+	public NaturalNumber divideBy(NaturalNumber t)
+			throws DivisionByZeroException, NaturalNumberException, CollectionException, RNumException
+	{
+		
+		if(t.equals(zero))throw new DivisionByZeroException();
+		if(this.equals(zero))return zero;
+		if(this.isSmallerThen(t))return zero;
+		
+		
+		NaturalNumber current = zero.clone();
+		NaturalNumber counter = zero.clone();
+		
+		for(;(current.isSmallerThen(this)||current.equals(this));)
+		{
+			current = current.addWith(t);
+			counter = counter.addWith(one);
+		}
+		
+		return counter.subtract(one);
+	}
+	
+	public boolean isGreaterThen(NaturalNumber n)
+	{
+		if(this.getNumberCore().compareTo(n.numberCore)>0)return true;
+		
+		return false;
+	}
+	
+	public boolean isSmallerThen(NaturalNumber n)
+	{
+		if(this.getNumberCore().compareTo(n.numberCore)<0)return true;
+		
+		return false;
+	}
+
+	public BigInteger getNumberCore()
 	{
 		return numberCore;
+	}
+	
+	public int hashCode()
+	{
+		return Objects.hash(numberCore);
+	}
+	
+	public boolean equals(Object obj)
+	{
+		
+		if (obj == this) return true;
+		
+	    if (!(obj instanceof NaturalNumber)) return false;
+	    
+	    NaturalNumber other = (NaturalNumber)obj;
+	    
+	    if(!other.getNumberCore().equals(numberCore))return false;
+	    
+	    return true;
+	}
+	
+	public double doubleApproximation()
+	{
+		return this.numberCore.doubleValue();
+	}
+	
+	public int integerApproximation()
+	{
+		return this.numberCore.intValue();
 	}
 	
 	public String toString()
 	{
 		return numberCore + "";
+	}
+	
+	public NaturalNumber clone()
+	{
+		try
+		{
+			return new NaturalNumber(numberCore);
+		}
+		catch (NaturalNumberException e) 
+		{
+			
+			System.out.println("Shouldn't happen!");
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

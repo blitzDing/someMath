@@ -135,7 +135,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 	}
 	
 	@Override
-	public Matrix<E> multiplyWith(Matrix<E> a) throws InterfaceNumberException
+	public Matrix<E> multiplyWith(Matrix<E> a) throws NaturalNumberException, RNumException, CloneNotSupportedException
 	{
 		
 		if(!(this.columns==a.rows)) throw new IllegalArgumentException("Can't Multiply these Matrixes.");
@@ -177,7 +177,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 				if(n==m)listOfValues.add(someValue.getNeutralOne());
 				else listOfValues.add(someValue.getNeutralZero());
 			}
-			catch (InterfaceNumberException e)
+			catch (NaturalNumberException e)
 			{
 				e.printStackTrace();
 			}
@@ -208,7 +208,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 			{
 				newValArr[n][m] = valArr[n][m].addWith(a.valArr[n][m]);
 			}
-			catch(InterfaceNumberException inexc)
+			catch(NaturalNumberException | RNumException | CloneNotSupportedException inexc)
 			{
 				inexc.printStackTrace();
 			}
@@ -231,7 +231,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 			{
 			listOfValues.add(someValue.getNeutralZero());
 			}
-			catch(InterfaceNumberException inexc)
+			catch(NaturalNumberException inexc)
 			{
 				inexc.printStackTrace();
 			}
@@ -249,7 +249,14 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 		newValArr = (E[][]) new MultiplyableAndAddable[rows][columns];
 		
 		BiConsumer<Integer, Integer> bic = (n,m)-> 
-		newValArr[n][m] = valArr[n][m].subtract(a.valArr[n][m]);
+		{
+			try {
+				newValArr[n][m] = valArr[n][m].subtract(a.valArr[n][m]);
+			} catch (RNumException | NaturalNumberException | CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		};
 		MatrixOps.walkThrouMatrix(this, bic);
 	
 		return new Matrix<E>(newValArr);
@@ -264,7 +271,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 		return (Class<E>) e.getClass();
 	}
 	
-	public Set<E> getEigenvalues() throws Exception
+	public Set<E> getEigenvalues() throws RNumException, NaturalNumberException, Exception
 	{
 		
 		if(!this.isQuadratic||this.rows!=2) throw new IllegalArgumentException("Can only calculate Eigenvalues for 2 by 2 Matrizies.");
@@ -278,8 +285,8 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 		E s = (a.addWith(d)).divideBy(two);
 		E r = s.multiplyWith(s).subtract(MatrixOps.getDeterminant(this));
 		
-		E x1 = (s.addWith(SmallTools.getNthRoot(r, 2)));
-		E x2 = (s.subtract(SmallTools.getNthRoot(r, 2)));
+		E x1 = (s.addWith(SmallTools.getNthRoot(7, r, 2)));
+		E x2 = (s.subtract(SmallTools.getNthRoot(7, r, 2)));
 		Set<E> set = new HashSet<>();
 		set.add(x1);
 		set.add(x2);
@@ -315,7 +322,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 	}
 
 	@Override
-	public Matrix<E> divideBy(Matrix<E> t) throws DivisionByZeroException, InterfaceNumberException, CollectionException
+	public Matrix<E> divideBy(Matrix<E> t) throws NaturalNumberException, CollectionException, RNumException, CloneNotSupportedException
 	{
 		
 		E e = (E) valArr[0][0];//half dummy half neutralZero.
