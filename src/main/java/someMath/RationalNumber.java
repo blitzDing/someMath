@@ -1,7 +1,10 @@
 package someMath;
 
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -213,7 +216,7 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 		
 		int sizeDiff = denominatorLength - numeratorLength;
 		
-		if(sizeDiff>=upperEndOfCiphers)
+		if(sizeDiff>upperEndOfCiphers)
 		{
 			return new RationalNumber(sign, integerPart, zero, one);
 		}
@@ -222,36 +225,53 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 		boolean denominatorBig = denominatorLength>upperEndOfCiphers;
 		
 		boolean nAndDEqual = (numeratorLength == denominatorLength);
-		
-		if(numeratorBig&&denominatorBig&&nAndDEqual)
+	
+		BigInteger oldNumerator = numerator.getNumberCore();
+		BigInteger oldDenominator = denominator.getNumberCore();
+
+		if(numeratorBig&&denominatorBig)
 		{
 			
-			BigInteger oldNumerator = numerator.getNumberCore();
-			BigInteger newNumerator = new BigInteger(oldNumerator.toString().substring(0, upperEndOfCiphers));
+			BigDecimal newNumerator = new BigDecimal(oldNumerator);
+			int maxSizeDiff = numeratorLength-upperEndOfCiphers;
 			
-			BigInteger oldDenominator = denominator.getNumberCore();
-			BigInteger newDenominator = new BigInteger(oldDenominator.toString().substring(0, upperEndOfCiphers));
+			BigDecimal divisor = new BigDecimal(Math.pow(10, maxSizeDiff));
+			newNumerator = newNumerator.divide(divisor, new MathContext(2*upperEndOfCiphers, RoundingMode.HALF_UP));
+			BigInteger finalNumerator = newNumerator.toBigInteger();
 			
-			NaturalNumber numo = new NaturalNumber(newNumerator);
-			NaturalNumber denio = new NaturalNumber(newDenominator);
+			BigDecimal newDenominator = new BigDecimal(oldDenominator);
+			newDenominator = newDenominator.divide(divisor, new MathContext(2*upperEndOfCiphers, RoundingMode.HALF_UP));
+			BigInteger finalDenominator = newDenominator.toBigInteger();
+			
+			NaturalNumber numo = new NaturalNumber(finalNumerator);
+			NaturalNumber denio = new NaturalNumber(finalDenominator);
 			
 			RationalNumber newRN = new RationalNumber(sign, integerPart, numo, denio);
 			
 			return newRN;
 		}
 		
-		if(denominatorBig&&!(numeratorBig))
+		if(denominatorBig&&(!numeratorBig))//Numerator can't be bigger than denominator.
+						  				   //Know is clear that they are both of 
+										   //different length. And the numerator is rather
+										   //small.
 		{
+			int maxSizeDiff = numeratorLength-1;
+			BigDecimal divisor = new BigDecimal(Math.pow(10, maxSizeDiff));
 			
 			//TODO:
 			BigInteger biOldNumerator = numerator.getNumberCore();
-			BigInteger biNewNumerator = new BigInteger(biOldNumerator.toString().substring(0, (numeratorLength-1)));
+			BigDecimal bdNewNumerator = new BigDecimal(biOldNumerator);
+			bdNewNumerator = bdNewNumerator.divide(divisor);
+			BigInteger finalNumerator = bdNewNumerator.toBigInteger();
 			
 			BigInteger biOldDenominator = denominator.getNumberCore();
-			BigInteger biNewDenominator = new BigInteger(biOldDenominator.toString().substring(0, (numeratorLength-1)));
+			BigDecimal bdNewDenominator = new BigDecimal(biOldDenominator);
+			bdNewDenominator = bdNewDenominator.divide(divisor);
+			BigInteger finalDenominator = bdNewDenominator.toBigInteger();
 			
-			NaturalNumber nnn = new NaturalNumber(biNewNumerator);
-			NaturalNumber nnd = new NaturalNumber(biNewDenominator);
+			NaturalNumber nnn = new NaturalNumber(finalNumerator);
+			NaturalNumber nnd = new NaturalNumber(finalDenominator);
 			
 			return new RationalNumber(sign, integerPart, nnn, nnd);
 		}

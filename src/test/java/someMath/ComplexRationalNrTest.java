@@ -58,7 +58,7 @@ public class ComplexRationalNrTest
 		assert(img.equals(rZero));
 		
 		System.out.println("a*conjugate(a) = " + a.multiplyWith(a.getConjugate()));
-		//System.out.println("Amount of a = " + a + ":-> "+ a.getAmount());
+		System.out.println("Amount of a = " + a + ":-> "+ a.getAmount());
 		System.out.println("Amount squared Exactly: " + a.multiplyWith(a.getConjugate()).getAmount());
 		/*
 		 * display("a*(a')", a.multiplyWith(a.getConjugate()));
