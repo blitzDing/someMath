@@ -1,16 +1,15 @@
-import java.util.Set;
+
 
 import org.junit.jupiter.api.Test;
 
 import someMath.CollectionException;
-import someMath.CollectionManipulation;
-import someMath.ComplexNrDouble;
+import someMath.DivisionByZeroException;
 import someMath.NaturalNumberException;
-import someMath.NaturalNumber;
-import someMath.PolynomSolver;
+import someMath.RNumException;
 import someMath.RationalNumber;
-import static someMath.RationalNumber.*;
-import static someMath.NaturalNumber.*;
+import someMath.SmallNatural;
+
+import static someMath.SmallNatural.*;
 
 public class PolynomSolverTest 
 {
@@ -18,11 +17,11 @@ public class PolynomSolverTest
 	private static final double prettySmall = Math.pow(10, -11);
 
 	@Test
-	public void testSolver() throws Exception
+	public void testSolver() throws NaturalNumberException, RNumException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
 		
-		NaturalNumber zwei = new NaturalNumber(2);
-		RationalNumber two = new RationalNumber(zwei, one);
+		SmallNatural zwei = new SmallNatural(2);
+		RationalNumber two = new RationalNumber(zwei, snOne);
 		
 		/*TODO:
 		//equals x²+2 = 0.

@@ -6,7 +6,7 @@ import java.util.List;
 public class EratosthenesSieb 
 {
 
-	private List<Integer> primeList = new ArrayList<>();
+	private static List<Integer> primeList = new ArrayList<>();
 	private int primeNr=1;
 	
 	public EratosthenesSieb(int maxPrimeNr)
@@ -29,7 +29,7 @@ public class EratosthenesSieb
 		}
 	}
 	
-	public List<Integer> getPrimeList()
+	public static List<Integer> getPrimeList()
 	{
 		return primeList;
 	}

@@ -135,7 +135,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 	}
 	
 	@Override
-	public Matrix<E> multiplyWith(Matrix<E> a) throws NaturalNumberException, RNumException, CloneNotSupportedException
+	public Matrix<E> multiplyWith(Matrix<E> a) throws NaturalNumberException, RNumException, CloneNotSupportedException, CollectionException, DivisionByZeroException
 	{
 		
 		if(!(this.columns==a.rows)) throw new IllegalArgumentException("Can't Multiply these Matrixes.");
@@ -208,7 +208,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 			{
 				newValArr[n][m] = valArr[n][m].addWith(a.valArr[n][m]);
 			}
-			catch(NaturalNumberException | RNumException | CloneNotSupportedException inexc)
+			catch(NaturalNumberException | RNumException | CloneNotSupportedException | CollectionException | DivisionByZeroException inexc)
 			{
 				inexc.printStackTrace();
 			}
@@ -252,7 +252,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 		{
 			try {
 				newValArr[n][m] = valArr[n][m].subtract(a.valArr[n][m]);
-			} catch (RNumException | NaturalNumberException | CloneNotSupportedException e) {
+			} catch (RNumException | NaturalNumberException | CloneNotSupportedException | DivisionByZeroException | CollectionException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -322,7 +322,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 	}
 
 	@Override
-	public Matrix<E> divideBy(Matrix<E> t) throws NaturalNumberException, CollectionException, RNumException, CloneNotSupportedException
+	public Matrix<E> divideBy(Matrix<E> t) throws NaturalNumberException, CollectionException, RNumException, CloneNotSupportedException, DivisionByZeroException
 	{
 		
 		E e = (E) valArr[0][0];//half dummy half neutralZero.

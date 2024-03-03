@@ -1,78 +1,84 @@
 package someMath;
 
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javafx.util.Pair;
 
-import static someMath.NaturalNumber.*;
+import static someMath.SmallNatural.*;
 
-public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
+public class RationalNumber implements Cloneable, SubtractableAndDivideable<RationalNumber>
 {
 
-	public final NaturalNumber numerator;
-	public final NaturalNumber denominator;
-	public final NaturalNumber integerPart;
+	public static final String divisionByZeroMsg = "Denominator can't be zero";
+	public static final String displacedMinusChar = "Only one minus sign and please upfront.";
+	public static final String maleFormedStringArgument = "maleformed String Argument";
+	private SmallNatural numerator;
+	private SmallNatural denominator;
+	private SmallNatural integerPart;
 	public final boolean sign; //false means negative.
 	
-	private static int upperEndOfCiphers = 12;
+	private static int upperEndOfCiphers = 4;
 
-	public static final RationalNumber rZero = new RationalNumber("hey", true, zero, zero, one);
-	public static final RationalNumber rOne = new RationalNumber("hi", true, zero, one, one);
+	public static final RationalNumber rZero = new RationalNumber("hey", true, snZero, snZero, snOne);
+	public static final RationalNumber rOne = new RationalNumber("hi", true, snZero, snOne, snOne);
 	
 	public static final Pattern pattern = Pattern.compile("(\\-)?((\\d+\\s)|(\\d+$))?((\\-)?(\\d+)(/)(\\d+))?");
 	
-	//Remember: NaturalNumber can't be lower than Zero!!!
-	public RationalNumber(NaturalNumber integerPart, NaturalNumber numerator, NaturalNumber denominator) throws RNumException, NaturalNumberException
+	//Remember: SmallNatural can't be lower than Zero!!!
+	public RationalNumber(SmallNatural integerPart, SmallNatural numerator, SmallNatural denominator) throws RNumException, NaturalNumberException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
 		this(true, integerPart, numerator, denominator);
 	}
 
-	public RationalNumber(boolean sign, NaturalNumber integerPart, NaturalNumber numerator, NaturalNumber denominator)throws RNumException, NaturalNumberException
+	public RationalNumber(boolean sign, SmallNatural integerPart, SmallNatural numerator, SmallNatural denominator)throws RNumException, NaturalNumberException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
 		
-		if(denominator.equals(zero))
+		if(denominator.equals(snZero))
 		{
 			System.out.println(denominator);
-			throw new RNumException("Denominator can't be zero");
+			throw new RNumException(divisionByZeroMsg);
 		}
 				
 		this.sign = sign;
 		
-		NaturalNumber[] shortend = shortening(numerator, denominator);
+		int oldNum = numerator.getNumberCore();
+		int oldDenom = denominator.getNumberCore();
+		
+		int[] shortend = shortening(oldNum, oldDenom);
 
-		this.integerPart = shortend[0].addWith(integerPart);
-		this.numerator   = shortend[1];
-		this.denominator = shortend[2];
+		int newInteger = shortend[0] + integerPart.getNumberCore();
+		int newNumerator   = shortend[1];
+		int newDenominator = shortend[2];
+		
+		this.integerPart = new SmallNatural(newInteger);
+		this.numerator = new SmallNatural(newNumerator);
+		this.denominator = new SmallNatural(newDenominator);
 	}
 	
 	//Default positive RN.
-	public RationalNumber(NaturalNumber numerator, NaturalNumber denominator) throws RNumException, NaturalNumberException
+	public RationalNumber(SmallNatural numerator, SmallNatural denominator) throws RNumException, NaturalNumberException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
 		//The default.
 		this(true, numerator, denominator);
 	}
 	
-	public RationalNumber(boolean sign, NaturalNumber numerator, NaturalNumber denominator) throws RNumException, NaturalNumberException
+	public RationalNumber(boolean sign, SmallNatural numerator, SmallNatural denominator) throws RNumException, NaturalNumberException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
-		this(sign, zero, numerator, denominator);
+		this(sign, snZero, numerator, denominator);
 	}
 	
-	public RationalNumber(String s) throws RNumException, NumberFormatException, NaturalNumberException
+	public RationalNumber(String s) throws RNumException, NumberFormatException, NaturalNumberException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
 		
 		String trimed = s.trim();
 		Matcher matcher = pattern.matcher(trimed);
 		
-		NaturalNumber integerPart = zero;
-		NaturalNumber numerator;
-		NaturalNumber denominator;
+		int integerPart = 0;
+		int numerator;
+		int denominator;
 		boolean sign;
 		
 		if(matcher.find())
@@ -80,7 +86,7 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 			String firstMinus = matcher.group(1);
 			String secondMinus = matcher.group(6);
 			
-			if(firstMinus!=null&&secondMinus!=null) throw new RNumException("Only one minus sign and please upfront.");
+			if(firstMinus!=null&&secondMinus!=null) throw new RNumException(displacedMinusChar);
 			
 			if(firstMinus!=null||secondMinus!=null) sign = false;
 			else sign = true;
@@ -88,51 +94,55 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 			String fractionPart = matcher.group(5);
 			String intPart = matcher.group(3);
 			
-			if(fractionPart==null&&intPart==null)throw new RNumException("Don't now What that is.");
-			if(intPart==null&&fractionPart==null)throw new RNumException("Integer part and Fraction part are not there. Can't parse this.");
-			if(intPart!=null)integerPart = new NaturalNumber(Integer.parseInt(intPart.trim()));
+			if(fractionPart==null&&intPart==null)throw new RNumException(maleFormedStringArgument);
+			if(intPart!=null)integerPart = Integer.parseInt(intPart.trim());
 			if(intPart!=null&&fractionPart==null)
 			{
 				
-				numerator = zero;
-				denominator = one;
+				numerator = 0;
+				denominator = 1;
 				
 				this.sign = sign;
-				
-				NaturalNumber[] shortend = shortening(numerator, denominator);
 
-				this.integerPart = shortend[0].addWith(integerPart);
-				this.numerator   = shortend[1];
-				this.denominator = shortend[2];
+				
+				int newIntegerPart = integerPart;
+
+				this.integerPart = new SmallNatural(newIntegerPart);
+				this.numerator   = new SmallNatural(numerator);
+				this.denominator = new SmallNatural(denominator);
 
 				return;			
 			}
 			
 			String numeratorString = matcher.group(7);
-			numerator = new NaturalNumber(Integer.parseInt(numeratorString));
+			numerator = Integer.parseInt(numeratorString);
 			
 			String denominatorString = matcher.group(9);
-			denominator = new NaturalNumber(Integer.parseInt(denominatorString));
+			denominator = Integer.parseInt(denominatorString);
 						
 			this.sign = sign;
 			
 			if(intPart==null&&fractionPart!=null)
 			{
 
-				NaturalNumber[] shortend = shortening(numerator, denominator);
+				int[] shortend = shortening(numerator, denominator);
 
-				this.integerPart = shortend[0];
-				this.numerator   = shortend[1];
-				this.denominator = shortend[2];
+				this.integerPart = new SmallNatural(shortend[0]);
+				this.numerator   = new SmallNatural(shortend[1]);
+				this.denominator = new SmallNatural(shortend[2]);
 				
 				return;
 			}
 			
-			NaturalNumber[] shortend = shortening(numerator, denominator);
+			int[] shortend = shortening(numerator, denominator);
 
-			this.integerPart = shortend[0].addWith(integerPart);
-			this.numerator   = shortend[1];
-			this.denominator = shortend[2];
+			int newIntegerPart = shortend[0] + integerPart;
+			int newNumerator   = shortend[1];
+			int newDenominator = shortend[2];
+			
+			this.integerPart = new SmallNatural(newIntegerPart);
+			this.numerator = new SmallNatural(newNumerator);
+			this.denominator = new SmallNatural(newDenominator);
 			
 			return;
 		}
@@ -146,7 +156,7 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 	//Constructors throw Exceptions. I made private 
 	//because there are is no shortening. So if ever
 	//there gone be more static constants be careful.
-	private RationalNumber(String hey, boolean sign, NaturalNumber integerPart, NaturalNumber numerator, NaturalNumber denominator)
+	private RationalNumber(String hey, boolean sign, SmallNatural integerPart, SmallNatural numerator, SmallNatural denominator)
 	{
 		this.sign = sign;
 		this.integerPart = integerPart;
@@ -154,137 +164,75 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 		this.denominator = denominator;
 	}
 
-	private NaturalNumber[] shortening(NaturalNumber numerator, NaturalNumber denominator) throws NaturalNumberException
+	private int[] shortening(int numerator, int denominator) throws NaturalNumberException, DivisionByZeroException, CollectionException, RNumException, CloneNotSupportedException
 	{
 		
-		NaturalNumber[] theThreeParts = new NaturalNumber[3];
-		theThreeParts[0] = zero;
-		theThreeParts[1] = zero;
-		theThreeParts[2] = zero;
+
+		int[] theThreeParts = new int[3];
+		theThreeParts[0] = 0;
+		theThreeParts[1] = 0;
+		theThreeParts[2] = 0;
 		
-		if(numerator.isSmallerThen(denominator))
+		if(numerator<denominator)
 		{
-			theThreeParts[0]= new NaturalNumber(0);
-			theThreeParts[1]=numerator;
-			theThreeParts[2]=denominator;
+			theThreeParts[0]= 0;
+						
+			int grtstcmnDiv = SmallTools.gcd(numerator, denominator);
+			int newNumerator = numerator/(grtstcmnDiv);
+			theThreeParts[1]= newNumerator;
+			int newDenominator = denominator/(grtstcmnDiv);
+			theThreeParts[2]= newDenominator;
+			
+			return theThreeParts;
 		}
 		
-		if(numerator.equals(denominator))
+		if(numerator==denominator)
 		{
-			theThreeParts[0]=new NaturalNumber(1);
-			theThreeParts[1]=new NaturalNumber(0);
-			theThreeParts[2]=new NaturalNumber(1);
+			theThreeParts[0]=1;
+			theThreeParts[1]=0;
+			theThreeParts[2]=1;
+
+			return theThreeParts;
 		}
 		
-		if(numerator.isGreaterThen(denominator))
+		if(numerator>denominator)
 		{
-			NaturalNumber[] down = shortening(numerator.subtract(denominator), denominator);
+			int[] down = shortening(numerator-denominator, denominator);
 			
 			
-			theThreeParts[0] = theThreeParts[0].addWith(down[0].addWith(one));
+			theThreeParts[0] = theThreeParts[0]+(down[0]+1);
 			theThreeParts[1] =  down[1];
 			theThreeParts[2] =  down[2];
+			
+			return theThreeParts;
 		}
 		
-		return theThreeParts;
+		throw new RNumException("Shhooout");
 	}
 	
-	public double doubleApproximation() throws NaturalNumberException, RNumException
+	public double doubleApproximation() throws NaturalNumberException, RNumException, DivisionByZeroException, CollectionException
 	{
 
 		int factor = -1;
 		if(sign)factor = 1;
 		
-		RationalNumber cut = cutCiphers();
-		
-		Double integerPartAsDouble = cut.integerPart.doubleApproximation();
-		Double numeratorAsDouble = cut.numerator.doubleApproximation();
-		Double denominatorAsDouble = cut.denominator.doubleApproximation();
+		Double integerPartAsDouble = (double)integerPart.getNumberCore();
+		Double numeratorAsDouble = (double)numerator.getNumberCore();
+		Double denominatorAsDouble = (double)denominator.getNumberCore();
 		
 		return factor*(integerPartAsDouble + (numeratorAsDouble/denominatorAsDouble));
 	}
-
-	private RationalNumber cutCiphers() throws NaturalNumberException, RNumException
+	
+	public Pair<Integer, Integer> expand() throws NaturalNumberException
 	{
 		
-		/*Remember: numerator and denominator get Constantly shortend
-		 * and the Numerator can't be bigger then the Denominator!!!
-		 */
+		int integer = integerPart.getNumberCore();
+		int num = numerator.getNumberCore();
+		int denom = denominator.getNumberCore();
 		
-		int numeratorLength = numerator.toString().length();
-		int denominatorLength = denominator.toString().length();
+		int newNumerator = integer*denom+num;
 		
-		int sizeDiff = denominatorLength - numeratorLength;
-		
-		if(sizeDiff>upperEndOfCiphers)
-		{
-			return new RationalNumber(sign, integerPart, zero, one);
-		}
-		
-		boolean numeratorBig = numeratorLength>upperEndOfCiphers;
-		boolean denominatorBig = denominatorLength>upperEndOfCiphers;
-		
-		boolean nAndDEqual = (numeratorLength == denominatorLength);
-	
-		BigInteger oldNumerator = numerator.getNumberCore();
-		BigInteger oldDenominator = denominator.getNumberCore();
-
-		if(numeratorBig&&denominatorBig)
-		{
-			
-			BigDecimal newNumerator = new BigDecimal(oldNumerator);
-			int maxSizeDiff = numeratorLength-upperEndOfCiphers;
-			
-			BigDecimal divisor = new BigDecimal(Math.pow(10, maxSizeDiff));
-			newNumerator = newNumerator.divide(divisor, new MathContext(2*upperEndOfCiphers, RoundingMode.HALF_UP));
-			BigInteger finalNumerator = newNumerator.toBigInteger();
-			
-			BigDecimal newDenominator = new BigDecimal(oldDenominator);
-			newDenominator = newDenominator.divide(divisor, new MathContext(2*upperEndOfCiphers, RoundingMode.HALF_UP));
-			BigInteger finalDenominator = newDenominator.toBigInteger();
-			
-			NaturalNumber numo = new NaturalNumber(finalNumerator);
-			NaturalNumber denio = new NaturalNumber(finalDenominator);
-			
-			RationalNumber newRN = new RationalNumber(sign, integerPart, numo, denio);
-			
-			return newRN;
-		}
-		
-		if(denominatorBig&&(!numeratorBig))//Numerator can't be bigger than denominator.
-						  				   //Know is clear that they are both of 
-										   //different length. And the numerator is rather
-										   //small.
-		{
-			int maxSizeDiff = numeratorLength-1;
-			BigDecimal divisor = new BigDecimal(Math.pow(10, maxSizeDiff));
-			
-			//TODO:
-			BigInteger biOldNumerator = numerator.getNumberCore();
-			BigDecimal bdNewNumerator = new BigDecimal(biOldNumerator);
-			bdNewNumerator = bdNewNumerator.divide(divisor);
-			BigInteger finalNumerator = bdNewNumerator.toBigInteger();
-			
-			BigInteger biOldDenominator = denominator.getNumberCore();
-			BigDecimal bdNewDenominator = new BigDecimal(biOldDenominator);
-			bdNewDenominator = bdNewDenominator.divide(divisor);
-			BigInteger finalDenominator = bdNewDenominator.toBigInteger();
-			
-			NaturalNumber nnn = new NaturalNumber(finalNumerator);
-			NaturalNumber nnd = new NaturalNumber(finalDenominator);
-			
-			return new RationalNumber(sign, integerPart, nnn, nnd);
-		}
-		
-		return this;
-	}
-	
-	public Pair<NaturalNumber, NaturalNumber> expand() throws NaturalNumberException
-	{
-		
-		NaturalNumber newNumerator = this.integerPart.multiplyWith(denominator).addWith(numerator);
-		
-		return new Pair<>(newNumerator, denominator);
+		return new Pair<>(newNumerator, denominator.getNumberCore());
 	}
 	
 	public String expandedVersionToString() throws NaturalNumberException
@@ -299,41 +247,119 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 	}
 
 	@Override
-	public RationalNumber multiplyWith(RationalNumber e) throws NaturalNumberException, RNumException
+	public RationalNumber multiplyWith(RationalNumber e) throws NaturalNumberException, RNumException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
 		
 		if(this.equals(rZero)||e.equals(rZero))return rZero;
 		
-		NaturalNumber expandedNumeratorThis = expand().getKey();
-		NaturalNumber expandedNumeratorE    = e.expand().getKey();
+		int expandedNumeratorThis = expand().getKey();
+		int expandedNumeratorE    = e.expand().getKey();
 		
 		boolean bothNegative = (!e.sign&&!this.sign);
 		boolean bothPositive = e.sign&&this.sign;
 		
 		boolean sign = (bothNegative||bothPositive);
 		
-		NaturalNumber productOfNumerators = expandedNumeratorThis.multiplyWith(expandedNumeratorE);
-		NaturalNumber productOfDenominators = denominator.multiplyWith(e.denominator);
+		int productOfNumerators = expandedNumeratorThis*expandedNumeratorE;
+		int denomThis = denominator.getNumberCore();
+		int denomE = e.denominator.getNumberCore();
+		int productOfDenominators = denomThis*denomE;
 		
-		RationalNumber output = new RationalNumber(sign, productOfNumerators, productOfDenominators);
+		int g = SmallTools.gcd(productOfNumerators, productOfDenominators);
+		int shortNumerator = productOfNumerators/g;
+		int shortDenominator = productOfDenominators/g;
+		
+		SmallNatural newNumerator = null;
+		SmallNatural newDenominator = null;
+		
+		double div = ((double)shortDenominator/(double)shortNumerator);
+		
+		//if ratio is to big meaning denominator is much bigger
+		//then numerator. this clause takes care of it.
+		if(div>(double)SmallNatural.max)
+		{
+			newNumerator = snOne;
+			newDenominator = new SmallNatural(SmallNatural.max);
+
+			return new RationalNumber(sign, newNumerator, newDenominator);
+		}
+		
+
+		double div2 = ((double)shortNumerator)/((double)shortDenominator);
+		
+		if(div2>(double)SmallNatural.max)
+		{
+			int newInteger = SmallNatural.max;
+			
+			SmallNatural maxInt = new SmallNatural(newInteger);
+			newNumerator = snZero;
+			newDenominator = snOne;
+			
+			return new RationalNumber(sign, maxInt, newNumerator, newDenominator);
+		}
+
+		int theThreeParts [] = shortening(shortNumerator, shortDenominator);
+
+		int newIntegerInt = theThreeParts[0];
+		boolean integerPartBig = (newIntegerInt>SmallNatural.max);
+		if(integerPartBig)throw new RNumException("IntegerPart out of Bounds.");
+		
+		int newNumeratorInt = theThreeParts[1];
+		int newDenominatorInt = theThreeParts[2];
+		
+		boolean numeratorBig = (newNumeratorInt>SmallNatural.max);
+		boolean denominatorBig = (newDenominatorInt>SmallNatural.max);
+
+		if(numeratorBig||denominatorBig)
+		{
+			
+			int ciphersOfNum = SmallTools.dezimalstellenVonInt(newNumeratorInt);
+			int ciphersOfDenom = SmallTools.dezimalstellenVonInt(newDenominatorInt);
+			
+			int maxCiphers = SmallTools.dezimalstellenVonInt(SmallNatural.max);
+		
+			int diff1 = maxCiphers-ciphersOfNum;
+			int diff2 = maxCiphers-ciphersOfDenom;
+			
+			double factor1 = Math.pow(10, diff1);
+			double factor2 = Math.pow(10, diff2);
+			
+			double actualFactor = factor1;
+			if(diff2<diff1)actualFactor = factor2;
+			
+			//TODO:Ta-da incomplete!
+
+		}
+
+		newNumerator = new SmallNatural(shortNumerator);
+		newDenominator = new SmallNatural(shortDenominator);
+
+		RationalNumber output = new RationalNumber(sign, newNumerator, newDenominator);
 	
-		return output.cutCiphers();
+		
+		return output;
 	}
 
-	public RationalNumber divideBy(RationalNumber r) throws DivisionByZeroException, NaturalNumberException, RNumException
+	public RationalNumber divideBy(RationalNumber r) throws DivisionByZeroException, NaturalNumberException, RNumException, CollectionException, CloneNotSupportedException
 	{
 		
 		if(r.equals(rZero))throw new DivisionByZeroException();
 		
 		if(this.equals(rZero))return rZero;
 		
-		NaturalNumber expandedNumerator = (r.integerPart.multiplyWith(r.denominator)).addWith(r.numerator);
-		boolean signOfE = r.sign;
+		int intR = r.integerPart.getNumberCore();
+		int numR = r.numerator.getNumberCore();
+		int denomR = r.denominator.getNumberCore();
 		
-		RationalNumber reciprocal = new RationalNumber(signOfE, r.denominator, expandedNumerator);
-		RationalNumber output = this.multiplyWith(reciprocal);
+		int expandedNumerator = intR*denomR+numR;
+
+		SmallNatural newNumerator = new SmallNatural(expandedNumerator);
 		
-		return output.cutCiphers();
+		RationalNumber reciprocal = new RationalNumber(r.sign, r.denominator, newNumerator);
+		RationalNumber output = 
+				this.multiplyWith(reciprocal);
+		
+		return output;
 	}
 	
 	@Override
@@ -349,7 +375,7 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 	}
 
 	@Override
-	public RationalNumber addWith(RationalNumber r) throws NaturalNumberException, RNumException, CloneNotSupportedException 
+	public RationalNumber addWith(RationalNumber r) throws NaturalNumberException, RNumException, CloneNotSupportedException, DivisionByZeroException, CollectionException 
 	{
 		
 		if(this.equals(rZero))return r;
@@ -357,11 +383,31 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 
 		if(this.sign==r.sign)
 		{
-			NaturalNumber newIntegerPart = this.integerPart.addWith(r.integerPart);
-			NaturalNumber newNotShortendNumerator = (this.numerator.multiplyWith(r.denominator)).addWith(r.numerator.multiplyWith(this.denominator));
-			NaturalNumber newNotShortendDenominator = this.denominator.multiplyWith(r.denominator);
-		
-			return new RationalNumber(sign, newIntegerPart, newNotShortendNumerator, newNotShortendDenominator);
+			
+			int intThis = integerPart.getNumberCore();
+			int intR = r.integerPart.getNumberCore();
+			int numThis = numerator.getNumberCore();
+			int numR = r.numerator.getNumberCore();
+			int denomThis = denominator.getNumberCore();
+			int denomR = r.denominator.getNumberCore();
+			
+			int newIntegerPart = intThis+intR;
+			int newNotShortendNumerator = numThis*denomR+numR*denomThis;
+			int newNotShortendDenominator = denomThis*denomR;
+
+			int g = SmallTools.gcd(newNotShortendNumerator, newNotShortendDenominator);
+			int shortendNum = newNotShortendNumerator/g;
+			int shortendDenom = newNotShortendDenominator/g;
+			
+			SmallNatural newInteger = new SmallNatural(newIntegerPart);
+			SmallNatural newNumerator = new SmallNatural(shortendNum);
+			SmallNatural newDenominator = new SmallNatural(shortendDenom);
+			
+			System.out.println("new Not Shortend Numerator = " + newNotShortendNumerator);
+			
+			System.out.println("new not shortend denominator = " + newNotShortendDenominator);
+			
+			return new RationalNumber(sign, newInteger, newNumerator, newDenominator);
 		}
 		
 		//Now it is clear that signs are different
@@ -382,9 +428,10 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 			underDog = (RationalNumber) r.clone();
 		}
 		
-		Pair<NaturalNumber, NaturalNumber> ex1 = rNDominating.expand();
-		Pair<NaturalNumber, NaturalNumber> ex2 = underDog.expand();
+		Pair<Integer, Integer> ex1 = rNDominating.expand();
+		Pair<Integer, Integer> ex2 = underDog.expand();
 		
+		/*TODO:
 		NaturalNumber newEx1Numerator = ex1.getKey().multiplyWith(ex2.getValue());
 		NaturalNumber newDenominator = ex1.getValue().multiplyWith(ex2.getValue());
 				
@@ -392,14 +439,15 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 				
 		NaturalNumber newNumerator= newEx1Numerator.subtract(newEx2Numerator);
 		
-		return new RationalNumber(rNDominating.sign, newNumerator, newDenominator).cutCiphers();
+		RationalNumber output = new RationalNumber(rNDominating.sign, newNumerator, newDenominator);
+		//Should be output TODO:*/
+		
+		return null;
 	}
 
-	public RationalNumber getAmount() throws RNumException, NaturalNumberException
+	public RationalNumber getAmount() throws RNumException, NaturalNumberException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
-		
-		if(sign)return this;
-		else return new RationalNumber(true, integerPart, numerator, denominator).cutCiphers();
+		return new RationalNumber(true, integerPart, numerator, denominator);
 	}
 
 	@Override
@@ -409,7 +457,7 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 	}
 
 	@Override
-	public RationalNumber subtract(RationalNumber e) throws RNumException, NaturalNumberException, CloneNotSupportedException 
+	public RationalNumber subtract(RationalNumber e) throws RNumException, NaturalNumberException, CloneNotSupportedException, DivisionByZeroException, CollectionException 
 	{
 		
 		RationalNumber minus = new RationalNumber(!e.sign, e.integerPart, e.numerator, e.denominator);
@@ -422,7 +470,7 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 		return Objects.hash(integerPart, numerator, denominator);
 	}
 
-	public boolean isGreaterThen(RationalNumber other) throws NaturalNumberException, RNumException
+	public boolean isGreaterThen(RationalNumber other) throws NaturalNumberException, RNumException, DivisionByZeroException, CollectionException
 	{
 		
 		boolean isEqual = (this.equals(other));
@@ -442,19 +490,40 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 
 			if(denominator.equals(other.denominator))return numerator.isGreaterThen(other.numerator);
 
-			NaturalNumber numeratorThis = numerator.multiplyWith(other.denominator);
-			NaturalNumber numeratorOther = other.numerator.multiplyWith(denominator);
+			int numThis = numerator.getNumberCore();
+			int numOther = other.numerator.getNumberCore();
+			int denomThis = denominator.getNumberCore();
+			int denomOther = other.denominator.getNumberCore();
 			
-			if(numeratorThis.isGreaterThen(numeratorOther)) return true;
+			int numeratorThis = numThis*denomOther;
+			int numeratorOther = numOther*denomThis;
+			
+			return numeratorThis>numeratorOther;
 		}
 		
 		if(!sign&&!other.sign)
 		{
 
-			RationalNumber positiveA = new RationalNumber(true, integerPart, numerator, denominator);
-			RationalNumber positiveB = new RationalNumber(true, other.integerPart, other.numerator, other.denominator);
+			if(integerPart.isGreaterThen(other.integerPart))return false;
+			if(integerPart.isSmallerThen(other.integerPart)) return true;
 
-			return !positiveA.isGreaterThen(positiveB);
+			//if it continues computing at this point it is clear the integerParts
+			//are equal.
+
+			if(denominator.equals(other.denominator))
+			{
+				return !numerator.isGreaterThen(other.numerator);
+			}
+
+			int numThis = numerator.getNumberCore();
+			int numOther = other.numerator.getNumberCore();
+			int denomThis = denominator.getNumberCore();
+			int denomOther = other.denominator.getNumberCore();
+			
+			int numeratorThis = numThis*denomOther;
+			int numeratorOther = numOther*denomThis;
+			
+			return (numeratorThis<numeratorOther);
 		}
 
 		return false;
@@ -490,10 +559,10 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 	public String toString()
 	{
 		
-		if(numerator.equals(zero)&&sign)return integerPart + "";
-		if(numerator.equals(zero)&&!sign)return "-"+integerPart;
-		if(integerPart.equals(zero)&&sign) return "(" + numerator + "/" + denominator + ")";
-		if(integerPart.equals(zero)&&!sign)return "-(" + numerator + "/" + denominator + ")";
+		if(numerator.equals(snZero)&&sign)return integerPart + "";
+		if(numerator.equals(snZero)&&!sign)return "-"+integerPart;
+		if(integerPart.equals(snZero)&&sign) return "(" + numerator + "/" + denominator + ")";
+		if(integerPart.equals(snZero)&&!sign)return "-(" + numerator + "/" + denominator + ")";
 		
 		if(sign)return "(" + integerPart + " + " + numerator + "/" + denominator + ")";
 		//if(!sign)
@@ -506,11 +575,26 @@ public class RationalNumber implements SubtractableAndDivideable<RationalNumber>
 		{
 			return new RationalNumber(sign, integerPart, numerator, denominator);
 		}
-		catch(RNumException | NaturalNumberException e)
+		catch(NaturalNumberException | DivisionByZeroException | CollectionException | CloneNotSupportedException | RNumException e)
 		{
 			System.out.println("This shouldnt happen!");
 			e.printStackTrace();
 			return null;
-		}
+		} 
+	}
+	
+	public SmallNatural getIntegerPart() throws NaturalNumberException
+	{
+		return integerPart.clone();
+	}
+
+	public SmallNatural getNumerator() throws NaturalNumberException
+	{
+		return numerator.clone();
+	}
+
+	public SmallNatural getDenominator() throws NaturalNumberException
+	{
+		return denominator.clone();
 	}
 }

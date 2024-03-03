@@ -8,7 +8,6 @@ import java.util.Objects;
 public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRationalNr>
 {
 
-	
 	public static final ComplexRationalNr zero = new ComplexRationalNr(rZero, rZero);
 	
 	public static final ComplexRationalNr one = new ComplexRationalNr(rOne, rOne);
@@ -26,7 +25,7 @@ public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRatio
 	}
 	
 	@Override
-	public ComplexRationalNr subtract(ComplexRationalNr e) throws RNumException, NaturalNumberException, CloneNotSupportedException
+	public ComplexRationalNr subtract(ComplexRationalNr e) throws RNumException, NaturalNumberException, CloneNotSupportedException, DivisionByZeroException, CollectionException
 	{
 		
 		RationalNumber newReal = real.subtract(e.real);
@@ -42,12 +41,12 @@ public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRatio
 	}
 
 	@Override
-	public ComplexRationalNr addWith(ComplexRationalNr e) throws NaturalNumberException, RNumException, CloneNotSupportedException
+	public ComplexRationalNr addWith(ComplexRationalNr e) throws NaturalNumberException, RNumException, CloneNotSupportedException, DivisionByZeroException, CollectionException
 	{
 		
 		RationalNumber newReal = real.addWith(e.real);
 		RationalNumber newImaginary = imaginary.addWith(e.imaginary);
-
+		
 		return new ComplexRationalNr(newReal, newImaginary);
 	}
 
@@ -58,7 +57,7 @@ public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRatio
 	}
 
 	@Override
-	public ComplexRationalNr divideBy(ComplexRationalNr t) throws DivisionByZeroException, NaturalNumberException, RNumException, CloneNotSupportedException
+	public ComplexRationalNr divideBy(ComplexRationalNr t) throws DivisionByZeroException, NaturalNumberException, RNumException, CloneNotSupportedException, CollectionException
 	{
 		if(t.equals(zero))throw new DivisionByZeroException();
 		if(this.equals(zero))return zero;
@@ -79,7 +78,7 @@ public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRatio
 	}
 
 	@Override
-	public ComplexRationalNr multiplyWith(ComplexRationalNr e) throws NaturalNumberException, RNumException, CloneNotSupportedException
+	public ComplexRationalNr multiplyWith(ComplexRationalNr e) throws NaturalNumberException, RNumException, CloneNotSupportedException, DivisionByZeroException, CollectionException
 	{
 		
 		RationalNumber realTimesReal = this.real.multiplyWith(e.real);
@@ -101,7 +100,7 @@ public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRatio
 		return one;
 	}
 
-	public ComplexRationalNr getConjugate() throws RNumException, NaturalNumberException, CloneNotSupportedException
+	public ComplexRationalNr getConjugate() throws RNumException, NaturalNumberException, CloneNotSupportedException, DivisionByZeroException, CollectionException
 	{
 		
 		RationalNumber minusOne = rZero.subtract(rOne);
@@ -125,9 +124,14 @@ public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRatio
 		if(imaginary.equals(rZero))return real;
 		if(real.equals(rZero))return imaginary;
 		
-		ComplexRationalNr pureReal = SmallTools.getNthRoot(multiplyWith(getConjugate()), 2);
+		RationalNumber a2 = real.multiplyWith(real);
+		RationalNumber b2 = imaginary.multiplyWith(imaginary);
+		RationalNumber sum = a2.addWith(b2);
 		
-		return pureReal.getRealPart();
+		System.out.println("Trying to find root of " + sum);
+		RationalNumber pureReal = SmallTools.getNthRoot(sum, 2);
+		
+		return pureReal;
 	}
 		
 	public int hashCode()
@@ -151,7 +155,18 @@ public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRatio
 	public String toString()
 	{
 		
-		String output = "(" + this.real + " + " +this.imaginary + "i)";
-		return output;
+		try
+		{
+			boolean notSmallerThanZero = imaginary.isGreaterThen(rZero)||imaginary.equals(rZero);
+			if(notSmallerThanZero)return "(" + this.real + "+" +this.imaginary + "i)";
+			else return "(" + this.real + this.imaginary + "i)";
+		}
+		catch (NaturalNumberException | RNumException | DivisionByZeroException | CollectionException e) 
+		{
+			System.out.println("WTF how could this happen!");
+			e.printStackTrace();
+		}
+		
+		return "Something went wrong";
 	}
 }

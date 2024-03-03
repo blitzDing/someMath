@@ -4,8 +4,8 @@ package someMath;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static someMath.RationalNumber.*;;
-
+import static someMath.RationalNumber.*;
+import static someMath.NaturalNumber.*;
 public class ComplexRationalNrTest 
 {
 
@@ -13,13 +13,13 @@ public class ComplexRationalNrTest
 
 	static RationalNumber rMinusOne;
 
-	ComplexRationalNr one = new ComplexRationalNr(rOne, rZero);
+	ComplexRationalNr cOne = new ComplexRationalNr(rOne, rZero);
 	ComplexRationalNr i = new ComplexRationalNr(rZero, rOne);
 	ComplexRationalNr minusI = new ComplexRationalNr(rZero, rMinusOne);
 	ComplexRationalNr minusOne = new ComplexRationalNr(rMinusOne, rZero);
 	
 	@BeforeAll
-	public static void init() throws RNumException, NaturalNumberException, CloneNotSupportedException
+	public static void init() throws RNumException, NaturalNumberException, CloneNotSupportedException, DivisionByZeroException, CollectionException
 	{
 		rMinusOne = rZero.subtract(rOne);
 	}
@@ -28,42 +28,55 @@ public class ComplexRationalNrTest
 	public void testConjugate() throws InterruptedException, NaturalNumberException, RNumException, CloneNotSupportedException, IllegalArgumentException, DivisionByZeroException, CollectionException
 	{
 		
-		System.out.println("Testing.");
-		System.out.println("******************");
+		System.out.println("Testing Conjugate of ComplexNr");
+		System.out.println("******************************");
 		
-		NaturalNumber zwei = new NaturalNumber(2);
-		NaturalNumber drei = new NaturalNumber(3);
-		NaturalNumber vier = new NaturalNumber(4);
-		NaturalNumber sieben = new NaturalNumber(7);
-		NaturalNumber nine = new NaturalNumber(9);
-		NaturalNumber elf = new NaturalNumber(11);
-
-		Thread.sleep(millisWait);
-		
-		RationalNumber r1 = new RationalNumber(zwei, drei);
-		RationalNumber sqr = SmallTools.getNthPotenz(r1, 2);
-		
-		System.out.println(sqr);
-		
+		SmallNatural zwei = new SmallNatural(2);
+		SmallNatural drei = new SmallNatural(3);
+		SmallNatural vier = new SmallNatural(4);
+		SmallNatural sieben = new SmallNatural(7);
+		SmallNatural nine = new SmallNatural(9);
+		SmallNatural elf = new SmallNatural(11);
+				
 		RationalNumber arg1 = new RationalNumber(zwei, drei);
 		RationalNumber arg2 = new RationalNumber(elf, sieben);
 			
 		ComplexRationalNr a = new ComplexRationalNr(arg1, arg2);
 		
-		
 		System.out.println("a: " + a);
+		System.out.println("Conjugate of a: " + a.getConjugate());
+
+		RationalNumber amount = a.getAmount();
+		System.out.println("amount of a = " + amount);
+
 		RationalNumber img = a.multiplyWith(a.getConjugate()).getImaginaryPart();
-		System.out.println("Imaginary of a: " + img);
-		System.out.println("Is imaginary equal to rZero?: " + img.equals(rZero));
 		assert(img.equals(rZero));
 		
 		System.out.println("a*conjugate(a) = " + a.multiplyWith(a.getConjugate()));
-		System.out.println("Amount of a = " + a + ":-> "+ a.getAmount());
-		System.out.println("Amount squared Exactly: " + a.multiplyWith(a.getConjugate()).getAmount());
-		/*
-		 * display("a*(a')", a.multiplyWith(a.getConjugate()));
+		//ComplexRationalNr theRealA = a.addWith(a.getConjugate());
+		//ComplexRationalNr realA = new ComplexRationalNr(a.getRealPart(), rZero);
+		//ComplexRationalNr cTwo = new ComplexRationalNr(new RationalNumber(zwei, one), rZero);
+		//ComplexRationalNr theRealARealPart = realA.multiplyWith(cTwo);
+		//RationalNumber img2 = theRealA.getImaginaryPart();
+		//assert(img2.equals(rZero));
+		//System.out.println("a + conjugate(a) = " + theRealA);
+		//assert(theRealARealPart.getRealPart().equals(theRealA.getRealPart()));
+		
+		ComplexRationalNr b = new ComplexRationalNr(arg2, arg1);
+		
+		//amount = b.getAmount();
+		
+		System.out.println("b: " + b);
+		System.out.println("Conjugate of b: " + b.getConjugate());
 
-		*/
+		img = b.multiplyWith(b.getConjugate()).getImaginaryPart();
+		assert(img.equals(rZero));
+		
+		System.out.println("b*conjugate(b) = " + b.multiplyWith(b.getConjugate()));
+		RationalNumber amountSquaredA = a.multiplyWith(a.getConjugate()).getRealPart();
+		RationalNumber amountSquaredB = b.multiplyWith(b.getConjugate()).getRealPart();
+		
+		assert(amountSquaredA.equals(amountSquaredB));
 	}
 
 	/*
@@ -518,7 +531,7 @@ public class ComplexRationalNrTest
 		System.out.println("Quadrant " + getQuadrant(z) + "\n");
 	}
 	
-	public int getQuadrant(ComplexRationalNr z) throws NaturalNumberException, RNumException
+	public int getQuadrant(ComplexRationalNr z) throws NaturalNumberException, RNumException, DivisionByZeroException, CollectionException
 	{
 		
 		double x = z.getRealPart().doubleApproximation();

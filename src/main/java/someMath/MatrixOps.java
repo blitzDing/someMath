@@ -29,7 +29,7 @@ public class MatrixOps
 		return new Matrix<A>(matrix.getRows()-1,matrix.getColumns()-1,list);
 	}
 	
-	private static <A extends SubtractableAndDivideable<A>> A developeDet(Matrix<A> matrix, int i, boolean doDevelopeByRow) throws NaturalNumberException, CollectionException, RNumException, CloneNotSupportedException
+	private static <A extends SubtractableAndDivideable<A>> A developeDet(Matrix<A> matrix, int i, boolean doDevelopeByRow) throws NaturalNumberException, CollectionException, RNumException, CloneNotSupportedException, DivisionByZeroException
 	{
 
 		List<A> list = rowAsList(matrix, i);;
@@ -45,7 +45,8 @@ public class MatrixOps
 				
 				Matrix<A> subM = subMatrixOfElement(matrix, i, n);
 
-				if((n+i)%2==1)factor= a.getNeutralZero().subtract(a.getNeutralOne());
+				if((n+i)%2==1)factor= 
+						a.getNeutralZero().subtract(a.getNeutralOne());
 				else factor = a.getNeutralOne();
 				
 				value = value
@@ -160,7 +161,7 @@ public class MatrixOps
 		return new Matrix<E>(newValArr);		
 	}
 
-	public static <X extends SubtractableAndDivideable<X>> X getDeterminant(Matrix<X> matrix) throws NaturalNumberException, CollectionException, RNumException, CloneNotSupportedException
+	public static <X extends SubtractableAndDivideable<X>> X getDeterminant(Matrix<X> matrix) throws NaturalNumberException, CollectionException, RNumException, CloneNotSupportedException, DivisionByZeroException
 	{
 		
 		int rows = matrix.getRows();

@@ -10,7 +10,7 @@ public interface Multiplyable<E>
 	
 	public boolean hasNeutralOne();
 	
-	public E multiplyWith(E e) throws NaturalNumberException, RNumException, CloneNotSupportedException;
+	public E multiplyWith(E e) throws NaturalNumberException, RNumException, CloneNotSupportedException, DivisionByZeroException, CollectionException;
 	
 	public E getNeutralOne() throws NaturalNumberException;
 }

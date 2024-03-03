@@ -1,11 +1,13 @@
 package someMath;
 
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.List;
 
+import fileShortCuts.TextAndObjSaveAndLoad;
 import javafx.util.Pair;
 
 import static someMath.NaturalNumber.*;
@@ -22,8 +24,9 @@ public class SmallTools
  
     final public static double prettySmall = Math.pow(10, -11);
 
-	private static final int standartDeepness = 6;
-    
+	private static final int standartDeepnessForRoot = 3;
+    	
+	
 	public static int dezimalstellenVonInt(int n)
 	{
 		
@@ -138,9 +141,26 @@ public class SmallTools
 		else return gcd(b,Math.floorMod(a,b));
 	}
 
+	//Smallest Common Multiple.
 	public static int scm(int a, int b)
 	{
 		return (a*b)/gcd(a,b);
+	}
+	
+	public static NaturalNumber gcd(NaturalNumber a, NaturalNumber b) throws NaturalNumberException
+	{
+		BigInteger biNum = a.getNumberCore();
+		BigInteger biDenom = b.getNumberCore();
+		
+		BigInteger biGCD = biNum.gcd(biDenom);
+		
+		return new NaturalNumber(biGCD);
+	}
+
+	//Smallest Common Multiple.
+	public static NaturalNumber scm(NaturalNumber a, NaturalNumber b) throws DivisionByZeroException, NaturalNumberException, CollectionException, RNumException
+	{
+		return (a.multiplyWith(b)).divideBy(gcd(a,b));
 	}
 	
 	public static int randomInt(int max, int min)
@@ -151,15 +171,14 @@ public class SmallTools
 	
 	public static RationalNumber rndRNr(RationalNumber max, RationalNumber min)
 	{
-		
+		//TODO:
 		return null;
 	}
 
 	public static <T extends SubtractableAndDivideable<T>> T getNthPotenz(T basis, int exponent) throws NaturalNumberException, RNumException, CloneNotSupportedException, DivisionByZeroException, CollectionException
 	{
 		
-		int newExponent = exponent;
-		if(exponent<0)newExponent = -exponent;
+		int newExponent = Math.abs(exponent);
 		
 		T potenz = basis.getNeutralOne();
 		
@@ -186,18 +205,27 @@ public class SmallTools
 		T currentValue =  basis.getNeutralOne();
 		if(root==1)return basis;
 		
-		T startValue = basis.getNeutralOne().addWith(basis.getNeutralOne());
+		T startValue = basis.getNeutralOne();
 		T ainz = basis.divideBy(startValue);
 		T two = ainz.addWith(ainz);
 		T half = ainz.divideBy(two);
-
+		
 		for(int n=0;n<deepNess;n++)
 		{
-			T newValue = half.multiplyWith(currentValue.addWith
-					(basis.divideBy(getNthPotenz(currentValue, newRoot-1))));
+
+			T power = getNthPotenz(currentValue, newRoot-1);
+			System.out.println("New Power: " + power);
+
+			T div = basis.divideBy(power);
+			System.out.println("New div: " + div);
+			
+			T sum = currentValue.addWith(div);
+			System.out.println("New Sum: " + sum);
+			
+			T newValue = half.multiplyWith(sum);
+			System.out.println("New Value: " + newValue);
 			
 			if(newValue.equals(currentValue))return newValue;
-			
 			currentValue = newValue;
 		}
 		
@@ -208,6 +236,6 @@ public class SmallTools
 	
 	public static <T extends SubtractableAndDivideable<T>> T getNthRoot(T basis, int root) throws IllegalArgumentException, NaturalNumberException, RNumException, CloneNotSupportedException, DivisionByZeroException, CollectionException
 	{
-		return getNthRoot(standartDeepness, basis, root);
+		return getNthRoot(standartDeepnessForRoot, basis, root);
 	}	
 }

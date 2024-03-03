@@ -27,20 +27,31 @@ class NaturalNumberTest
 
 		int z1 = SmallTools.randomInt(2000, 1001);
 		int z2 = SmallTools.randomInt(1000, 0);
+		int z3 = SmallTools.randomInt(1000, 0);
 
 		NaturalNumber a = new NaturalNumber(z1);
 		NaturalNumber b = new NaturalNumber(z2);
+		
 
 		NaturalNumber sum = (a.addWith(b));
 		NaturalNumber diff = (a.subtract(b));
-		
-		boolean check = (a.multiplyWith(a)).subtract(b.multiplyWith(b)).equals(sum.multiplyWith(diff));
+
+		NaturalNumber a2 = a.multiplyWith(a);
+		NaturalNumber b2 = b.multiplyWith(b);
+
+		boolean check = (a2.subtract(b2)).equals(sum.multiplyWith(diff));
 		
 		assert(check);
 		
-		System.out.println(check);
+		
+		NaturalNumber c = new NaturalNumber(z3);
+		
+		NaturalNumber ac = a.multiplyWith(c);
+		NaturalNumber bc = b.multiplyWith(c);
+		
+		assert(ac.isGreaterThen(bc));
 	}
-	
+
 	@Test
 	void divisonTest() throws NaturalNumberException, DivisionByZeroException, CollectionException, RNumException
 	{
@@ -51,13 +62,10 @@ class NaturalNumberTest
 		NaturalNumber e = new NaturalNumber(5);
 		NaturalNumber f = new NaturalNumber(4);
 
-		NaturalNumber d1 = a.divideBy(b);
-		System.out.println("D1: " + d1);
+		NaturalNumber d1 = a.divideBy(b);//Hole Number division rounding down
 		assert(d1.equals(e));
 		
 		NaturalNumber d2 = c.divideBy(b);
-		System.out.println("D2: " + d2);
 		assert(d2.equals(f));
 	}
-
 }

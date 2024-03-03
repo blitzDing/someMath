@@ -5,7 +5,7 @@ import java.util.Objects;
 
 //Even so it implements addition, subtraction, multiplication and division this is
 // NOT a mathematical Group!!!!
-public class NaturalNumber implements SubtractableAndDivideable<NaturalNumber> 
+public class NaturalNumber implements SubtractableAndDivideable<NaturalNumber>, Cloneable
 {
 
 	private final BigInteger numberCore;
@@ -94,18 +94,18 @@ public class NaturalNumber implements SubtractableAndDivideable<NaturalNumber>
 		if(t.equals(zero))throw new DivisionByZeroException();
 		if(this.equals(zero))return zero;
 		if(this.isSmallerThen(t))return zero;
-		
+		if(this.equals(t))return one;
+		if(t.equals(one))return new NaturalNumber(numberCore);
 		
 		NaturalNumber current = zero.clone();
-		NaturalNumber counter = zero.clone();
+		int counter = 0;
 		
-		for(;(current.isSmallerThen(this)||current.equals(this));)
+		for(;(!(current.isGreaterThen(this)));counter++)
 		{
 			current = current.addWith(t);
-			counter = counter.addWith(one);
 		}
-		
-		return counter.subtract(one);
+
+		return new NaturalNumber(counter-1);
 	}
 	
 	public boolean isGreaterThen(NaturalNumber n)
