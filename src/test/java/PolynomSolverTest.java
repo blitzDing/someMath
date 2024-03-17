@@ -20,8 +20,7 @@ public class PolynomSolverTest
 	public void testSolver() throws NaturalNumberException, RNumException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
 		
-		SmallNatural zwei = new SmallNatural(2);
-		RationalNumber two = new RationalNumber(zwei, snOne);
+		RationalNumber two = new RationalNumber(2, 1);
 		
 		/*TODO:
 		//equals x²+2 = 0.

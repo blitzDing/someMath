@@ -31,15 +31,9 @@ public class ComplexRationalNrTest
 		System.out.println("Testing Conjugate of ComplexNr");
 		System.out.println("******************************");
 		
-		SmallNatural zwei = new SmallNatural(2);
-		SmallNatural drei = new SmallNatural(3);
-		SmallNatural vier = new SmallNatural(4);
-		SmallNatural sieben = new SmallNatural(7);
-		SmallNatural nine = new SmallNatural(9);
-		SmallNatural elf = new SmallNatural(11);
-				
-		RationalNumber arg1 = new RationalNumber(zwei, drei);
-		RationalNumber arg2 = new RationalNumber(elf, sieben);
+
+		RationalNumber arg1 = new RationalNumber(2, 3);
+		RationalNumber arg2 = new RationalNumber(11, 7);
 			
 		ComplexRationalNr a = new ComplexRationalNr(arg1, arg2);
 		

@@ -17,30 +17,33 @@ public class RationalNumberTest
 
 	private static double prettySmall = Math.pow(10, -11);
 
-	static SmallNatural zwei;
-	static SmallNatural vier;
-	static SmallNatural drei;
-	static SmallNatural ten;
-	static SmallNatural sex;
-	static SmallNatural five;
-	static SmallNatural hexMex;
-	static SmallNatural maxSN;
-	static RationalNumber fourToo;
+	static int zero;
+	static int one;
+	static int zwei;
+	static int vier;
+	static int drei;
+	static int ten;
+	static int sex;
+	static int five;
+	static int hexMex;
+	static int max;
+	static int fourToo;
 
 
 	@BeforeAll
 	public static void prepare() throws NaturalNumberException, RNumException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
 		
-		zwei = new SmallNatural(2);
-		vier = new SmallNatural(4);
-		drei = new SmallNatural(3);
-		five = new SmallNatural(5);
-		ten = new SmallNatural(10);
-		sex = drei.multiplyWith(zwei);
-		hexMex = new SmallNatural(16);
-		maxSN = new SmallNatural(SmallNatural.max);
-		fourToo = new RationalNumber(hexMex, vier);
+		zero = 0;
+		one = 1;
+		zwei = 2;
+		vier = 4;
+		drei = 3;
+		five = 5;
+		ten = 10;
+		sex = 6;
+		hexMex = 16;
+		max = Integer.MAX_VALUE;
 	}
 
 	@Test
@@ -50,20 +53,20 @@ public class RationalNumberTest
 		System.out.println("Edge Test");
 		System.out.println("*********");
 
-		NaturalNumberException exception = assertThrows(NaturalNumberException.class,()->
+		RNumException exception = assertThrows(RNumException.class,()->
 		{
-			RationalNumber maxInt = new RationalNumber(true, maxSN, drei, zwei);
+			RationalNumber maxInt = new RationalNumber(max, drei, zero);
 		});
 		
-		RationalNumber edge = new RationalNumber(true, maxSN, zwei, drei);
+		RationalNumber edge = new RationalNumber(max, zwei, drei);
 		System.out.println("Edge: " + edge);
 
 		RationalNumber overTheEdge = edge.multiplyWith(edge);
-		assert(overTheEdge.getIntegerPart().getNumberCore()==SmallNatural.max);
-		assert(overTheEdge.getNumerator().getNumberCore()==0);
-		assert(overTheEdge.getDenominator().getNumberCore()==1);
+		System.out.println("overTheEdge integerPart: " + overTheEdge.getIntegerPart());
+		System.out.println("overTheEdge numerator: " + overTheEdge.getNumerator());
+		System.out.println("overTheEdge denominator: " + overTheEdge.getDenominator());
 		
-		assert(SmallNatural.valueOutOfBounds.equals(exception.getMessage()));
+		assert(RationalNumber.divisionByZeroMsg.equals(exception.getMessage()));
 	}
 
 	@Test
@@ -76,56 +79,58 @@ public class RationalNumberTest
 		RationalNumber a = new RationalNumber(vier, zwei);
 		
 		assert("2".equals(a.toString()));
-		assert(a.getIntegerPart().equals(zwei));
-		assert(a.getNumerator().equals(snZero));
-		assert(a.getDenominator().equals(snOne));
+		assert(a.getIntegerPart()==zwei);
+		assert(a.getNumerator()==zero);
+		assert(a.getDenominator()==one);
 
-		assert("4".equals(fourToo.toString()));
-		assert(fourToo.getIntegerPart().equals(vier));
-		assert(fourToo.getNumerator().equals(snZero));
-		assert(fourToo.getDenominator().equals(snOne));
+		RationalNumber fourToo = new RationalNumber(vier*vier, vier);
+		
+		assert("4".equals(""+fourToo));
+		assert(fourToo.getIntegerPart()==4);
+		assert(fourToo.getNumerator()==0);
+		assert(fourToo.getDenominator()==1);
 				
-		RationalNumber c = new RationalNumber(false, drei, hexMex, ten);
+		RationalNumber c = new RationalNumber(drei, hexMex, ten);
 		System.out.println(c);
 		assert("-(4 + 3/5)".equals(c.toString()));
-		assert(c.getIntegerPart().equals(vier));
-		assert(c.getNumerator().equals(drei));
-		assert(c.getDenominator().equals(five));
+		assert(c.getIntegerPart()==vier);
+		assert(c.getNumerator()==drei);
+		assert(c.getDenominator()==five);
 		assert("23/5".equals(c.expandedVersionToString()));//must be not negative!;
 		
 		RationalNumber d = new RationalNumber("5 2/3");
 		assert("(5 + 2/3)".equals(d.toString()));
-		assert(d.getIntegerPart().equals(five));
-		assert(d.getNumerator().equals(zwei));
-		assert(d.getDenominator().equals(drei));
+		assert(d.getIntegerPart()==five);
+		assert(d.getNumerator()==zwei);
+		assert(d.getDenominator()==drei);
 		assert("17/3".equals(d.expandedVersionToString()));//must be not negative!;
 
-		SmallNatural seven = new SmallNatural(7);
+		int seven = 7;
 		RationalNumber e = new RationalNumber("5/7");
 		assert("(5/7)".equals(e.toString()));
-		assert(e.getIntegerPart().equals(snZero));
-		assert(e.getNumerator().equals(five));
-		assert(e.getDenominator().equals(seven));
+		assert(e.getIntegerPart()==0);
+		assert(e.getNumerator()==five);
+		assert(e.getDenominator()==seven);
 
 		RationalNumber f = new RationalNumber("-5 2/3");
 		assert("-(5 + 2/3)".equals(f.toString()));
-		assert(f.getIntegerPart().equals(five));
-		assert(f.getNumerator().equals(zwei));
-		assert(f.getDenominator().equals(drei));
-		assert(false == f.sign);
+		assert(f.getIntegerPart()==five);
+		assert(f.getNumerator()==zwei);
+		assert(f.getDenominator()==drei);
+		assert(false == f.getSign());
 		assert("17/3".equals(f.expandedVersionToString()));
 		
 		RationalNumber g = new RationalNumber("-50/7");
 		assert("-(7 + 1/7)".equals(g.toString()));
-		assert(g.getIntegerPart().equals(seven));
-		assert(g.getNumerator().equals(snOne));
-		assert(g.getDenominator().equals(seven));
+		assert(g.getIntegerPart()==seven);
+		assert(g.getNumerator()==one);
+		assert(g.getDenominator()==seven);
 
 		RationalNumber h = new RationalNumber("25/7");
 		assert("(3 + 4/7)".equals(h.toString()));
-		assert(h.getIntegerPart().equals(drei));
-		assert(h.getNumerator().equals(vier));
-		assert(h.getDenominator().equals(seven));
+		assert(h.getIntegerPart()==drei);
+		assert(h.getNumerator()==vier);
+		assert(h.getDenominator()==seven);
 		assert("25/7".equals(h.expandedVersionToString()));
 		
 		//RationalNumber i = new RationalNumber("7-20/10");//throws white space illegal argument exception.
@@ -161,7 +166,7 @@ public class RationalNumberTest
 		
 		System.out.println(a + " = " + self + "?");
 		assert(a.equals(self));
-		assert(a.divideBy(a).addWith(rOne).equals(new RationalNumber(true, zwei, snZero, snOne)));
+		assert(a.divideBy(a).addWith(rOne).equals(new RationalNumber(zwei, zero, one)));
 
 		RationalNumber samesame = a.addWith(rZero);
 		RationalNumber alsoSame = samesame.multiplyWith(rOne);
