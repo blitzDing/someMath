@@ -1,7 +1,9 @@
+package someMath;
 
 
 import org.junit.jupiter.api.Test;
 
+import someMath.MathSetClassClosedUnderUnion;
 import someMath.SmallTools;
 
 import java.util.*;
@@ -28,7 +30,7 @@ class CreateFamilieTest {
 		origin.add(two);
 		origin.add(three);
 		
-		Set<Set<Character>> output = SmallTools.createFamilie(origin);
+		Set<Set<Character>> output = MathSetClassClosedUnderUnion.createFamilie(origin);
 
 		System.out.println("\nOrigin:");
 		for(Set<Character> e: origin)
