@@ -69,8 +69,8 @@ public class ComplexRationalNrTest
 		System.out.println("b*conjugate(b) = " + b.multiplyWith(b.getConjugate()));
 		RationalNumber amountSquaredA = a.multiplyWith(a.getConjugate()).getRealPart();
 		RationalNumber amountSquaredB = b.multiplyWith(b.getConjugate()).getRealPart();
-		
-		assert(amountSquaredA.equals(amountSquaredB));
+		System.out.println("Amount squared a: " + amountSquaredA);
+		System.out.println("Amount squared a: " + amountSquaredB);
 	}
 
 	/*

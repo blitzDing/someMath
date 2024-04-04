@@ -31,45 +31,16 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 		
 		if(denominator==0)throw new RNumException(divisionByZeroMsg);
 
-		if(numerator<0&&denominator<0)
-		{
-			numerator = Math.abs(numerator);
-			denominator = Math.abs(denominator);
-		}
-
 		int newNum = integerPart*denominator+numerator;
 
-		boolean newNumNegative = (newNum<0);
-		boolean denomNegative = (denominator<0);
-
-		boolean newNumPositive = (newNum>0);
-		boolean denomPositive = (denominator>0);
-
-		boolean sameSame = (newNumNegative&&denomNegative)||(newNumPositive&&denomPositive);
-		
-		int newNumAbs = Math.abs(newNum);
-		int denomAbs = Math.abs(denominator);
-		
-		int [] shortend = shortening(newNumAbs, denomAbs);
-		
-		if(sameSame)
-		{
-			
-			this.integerPart = shortend[0];
-			this.numerator = shortend[1];
-			this.denominator = shortend[2];
-			
-			this.sign = !newNumNegative;//Includes Zero as Positive.
-			
-			return;
-		}
-		
-		this.integerPart = -shortend[0];
-		this.numerator = -shortend[1];
+		int [] shortend = shortening(newNum, denominator);
+				
+		this.integerPart = shortend[0];
+		this.numerator = shortend[1];
 		this.denominator = shortend[2]; //denominator in a fleshed out instance never
 										//smaller or equal Zero!
 		
-		this.sign = !newNumNegative;//Includes Zero as Positive.
+		this.sign = !(integerPart<0||(integerPart<=0&&numerator<0));//Includes Zero as Positive.
 	}
 	
 	//Default positive RN.
@@ -99,7 +70,6 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 		this.denominator = denominator;
 	}
 
-	//Careful please no negatives!!!
 	private int[] shortening(int numerator, int denominator)
 	{
 		
@@ -108,23 +78,34 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 		theThreeParts[1] = 0;
 		theThreeParts[2] = 0;
 		
-		if(numerator<denominator)
+		int numAbs = Math.abs(numerator);
+		int denomAbs = Math.abs(denominator);
+		
+		if(numAbs<denomAbs)
 		{
 			theThreeParts[0] = 0;
-			theThreeParts[1] = numerator;
-			theThreeParts[2] = denominator;
+			theThreeParts[1] = numerator/SmallTools.gcd(numerator, denominator);
+			theThreeParts[2] = denominator/SmallTools.gcd(numerator, denominator);
 			
 			return theThreeParts;
 		}
 		
-		int[] down = shortening(numerator-denominator, denominator);
+		int[] down = shortening(numAbs-denomAbs, denomAbs);
 
 		theThreeParts[0] = theThreeParts[0]+(down[0]+1);
 		theThreeParts[1] =  down[1];
 		theThreeParts[2] =  down[2];
-			
-		return theThreeParts;
 		
+		boolean sameSame = (numerator<0&&denominator<0)||(numerator>0&&denominator>0);
+		if(sameSame)return theThreeParts;
+		else
+		{
+			
+			theThreeParts[0] = -theThreeParts[0];
+			theThreeParts[1] = -theThreeParts[1];
+			
+			return theThreeParts;
+		}
 	}
 	
 	private static int[] parseString(String s) throws RNumException
@@ -187,7 +168,7 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 				theParts[2] = denominator;
 
 				if(firstMinus!=null)theParts[0] = -Integer.parseInt(intPart);
-				else theParts[0] = -Integer.parseInt(intPart);
+				else theParts[0] = Integer.parseInt(intPart);
 
 				if(secondMinus!=null)theParts[1] = -numerator;
 				else theParts[1] = numerator;
@@ -372,7 +353,8 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 		if(numerator==0)return integerPart + "";
 		if(integerPart==0) return "(" + numerator + "/" + denominator + ")";
 		
-		return "(" + integerPart + " + " + numerator + "/" + denominator + ")";
+		if(numerator<0) return "(" + integerPart  + numerator + "/" + denominator + ")";
+		else return "(" + integerPart + " + " + numerator + "/" + denominator + ")";
 	}
 	
 	public RationalNumber clone() throws CloneNotSupportedException

@@ -1,8 +1,6 @@
 package someMath;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class MathSetClassClosedUnderUnion
@@ -82,5 +80,22 @@ public class MathSetClassClosedUnderUnion
 		}
 
 		return true;
+	}
+	
+	
+	public static <T> Set<T> catchRandomNAndRemove(int n, Set<T> source) throws CollectionException
+	{
+		
+		Set<T> output = new HashSet<>();
+		if(n>source.size())throw new IllegalArgumentException("Not enough Elements in Set.");
+		
+		for(int i=0;i<n;i++)
+		{
+			T t = CollectionManipulation.catchRandomElementOfSet(source);
+			source.remove(t);
+			output.add(t);
+		}
+		
+		return output;
 	}
 }

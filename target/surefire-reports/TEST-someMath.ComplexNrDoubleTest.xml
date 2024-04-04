@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="someMath.ComplexNrDoubleTest" time="0.163" tests="9" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="someMath.ComplexNrDoubleTest" time="0.152" tests="9" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="19"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="DE"/>
     <property name="sun.boot.library.path" value="/home/bernstein/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_19.0.1.v20221102-1007/jre/lib"/>
-    <property name="sun.java.command" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire/surefirebooter3579137057845497167.jar /home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire 2024-02-13T18-16-23_732-jvmRun1 surefire9413501090762731054tmp surefire_014034501114105099196tmp"/>
+    <property name="sun.java.command" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire/surefirebooter2756900622929038410.jar /home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire 2024-04-03T22-50-38_673-jvmRun1 surefire4872234133594869809tmp surefire_06457580584688113850tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/test-classes:/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/classes:/home/bernstein/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.1/junit-jupiter-engine-5.9.1.jar:/home/bernstein/.m2/repository/org/junit/platform/junit-platform-engine/1.9.1/junit-platform-engine-1.9.1.jar:/home/bernstein/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/bernstein/.m2/repository/org/junit/platform/junit-platform-commons/1.9.1/junit-platform-commons-1.9.1.jar:/home/bernstein/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.1/junit-jupiter-api-5.9.1.jar:/home/bernstein/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-controls/20/javafx-controls-20.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-controls/20/javafx-controls-20-linux.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-graphics/20/javafx-graphics-20.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-graphics/20/javafx-graphics-20-linux.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-base/20/javafx-base-20.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-base/20/javafx-base-20-linux.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -28,13 +28,13 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire/surefirebooter3579137057845497167.jar"/>
+    <property name="surefire.real.class.path" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire/surefirebooter2756900622929038410.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="19.0.1+10"/>
     <property name="user.name" value="bernstein"/>
     <property name="stdout.encoding" value="UTF-8"/>
     <property name="path.separator" value=":"/>
-    <property name="os.version" value="6.5.0-17-generic"/>
+    <property name="os.version" value="6.5.0-26-generic"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="file.encoding" value="UTF-8"/>
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
@@ -55,13 +55,13 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="63.0"/>
   </properties>
-  <testcase name="testLogarithm" classname="someMath.ComplexNrDoubleTest" time="0.023"/>
-  <testcase name="testMultiplication" classname="someMath.ComplexNrDoubleTest" time="0.042"/>
-  <testcase name="testAddition" classname="someMath.ComplexNrDoubleTest" time="0.027"/>
-  <testcase name="testConjugate" classname="someMath.ComplexNrDoubleTest" time="0.007"/>
-  <testcase name="testPolarAndBackTransform" classname="someMath.ComplexNrDoubleTest" time="0.001"/>
-  <testcase name="testArgAndAmount" classname="someMath.ComplexNrDoubleTest" time="0.016"/>
-  <testcase name="testDivision" classname="someMath.ComplexNrDoubleTest" time="0.013"/>
-  <testcase name="testPowers" classname="someMath.ComplexNrDoubleTest" time="0.01"/>
-  <testcase name="testSubtraction" classname="someMath.ComplexNrDoubleTest" time="0.004"/>
+  <testcase name="testLogarithm" classname="someMath.ComplexNrDoubleTest" time="0.026"/>
+  <testcase name="testMultiplication" classname="someMath.ComplexNrDoubleTest" time="0.059"/>
+  <testcase name="testAddition" classname="someMath.ComplexNrDoubleTest" time="0.019"/>
+  <testcase name="testConjugate" classname="someMath.ComplexNrDoubleTest" time="0.005"/>
+  <testcase name="testPolarAndBackTransform" classname="someMath.ComplexNrDoubleTest" time="0.002"/>
+  <testcase name="testArgAndAmount" classname="someMath.ComplexNrDoubleTest" time="0.009"/>
+  <testcase name="testDivision" classname="someMath.ComplexNrDoubleTest" time="0.008"/>
+  <testcase name="testPowers" classname="someMath.ComplexNrDoubleTest" time="0.002"/>
+  <testcase name="testSubtraction" classname="someMath.ComplexNrDoubleTest" time="0.005"/>
 </testsuite>

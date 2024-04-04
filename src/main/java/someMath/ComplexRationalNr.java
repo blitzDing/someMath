@@ -159,9 +159,15 @@ public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRatio
 		{
 			boolean notSmallerThanZero = imaginary.isGreaterThen(rZero)||imaginary.equals(rZero);
 			if(notSmallerThanZero)return "(" + this.real + "+" +this.imaginary + "i)";
-			else return "(" + this.real + this.imaginary + "i)";
+			else 
+			{
+				
+				RationalNumber negativImg = new RationalNumber(-1,0,1).multiplyWith(this.imaginary);
+				
+				return "(" + this.real + "-" + negativImg + "i)";
+			}
 		}
-		catch (NaturalNumberException | RNumException | DivisionByZeroException | CollectionException e) 
+		catch (NaturalNumberException | RNumException | DivisionByZeroException | CollectionException | CloneNotSupportedException e) 
 		{
 			System.out.println("WTF how could this happen!");
 			e.printStackTrace();

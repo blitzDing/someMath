@@ -15,20 +15,37 @@ public class CantorPairTest
 	public void someThing() throws NaturalNumberException, DivisionByZeroException, CollectionException, RNumException
 	{
 
-		NaturalNumber bd = SmallTools.cantorPairNr(new NaturalNumber(0), new NaturalNumber(0));
-		NaturalNumber bd2 = SmallTools.cantorPairNr(new NaturalNumber(1), new NaturalNumber(0));
-		NaturalNumber bd3= SmallTools.cantorPairNr(new NaturalNumber(1), new NaturalNumber(1));
-		NaturalNumber bd4 = SmallTools.cantorPairNr(new NaturalNumber(1), new NaturalNumber(2));
-		NaturalNumber bd5 = SmallTools.cantorPairNr(new NaturalNumber(2), new NaturalNumber(0));
-		NaturalNumber bd6 = SmallTools.cantorPairNr(new NaturalNumber(2), new NaturalNumber(1));
-		NaturalNumber bd7 = SmallTools.cantorPairNr(new NaturalNumber(2), new NaturalNumber(2));
+
+		for(int n=0;n<4;n++)
+		{
+			int z1 = SmallTools.randomInt(30, 1);
+			int z2 = SmallTools.randomInt(20, 1);
+			
+			NaturalNumber nn1 = new NaturalNumber(z1);
+			NaturalNumber p0 = SmallTools.cantorPairNr(NaturalNumber.zero, nn1);
+			display("Pair", NaturalNumber.zero, nn1);
+			NaturalNumber nn2 = nn1.addWith(NaturalNumber.one);
+			NaturalNumber p1 = SmallTools.cantorPairNr(nn2, NaturalNumber.zero);
+			display("Pair Successor", nn2, NaturalNumber.zero);
+			
+			assert(nn1.addWith(NaturalNumber.one).equals(new NaturalNumber(z1+1)));
+			assert(p1.equals(p0.addWith(NaturalNumber.one)));
+			
+			NaturalNumber p2 = SmallTools.cantorPairNr(nn1, nn2);
+			display("other Pair", nn1, nn2);
+			NaturalNumber smallNN1 = nn1.subtract(NaturalNumber.one);
+			NaturalNumber bigNN2 = nn2.addWith(NaturalNumber.one);
+			NaturalNumber p3 = SmallTools.cantorPairNr(smallNN1, bigNN2);
+			display("Other Pair Successor", smallNN1, bigNN2);
+			
+			assert(p2.addWith(NaturalNumber.one).equals(p3));
+		}
+	}
+	
+	public void display(String name, NaturalNumber a, NaturalNumber b) throws NaturalNumberException, DivisionByZeroException, CollectionException, RNumException
+	{
 		
-		System.out.println("(0, 0) = " + bd);
-		System.out.println("(1, 0) = " + bd2);
-		System.out.println("(1, 1) = " + bd3);
-		System.out.println("(1, 2) = " + bd4);
-		System.out.println("(2, 0) = " + bd5);
-		System.out.println("(2, 1) = " + bd6);
-		System.out.println("(2, 2) = " + bd7);
+		NaturalNumber nn = SmallTools.cantorPairNr(a, b);
+		System.out.println(name + "(" + a + ", " + b + ") = " + nn);
 	}
 }
