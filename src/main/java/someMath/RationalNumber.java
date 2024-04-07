@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static someMath.SmallNatural.*;
 
 public class RationalNumber implements Cloneable, SubtractableAndDivideable<RationalNumber>
 {
@@ -23,7 +22,26 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 	public static final RationalNumber rZero = new RationalNumber("hey", 0, 0, 1);
 	public static final RationalNumber rOne = new RationalNumber("hi", 1, 0, 1);
 	
-	public static final Pattern pattern = Pattern.compile("(\\-)?((\\d+\\s)|(\\d+$))?((\\-)?(\\d+)(/)(\\d+))?");
+	public static final String vorzeichen = "([+-])";
+	public static final String oVorzeichen = vorzeichen + "?";
+	public static final String ciphers = "(\\d+)";
+	public static final String space = "(\\s+)";
+	public static final String oSpace = space + "?";
+	public static final String bruchStrich = "(/)";
+
+	public static final String intPart =   "(" + oVorzeichen + ciphers + ")";
+	public static final String oIntPart = intPart + "?";
+
+	public static final String fractional = 
+			"(" + oVorzeichen + ciphers + bruchStrich + oVorzeichen + ciphers + ")";
+	public static final String sFractional = 
+			"(" + vorzeichen + ciphers + bruchStrich + oVorzeichen + ciphers + ")";
+			
+	public static final String oFractional = fractional + "?";
+	
+	public static final Pattern patternCompound = Pattern.compile(intPart + sFractional);
+	public static final Pattern patternIntOnly = Pattern.compile(intPart);
+	public static final Pattern patternFracOnly = Pattern.compile(fractional);
 	
 
 	public RationalNumber(int integerPart, int numerator, int denominator) throws RNumException, DivisionByZeroException, CollectionException, CloneNotSupportedException
@@ -108,74 +126,102 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 		}
 	}
 	
+	private static void displayGroups(String s, Matcher matcher)
+	{
+		
+		System.out.println("Groups in String s: " + s);
+		int i = matcher.groupCount();
+		for(int m=0;m<i+1;m++)System.out.println("GroupNr: "+ m + " Group: " + matcher.group(m));
+	}
+	
 	private static int[] parseString(String s) throws RNumException
 	{
 		
 		int theParts[] = new int[3];
 		
 		String trimed = s.trim();
-		Matcher matcher = pattern.matcher(trimed);
 		
-		int integerPart = 0;
-		int numerator;
-		int denominator;
-		boolean sign;
-		
-		if(matcher.find())
+		Matcher compoundMatcher = patternCompound.matcher(trimed);
+		Matcher intMatcher = patternIntOnly.matcher(trimed);
+		Matcher fracMatcher = patternFracOnly.matcher(trimed);
+				
+		if(compoundMatcher.matches())
 		{
-			String firstMinus = matcher.group(1);
-			String secondMinus = matcher.group(6);
 			
+			//displayGroups(s, compoundMatcher);
+			System.out.println("Int+Frac");
 
-			String fractionPart = matcher.group(5);
-			String intPart = matcher.group(3);
-			
-			if(intPart!=null)integerPart = Integer.parseInt(intPart.trim());
-			if(intPart!=null&&fractionPart==null)
-			{
+			String firstSign = compoundMatcher.group(2);
+			String secondSign = compoundMatcher.group(5);
+			String thirdSign = compoundMatcher.group(8);
 
-				theParts[1] = 0;
-				theParts[2] = 1;
-
-				if(firstMinus!=null)theParts[0] = -Integer.parseInt(intPart);
-				else theParts[0] = -Integer.parseInt(intPart);
-								
-				return theParts;			
-			}
-			
-			String numeratorString = matcher.group(7);
-			numerator = Integer.parseInt(numeratorString);
-			
-			String denominatorString = matcher.group(9);
-			denominator = Integer.parseInt(denominatorString);
-			
-			if(intPart==null&&fractionPart!=null)
-			{
+			if(secondSign==null)throw new RNumException("Missing plus or minus Char.");
 				
-				theParts[0] = 0;
-
-				theParts[2] = denominator;
-
-				if(secondMinus!=null)theParts[1] = -numerator;
-				else theParts[1] = numerator;
-
-				return theParts;
-			}
+			theParts[0] = Integer.parseInt(compoundMatcher.group(1));
 			
-			if(intPart!=null&&fractionPart!=null)
-			{
+			int numAbs = Integer.parseInt(compoundMatcher.group(6));
+			int num = numAbs;
+			if(secondSign.equals("-"))num = -numAbs;
+						
+			int denomAbs = Integer.parseInt(compoundMatcher.group(9));
+			int denom = denomAbs;
+			if(thirdSign!=null&&thirdSign.equals("-"))denom = -denomAbs;
 				
-				theParts[2] = denominator;
 
-				if(firstMinus!=null)theParts[0] = -Integer.parseInt(intPart);
-				else theParts[0] = Integer.parseInt(intPart);
+			theParts[1] = num;
+			theParts[2] = denom;
 
-				if(secondMinus!=null)theParts[1] = -numerator;
-				else theParts[1] = numerator;
+			return theParts;
+		}			
+	
+		if(intMatcher.matches())
+		{
+			
+			//displayGroups(s, intMatcher);
+			System.out.println("Int only");
+
+			int n = Integer.parseInt(s);
+			theParts[0] =
+			theParts[1] = 0;
+			theParts[2] = 1;
+				
+			return theParts;
+		}
+
+		if(fracMatcher.matches())
+		{
+			
+			String firstSign = fracMatcher.group(2);
+			String secondSign = fracMatcher.group(5);
+
+			//displayGroups(s, fracMatcher);
+			System.out.println("Frac only");
+
+			int numAbs = Integer.parseInt(fracMatcher.group(3));
+			int num = numAbs;
+			if((firstSign!=null)&&firstSign.equals("-"))
+			{
+
+				System.out.println("Switch 1st Sign");
+				num = -numAbs;
 			}
+					
+			int denomAbs = Integer.parseInt(fracMatcher.group(6));
+			int denom = denomAbs;
+			if((secondSign!=null)&&secondSign.equals("-"))
+			{
+				System.out.println("Switch 2st Sign");
+				denom = -denomAbs;
+			}
+
+			theParts[0] = 0;
+			theParts[1] = num;
+			theParts[2] = denom;
+		
+			return theParts;
 		}
 		
-		throw new RNumException("Can' interpret String as Rational Number.");
+		throw new RNumException("Can't parse the String.");
 	}
 	
 	public double doubleApproximation() throws NaturalNumberException, RNumException, DivisionByZeroException, CollectionException

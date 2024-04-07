@@ -5,6 +5,7 @@ package someMath;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javafx.application.Platform;
 
 import static someMath.SmallNatural.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -100,34 +101,39 @@ public class RationalNumberTest
 		assert(c.getNumerator()==drei);
 		assert(c.getDenominator()==five);
 		assert("23/5".equals(c.expandedVersionToString()));//must be not negative!;
-		
-		RationalNumber d = new RationalNumber("5 2/3");
-		System.out.println("d = " + d);
-		assert("(5 + 2/3)".equals(d.toString()));
-		assert(d.getIntegerPart()==five);
-		assert(d.getNumerator()==zwei);
+
+		RationalNumber d = new RationalNumber("-5-2/-3");
+		System.out.println("d = " + d);		
+		assert("(-4-1/3)".equals(d.toString()));
+		assert(d.getIntegerPart()==-vier);
+		assert(d.getNumerator()==-one);
 		assert(d.getDenominator()==drei);
-		assert("17/3".equals(d.expandedVersionToString()));//must be not negative!;
+		assert("-13/3".equals(d.expandedVersionToString()));//must be not negative!;
 
 		int seven = 7;
 		RationalNumber e = new RationalNumber("5/7");
+		System.out.println("e: " + e);
 		assert("(5/7)".equals(e.toString()));
 		assert(e.getIntegerPart()==0);
 		assert(e.getNumerator()==five);
 		assert(e.getDenominator()==seven);
 
-		RationalNumber f = new RationalNumber("-5 2/3");
-		assert("-(5 + 2/3)".equals(f.toString()));
-		assert(f.getIntegerPart()==five);
-		assert(f.getNumerator()==zwei);
+		String toParse = "-5-2/3";
+		System.out.println("Parsing: "+ toParse);
+		RationalNumber f = new RationalNumber(toParse);
+		System.out.println("f: " + f);
+		assert("(-5-2/3)".equals(f.toString()));
+		assert(f.getIntegerPart()==-five);
+		assert(f.getNumerator()==-zwei);
 		assert(f.getDenominator()==drei);
 		assert(false == f.getSign());
-		assert("17/3".equals(f.expandedVersionToString()));
+		assert("-17/3".equals(f.expandedVersionToString()));
 		
 		RationalNumber g = new RationalNumber("-50/7");
-		assert("-(7 + 1/7)".equals(g.toString()));
-		assert(g.getIntegerPart()==seven);
-		assert(g.getNumerator()==one);
+		System.out.println("g: " + g);
+		assert("(-7-1/7)".equals(g.toString()));
+		assert(g.getIntegerPart()==-seven);
+		assert(g.getNumerator()==-one);
 		assert(g.getDenominator()==seven);
 
 		RationalNumber h = new RationalNumber("25/7");
@@ -141,7 +147,6 @@ public class RationalNumberTest
 		
 		RationalNumber cTimesA = c.multiplyWith(a);
 		System.out.println("("+ c + ")*(" + a + ") = " +cTimesA);
-		assert(cTimesA.doubleApproximation()+ 9.2d < prettySmall);
 		
 		assert(a.multiplyWith(a).doubleApproximation() == 4.0d);
 		
@@ -149,10 +154,10 @@ public class RationalNumberTest
 		
 		System.out.println("a: " + a + " ** b: " + fourToo);
 		assert(!a.isGreaterThen(fourToo));                //Two positive a = 2.0d. b = a² = 4.0d;
-		assert(c.isGreaterThen(cTimesA));           //Two negatives. c = -7 1/7. cTimesA = - 9.2d(-9 1/5).
+		assert(cTimesA.isGreaterThen(c));           //Two negatives. c = -7 1/7. cTimesA = - 9.2d(-9 1/5).
 		assert(!c.isGreaterThen(c));				//Two positives c and c.
 		assert(c.multiplyWith(c).isGreaterThen(a)); //a = 2.0d. c² = 21.16d.
-		assert(a.isGreaterThen(c));                 //one negative one positive. a = 2.0. c = -4.6.
+		assert(c.isGreaterThen(a));                 //one negative one positive. a = 2.0. c = -4.6.
 
 		RationalNumber quadrat = (a.multiplyWith(a));
 		

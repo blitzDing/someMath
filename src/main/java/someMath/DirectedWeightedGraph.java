@@ -7,10 +7,10 @@ import java.util.Set;
 
 import javafx.util.Pair;
 
-public class DirectedWeightedGraph <Vertex>//Vertex is a Generic not a Class!!!
+public class DirectedWeightedGraph <V>//Vertex is a Generic not a Class!!!
 {
 
-	private final Map<Vertex, Set<Pair<Double, Vertex>>> connectionMap;
+	private final Map<V, Set<Pair<Double, V>>> connectionMap;
 	
 	public DirectedWeightedGraph()
 	{		
@@ -18,65 +18,65 @@ public class DirectedWeightedGraph <Vertex>//Vertex is a Generic not a Class!!!
 	}
 	
 	/*
-	 * a is connected to b. But not the other Way around.
-	 * b is not connected to a. So every Connection has 
+	 * v1 is connected to v2. But not the other Way around.
+	 * v2 is not connected to v1. So every Connection has 
 	 * a direction.
 	*/
-	public void connect(Vertex a, Vertex b, double weight)
+	public void connect(V v1, V v2, double weight)
 	{
 		
-		Set<Pair<Double, Vertex>> destiniesOfA = getDestiniesOf(a);
+		Set<Pair<Double, V>> destiniesOfV1 = getDestiniesOf(v1);
 
-		destiniesOfA.add(new Pair<Double, Vertex>(weight, b));//If it's already there it won't add. This is a Set.
-		connectionMap.put(a, destiniesOfA);
+		destiniesOfV1.add(new Pair<Double, V>(weight, v2));//If it's already there it won't add. This is a Set.
+		connectionMap.put(v1, destiniesOfV1);
 	}
 	
-	public void doubleConnect(Vertex a, Vertex b, double weightA, double weightB)
+	public void doubleConnect(V v1, V v2, double weightV1, double weightV2)
 	{
-		connect(a,b, weightA);
-		connect(b,a, weightB);
+		connect(v1, v2, weightV1);
+		connect(v2, v1, weightV2);
 	}
 	
-	public Set<Pair<Double, Vertex>> getDestiniesOf(Vertex a)
-	{
-		
-		Set<Pair<Double, Vertex>> destiniesOfA;
-
-		if(connectionMap.containsKey(a))destiniesOfA = connectionMap.get(a);
-		else destiniesOfA = new HashSet<>();
-
-		return destiniesOfA;
-	}
-	
-	public double getWeightOfConnection(Vertex a, Vertex b)
+	public Set<Pair<Double, V>> getDestiniesOf(V v)
 	{
 		
-		Set<Pair<Double, Vertex>> destiniesOfA = getDestiniesOf(a);
+		Set<Pair<Double, V>> destiniesOfV;
 
-		if(destiniesOfA.isEmpty())throw new IllegalArgumentException("The Vertex in the first Argument is not 'Source' of any Connection.");
+		if(connectionMap.containsKey(v))destiniesOfV = connectionMap.get(v);
+		else destiniesOfV = new HashSet<>();
+
+		return destiniesOfV;
+	}
+	
+	public double getWeightOfConnection(V v1, V v2)
+	{
+		
+		Set<Pair<Double, V>> destiniesOfV1 = getDestiniesOf(v1);
+
+		if(destiniesOfV1.isEmpty())throw new IllegalArgumentException("The Vertex in the first Argument is not 'Source' of any Connection.");
 		else
 		{
-			for(Pair<Double, Vertex> destination: destiniesOfA)
+			for(Pair<Double, V> destination: destiniesOfV1)
 			{
-				if(destination.getValue().equals(b))return destination.getKey();
+				if(destination.getValue().equals(v2))return destination.getKey();
 			}
 		}
 		
-		throw new IllegalArgumentException("Vertex " + a + " is not pointing to " + b.toString());
+		throw new IllegalArgumentException("Vertex " + v1 + " is not pointing to " + v2);
 	}
 	
-	public Set<Vertex> whoPointsToThisVertex(Vertex a)
+	public Set<V> whoPointsToThisVertex(V v1)
 	{
 
-		Set<Vertex> incoming = new HashSet<>();
+		Set<V> incoming = new HashSet<>();
 
-		for(Vertex b: connectionMap.keySet())
+		for(V v2: connectionMap.keySet())
 		{
-			Set<Pair<Double, Vertex>> set = connectionMap.get(b);
+			Set<Pair<Double, V>> set = connectionMap.get(v2);
 
-			for(Pair<Double, Vertex> con: set)
+			for(Pair<Double, V> con: set)
 			{
-				if(con.getValue().equals(a))incoming.add(b);
+				if(con.getValue().equals(v1))incoming.add(v2);
 			}
 		}
 
