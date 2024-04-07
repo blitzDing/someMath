@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="SimpleLoggerTest" time="0.035" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="SimpleLoggerTest" time="0.037" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="19"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="DE"/>
     <property name="sun.boot.library.path" value="/home/bernstein/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_19.0.1.v20221102-1007/jre/lib"/>
-    <property name="sun.java.command" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire/surefirebooter2756900622929038410.jar /home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire 2024-04-03T22-50-38_673-jvmRun1 surefire4872234133594869809tmp surefire_06457580584688113850tmp"/>
+    <property name="sun.java.command" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire/surefirebooter9460139607486767794.jar /home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire 2024-04-06T20-26-20_209-jvmRun1 surefire5783106977253853875tmp surefire_05045601601404862704tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/test-classes:/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/classes:/home/bernstein/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.1/junit-jupiter-engine-5.9.1.jar:/home/bernstein/.m2/repository/org/junit/platform/junit-platform-engine/1.9.1/junit-platform-engine-1.9.1.jar:/home/bernstein/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/bernstein/.m2/repository/org/junit/platform/junit-platform-commons/1.9.1/junit-platform-commons-1.9.1.jar:/home/bernstein/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.1/junit-jupiter-api-5.9.1.jar:/home/bernstein/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-controls/20/javafx-controls-20.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-controls/20/javafx-controls-20-linux.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-graphics/20/javafx-graphics-20.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-graphics/20/javafx-graphics-20-linux.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-base/20/javafx-base-20.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-base/20/javafx-base-20-linux.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -28,7 +28,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire/surefirebooter2756900622929038410.jar"/>
+    <property name="surefire.real.class.path" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire/surefirebooter9460139607486767794.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="19.0.1+10"/>
     <property name="user.name" value="bernstein"/>
@@ -55,5 +55,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="63.0"/>
   </properties>
-  <testcase name="test" classname="SimpleLoggerTest" time="0.033"/>
+  <testcase name="test" classname="SimpleLoggerTest" time="0.037"/>
 </testsuite>
