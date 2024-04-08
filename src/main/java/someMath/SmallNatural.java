@@ -46,7 +46,7 @@ public class SmallNatural implements SubtractableAndDivideable<SmallNatural>, Cl
 	}
 
 	@Override
-	public SmallNatural addWith(SmallNatural e) throws NaturalNumberException, RNumException,
+	public SmallNatural add(SmallNatural e) throws NaturalNumberException, RNumException,
 			CloneNotSupportedException, CollectionException, DivisionByZeroException
 	{
 
@@ -78,7 +78,7 @@ public class SmallNatural implements SubtractableAndDivideable<SmallNatural>, Cl
 		
 		for(;!(current.isGreaterThen(this));counter++)
 		{
-			current = current.addWith(t);
+			current = current.add(t);
 		}
 		
 		return new SmallNatural(counter-1);

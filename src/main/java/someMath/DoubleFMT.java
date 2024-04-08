@@ -42,7 +42,7 @@ public class DoubleFMT implements SubtractableAndDivideable<DoubleFMT>
 	}
 
 	@Override
-	public DoubleFMT addWith(DoubleFMT e)
+	public DoubleFMT add(DoubleFMT e)
 	{
 		return new DoubleFMT(e.value+this.value);
 	}

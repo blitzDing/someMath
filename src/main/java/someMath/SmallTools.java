@@ -101,11 +101,11 @@ public class SmallTools
 		
 		NaturalNumber two = new NaturalNumber(2);
 
-		NaturalNumber sum = x.addWith(y);
-		NaturalNumber sumPlusOne = sum.addWith(one);
+		NaturalNumber sum = x.add(y);
+		NaturalNumber sumPlusOne = sum.add(one);
 		NaturalNumber product = sum.multiplyWith(sumPlusOne).divideBy(two);
 
-		NaturalNumber cpNr = y.addWith(product);
+		NaturalNumber cpNr = y.add(product);
         
 		return cpNr;
 	}
@@ -206,7 +206,7 @@ public class SmallTools
 		
 		T startValue = basis.getNeutralOne();
 		T ainz = basis.divideBy(startValue);
-		T two = ainz.addWith(ainz);
+		T two = ainz.add(ainz);
 		T half = ainz.divideBy(two);
 		
 		for(int n=0;n<deepNess;n++)
@@ -218,7 +218,7 @@ public class SmallTools
 			T div = basis.divideBy(power);
 			System.out.println("New div: " + div);
 			
-			T sum = currentValue.addWith(div);
+			T sum = currentValue.add(div);
 			System.out.println("New Sum: " + sum);
 			
 			T newValue = half.multiplyWith(sum);

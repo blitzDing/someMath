@@ -135,6 +135,8 @@ public class RationalNumberTest
 		assert(g.getIntegerPart()==-seven);
 		assert(g.getNumerator()==-one);
 		assert(g.getDenominator()==seven);
+		RationalNumber g2 = new RationalNumber("50/-7");
+		assert(g.equals(g2));
 
 		RationalNumber h = new RationalNumber("25/7");
 		assert("(3 + 4/7)".equals(h.toString()));
@@ -175,9 +177,9 @@ public class RationalNumberTest
 		
 		System.out.println(a + " = " + self + "?");
 		assert(a.equals(self));
-		assert(a.divideBy(a).addWith(rOne).equals(new RationalNumber(zwei, zero, one)));
+		assert(a.divideBy(a).add(rOne).equals(new RationalNumber(zwei, zero, one)));
 
-		RationalNumber samesame = a.addWith(rZero);
+		RationalNumber samesame = a.add(rZero);
 		RationalNumber alsoSame = samesame.multiplyWith(rOne);
 		assert(samesame.equals(a));
 		assert(samesame.equals(alsoSame));
@@ -196,7 +198,7 @@ public class RationalNumberTest
 		System.out.println("\nAddition Test Rational Numbers");
 		System.out.println("******************************");
 		RationalNumber twoThirdst = new RationalNumber(vier, sex);
-		RationalNumber fourThirdst = new RationalNumber(vier, sex).addWith(new RationalNumber(vier, sex));
+		RationalNumber fourThirdst = new RationalNumber(vier, sex).add(new RationalNumber(vier, sex));
 		
 		System.out.println(twoThirdst + " + " + twoThirdst + " = " + fourThirdst);
 	}

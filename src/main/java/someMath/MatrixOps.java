@@ -50,7 +50,7 @@ public class MatrixOps
 				else factor = a.getNeutralOne();
 				
 				value = value
-						.addWith(factor.multiplyWith(list.get(n)
+						.add(factor.multiplyWith(list.get(n)
 								.multiplyWith(getDeterminant(subM))));
 			}
 			
@@ -67,7 +67,7 @@ public class MatrixOps
 				if((m+i)%2==1)factor= a.getNeutralZero().subtract(a.getNeutralOne());
 				else factor = a.getNeutralOne();
 				
-				value = value.addWith(factor.multiplyWith(list.get(m).multiplyWith(getDeterminant(subM))));
+				value = value.add(factor.multiplyWith(list.get(m).multiplyWith(getDeterminant(subM))));
 			}
 		}
 		return value;

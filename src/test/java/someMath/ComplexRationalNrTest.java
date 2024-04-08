@@ -57,12 +57,9 @@ public class ComplexRationalNrTest
 		//assert(theRealARealPart.getRealPart().equals(theRealA.getRealPart()));
 		
 		ComplexRationalNr b = new ComplexRationalNr(arg2, arg1);
-		
-		//amount = b.getAmount();
-		
 		System.out.println("b: " + b);
-		System.out.println("Conjugate of b: " + b.getConjugate());
-
+		ComplexRationalNr bConjugate = b.getConjugate();
+		System.out.println("Conjugate of b: " + bConjugate);
 		img = b.multiplyWith(b.getConjugate()).getImaginaryPart();
 		assert(img.equals(rZero));
 		

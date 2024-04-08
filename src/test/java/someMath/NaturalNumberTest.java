@@ -33,7 +33,7 @@ class NaturalNumberTest
 		NaturalNumber b = new NaturalNumber(z2);
 		
 
-		NaturalNumber sum = (a.addWith(b));
+		NaturalNumber sum = (a.add(b));
 		NaturalNumber diff = (a.subtract(b));
 
 		NaturalNumber a2 = a.multiplyWith(a);

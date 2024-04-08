@@ -41,11 +41,11 @@ public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRatio
 	}
 
 	@Override
-	public ComplexRationalNr addWith(ComplexRationalNr e) throws NaturalNumberException, RNumException, CloneNotSupportedException, DivisionByZeroException, CollectionException
+	public ComplexRationalNr add(ComplexRationalNr e) throws NaturalNumberException, RNumException, CloneNotSupportedException, DivisionByZeroException, CollectionException
 	{
 		
-		RationalNumber newReal = real.addWith(e.real);
-		RationalNumber newImaginary = imaginary.addWith(e.imaginary);
+		RationalNumber newReal = real.add(e.real);
+		RationalNumber newImaginary = imaginary.add(e.imaginary);
 		
 		return new ComplexRationalNr(newReal, newImaginary);
 	}
@@ -89,7 +89,7 @@ public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRatio
 		RationalNumber realTimesImg = this.real.multiplyWith(e.imaginary);
 		RationalNumber imgTimesReal = this.imaginary.multiplyWith(e.real);
 		
-		RationalNumber newImaginary = realTimesImg.addWith(imgTimesReal);
+		RationalNumber newImaginary = realTimesImg.add(imgTimesReal);
 		
 		return new ComplexRationalNr(newReal, newImaginary);
 	}
@@ -104,8 +104,9 @@ public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRatio
 	{
 		
 		RationalNumber minusOne = rZero.subtract(rOne);
-		
-		return new ComplexRationalNr(real, imaginary.multiplyWith(minusOne));
+		RationalNumber newImaginary = imaginary.multiplyWith(minusOne);
+
+		return new ComplexRationalNr(real, newImaginary);
 	}
 	
 	public RationalNumber getRealPart()
@@ -126,7 +127,7 @@ public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRatio
 		
 		RationalNumber a2 = real.multiplyWith(real);
 		RationalNumber b2 = imaginary.multiplyWith(imaginary);
-		RationalNumber sum = a2.addWith(b2);
+		RationalNumber sum = a2.add(b2);
 		
 		System.out.println("Trying to find root of " + sum);
 		RationalNumber pureReal = SmallTools.getNthRoot(sum, 2);

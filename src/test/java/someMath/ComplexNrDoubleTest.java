@@ -53,17 +53,17 @@ public class ComplexNrDoubleTest
 				
 			display("z", z);
 			display("anti-z", anti);
-			display("sum", z.addWith(anti));
+			display("sum", z.add(anti));
 				
-			assert(z.addWith(anti).equals(z.getNeutralZero()));
+			assert(z.add(anti).equals(z.getNeutralZero()));
 				
-			ComplexNrDouble times2 = z.addWith(z);
+			ComplexNrDouble times2 = z.add(z);
 			display("z+z", times2);
 				
 			assert( Math.abs( times2.Arg()-z.Arg() ) < prettySmall);
 			assert( Math.abs( times2.amount()-2*z.amount()) < prettySmall);
 
-			ComplexNrDouble times3 = times2.addWith(z);
+			ComplexNrDouble times3 = times2.add(z);
 			display("z+z+z", times3);
 				
 			assert( Math.abs( times3.Arg()-z.Arg() ) < prettySmall);

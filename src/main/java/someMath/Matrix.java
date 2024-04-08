@@ -153,7 +153,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 				E currentValue = someValue.getNeutralZero();
 			
 				for(int i=0;i<this.columns;i++)
-					currentValue = currentValue.addWith(this.valArr[n][i].multiplyWith(a.valArr[i][m]));
+					currentValue = currentValue.add(this.valArr[n][i].multiplyWith(a.valArr[i][m]));
 
 				newValues[n][m] = currentValue;
 			}
@@ -196,7 +196,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Matrix<E> addWith(Matrix<E> a)
+	public Matrix<E> add(Matrix<E> a)
 	{
 		
 		E[][] newValArr;
@@ -206,7 +206,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 		{
 			try
 			{
-				newValArr[n][m] = valArr[n][m].addWith(a.valArr[n][m]);
+				newValArr[n][m] = valArr[n][m].add(a.valArr[n][m]);
 			}
 			catch(NaturalNumberException | RNumException | CloneNotSupportedException | CollectionException | DivisionByZeroException inexc)
 			{
@@ -281,11 +281,11 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 		E a = valArr[0][0];
 		E d = valArr[1][1];
 		
-		E two = ainz.addWith(ainz);
-		E s = (a.addWith(d)).divideBy(two);
+		E two = ainz.add(ainz);
+		E s = (a.add(d)).divideBy(two);
 		E r = s.multiplyWith(s).subtract(MatrixOps.getDeterminant(this));
 		
-		E x1 = (s.addWith(SmallTools.getNthRoot(7, r, 2)));
+		E x1 = (s.add(SmallTools.getNthRoot(7, r, 2)));
 		E x2 = (s.subtract(SmallTools.getNthRoot(7, r, 2)));
 		Set<E> set = new HashSet<>();
 		set.add(x1);

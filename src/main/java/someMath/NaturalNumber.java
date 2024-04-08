@@ -70,7 +70,7 @@ public class NaturalNumber implements SubtractableAndDivideable<NaturalNumber>, 
 	}
 
 	@Override
-	public NaturalNumber addWith(NaturalNumber e) throws NaturalNumberException 
+	public NaturalNumber add(NaturalNumber e) throws NaturalNumberException 
 	{
 		BigInteger s = numberCore.add(e.getNumberCore());
 		
@@ -102,7 +102,7 @@ public class NaturalNumber implements SubtractableAndDivideable<NaturalNumber>, 
 		
 		for(;(!(current.isGreaterThen(this)));counter++)
 		{
-			current = current.addWith(t);
+			current = current.add(t);
 		}
 
 		return new NaturalNumber(counter-1);

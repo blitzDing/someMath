@@ -305,7 +305,7 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 	}
 
 	@Override
-	public RationalNumber addWith(RationalNumber r) throws CloneNotSupportedException, NaturalNumberException, RNumException, DivisionByZeroException, CollectionException
+	public RationalNumber add(RationalNumber r) throws CloneNotSupportedException, NaturalNumberException, RNumException, DivisionByZeroException, CollectionException
 	{
 		
 		if(this.equals(rZero))return r.clone();
@@ -337,7 +337,7 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 		
 		RationalNumber minus = new RationalNumber(-e.integerPart, -e.numerator, -e.denominator);
 		
-		return this.addWith(minus);
+		return this.add(minus);
 	}
 	
 	public int hashCode()

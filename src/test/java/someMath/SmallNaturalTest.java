@@ -32,7 +32,7 @@ public class SmallNaturalTest
 		SmallNatural b = new SmallNatural(z2);
 		
 
-		SmallNatural sum = (a.addWith(b));
+		SmallNatural sum = (a.add(b));
 		SmallNatural diff = (a.subtract(b));
 
 		SmallNatural a2 = a.multiplyWith(a);

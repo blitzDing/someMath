@@ -56,7 +56,7 @@ public class ComplexNrDouble implements SubtractableAndDivideable<ComplexNrDoubl
 	}
 	
 	@Override
-	public ComplexNrDouble addWith(ComplexNrDouble e) 
+	public ComplexNrDouble add(ComplexNrDouble e) 
 	{
 	
 		return new ComplexNrDouble(this.real + e.real, this.imaginary + e.imaginary);
