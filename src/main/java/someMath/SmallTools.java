@@ -129,17 +129,20 @@ public class SmallTools
 	public static int gcd(int a, int b)
 	{
 		//a should be bigger or equal b, so sorting is needed
-		if(a<b)
-		{
-			int holdIt=b;
-			b=a;
-			a=holdIt;
-		}
+		if(a<b)switchValues(a, b);
         	
 		if(b==0)return a;
 		else return gcd(b,Math.floorMod(a,b));
 	}
 
+
+	public static void switchValues(Integer a, Integer b)//making use of the fact that a and b
+	{													 //are Objects!!!
+		Integer c = b;
+		b=a;
+		a = c;
+	}
+	
 	//Smallest Common Multiple.
 	public static int scm(int a, int b)
 	{
