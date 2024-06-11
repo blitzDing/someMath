@@ -10,6 +10,7 @@ someMath/MatrixTest.class
 IOTest.class
 EratosthenesSiebTest.class
 someMath/RootsAndPowersOfDivideableAndAddable.class
+someMath/CollectionManipulationTests.class
 PolynomSolverTest.class
 SimpleLoggerTest.class
 someMath/CreateFamilieTest.class

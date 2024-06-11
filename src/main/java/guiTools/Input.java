@@ -41,12 +41,6 @@ public class Input
 
     public static final String cancelButtonLabel = "Cancel";
     public static final String cancelAnswerToQuestion = "Canceled";
-        
-    public static void styleStage(Stage stage)
-    {
-    	
-    	stage.getScene().getStylesheets().add(Input.class.getResource("/stageCss.css").toExternalForm());
-    }
     
     public static Function<String, String> question = (frage)->
     {
@@ -88,7 +82,6 @@ public class Input
         input.setWidth(185);
         input.setHeight(150);
         input.setScene(scene);
-        styleStage(input);//must be done after the stage has a scene.
 
         input.initStyle(StageStyle.UNDECORATED);
 

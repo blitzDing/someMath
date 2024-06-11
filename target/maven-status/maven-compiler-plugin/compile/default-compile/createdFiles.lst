@@ -33,6 +33,7 @@ someMath/Subtractable.class
 tableViewIssus/TableCreatorFlexible.class
 tableViewIssus/TableCreator.class
 fileShortCuts/TextAndObjSaveAndLoad.class
+consoleTools/TerminalXDisplay.class
 someMath/MultiplyableAndAddable.class
 guiTools/EnterToStringHandler.class
 someMath/SmallNatural.class

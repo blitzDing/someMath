@@ -54,33 +54,6 @@ public class SmallTools
 		return dest;
 	}
 	
-	static <T> Set<Set<T>> powerSet(Set<T> input) throws CollectionException
-	{
-
-		if(input==null)throw new IllegalArgumentException("Set can't be Null.");
-		if(input.contains(null))throw new IllegalArgumentException("Set contains Null.");
-
-		Set<Set<T>> output = new HashSet<>();
-		if(input.size()==0)
-		{
-			output.add(new HashSet<T>());//Add an (the) emptySet;
-			return output;
-		}
-
-		Set<T> copy = new HashSet<>(input);
-		T cutOut = CollectionManipulation.catchRandomElementOfSet(copy);
-		copy.remove(cutOut);
-		for(Set<T> set: powerSet(copy))
-		{
-			output.add(set);
-			Set<T> withCutOut = new HashSet<>(set);
-			withCutOut.add(cutOut);
-			output.add(withCutOut);
-		}
-
-		return output;
-	}
-
 	public static boolean isInteger(String s)
 	{
 		if(s.isEmpty()) return false;

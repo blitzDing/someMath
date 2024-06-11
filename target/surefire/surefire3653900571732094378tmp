@@ -1,5 +1,5 @@
 #surefire
-#Sat Apr 13 16:31:34 CEST 2024
+#Tue Jun 11 21:35:00 CEST 2024
 childDelegation=false
 classPathUrl.0=/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/test-classes
 classPathUrl.1=/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/classes
@@ -30,7 +30,7 @@ mainCliOptions2=LOGGING_LEVEL_INFO
 mainCliOptions3=LOGGING_LEVEL_DEBUG
 mainCliOptions4=SHOW_ERRORS
 mainCliOptions5=REACTOR_FAIL_FAST
-pluginPid=8493
+pluginPid=10975
 preferTestsFromInStream=false
 providerConfiguration=org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
 reportsDirectory=/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire-reports
@@ -51,16 +51,17 @@ systemExitTimeout=30
 tc.0=IOTest
 tc.1=StringMatrixTest
 tc.10=SimpleLoggerTest
-tc.11=someMath.NaturalNumberTest
-tc.12=someMath.RationalNumberTest
-tc.13=someMath.CantorPairTest
-tc.14=someMath.MatrixTest
-tc.15=someMath.MathSetClassClosedUnderUnionTest
-tc.16=someMath.ComplexRationalNrTest
-tc.17=someMath.SmallNaturalTest
-tc.18=someMath.ComplexNrDoubleTest
-tc.19=someMath.CreateFamilieTest
+tc.11=someMath.CollectionManipulationTests
+tc.12=someMath.NaturalNumberTest
+tc.13=someMath.RationalNumberTest
+tc.14=someMath.CantorPairTest
+tc.15=someMath.MatrixTest
+tc.16=someMath.MathSetClassClosedUnderUnionTest
+tc.17=someMath.ComplexRationalNrTest
+tc.18=someMath.SmallNaturalTest
+tc.19=someMath.ComplexNrDoubleTest
 tc.2=EratosthenesSiebTest
+tc.20=someMath.CreateFamilieTest
 tc.3=CartesianProductTest
 tc.4=ExactPeriodeTest
 tc.5=TestingCalculator

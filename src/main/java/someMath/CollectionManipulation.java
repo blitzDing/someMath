@@ -150,4 +150,66 @@ public class CollectionManipulation
 		
 		return output;
 	}
+
+	public static <T> Set<Set<T>> powerSet(Set<T> input) throws CollectionException
+	{
+
+		if(input==null)throw new IllegalArgumentException("Set can't be Null.");
+		if(input.contains(null))throw new IllegalArgumentException("Set contains Null.");
+	
+		Set<Set<T>> output = new HashSet<>();
+		if(input.size()==0)
+		{
+			output.add(new HashSet<T>());//Add an (the) emptySet;
+			return output;
+		}
+	
+		Set<T> copy = new HashSet<>(input);
+		T cutOut = CollectionManipulation.catchRandomElementOfSet(copy);
+		copy.remove(cutOut);
+		for(Set<T> set: powerSet(copy))
+		{
+			output.add(set);
+			Set<T> withCutOut = new HashSet<>(set);
+			withCutOut.add(cutOut);
+			output.add(withCutOut);
+		}
+	
+		return output;
+	}
+	
+	public static <T> Set<Set<T>> allSubSetsOfSizeN(Set<T> originSet, int n) throws CollectionException
+	{
+
+		Set<T> emptySet = new HashSet<>();
+		Set<Set<T>> output = new HashSet<>();
+		if(n<0) throw new CollectionException("n is to small. It is below Zero.");
+		if(n>originSet.size())throw new CollectionException("n is bigger then the Set size.");
+		if(originSet==null)throw new CollectionException("Set can't be null.");
+		
+		if(n==0||originSet.isEmpty()) 
+		{
+			output.add(emptySet);
+			return output;
+		}
+
+		if(n==originSet.size())
+		{
+			output.add(originSet);
+			return output;
+		}
+
+		for(T t: originSet)
+		{		
+			Set<T> copy = new HashSet<>(originSet);
+			copy.remove(t);
+
+			for(Set<T> set: allSubSetsOfSizeN(copy, n))
+			{
+				output.add(set);
+			}
+		}
+
+		return output;
+	}
  }
