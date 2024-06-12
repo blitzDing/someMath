@@ -257,7 +257,65 @@ public class InputStreamSession
 		return ldt;
 	}
 	
+	public String forcedString(String question)
+	{
+
+		String s = getString(question);
+		if(s==null||s.trim().equals(""))
+		{
+			System.out.println("Empty String! Try Again!");
+			return forcedString(question);
+		}
+
+		return s;
+	}
+
+	public boolean forcedYesOrNo(String question) throws IOException
+	{
+		boolean q;
+		
+		try
+		{
+			q = getYesOrNo(question);
+			return q;
+		}
+		catch (InputArgumentException e)
+		{
+			System.out.println(e.getMessage());
+			return forcedYesOrNo(question);
+		}
+	}
 	
-	
-	
+	public String forcedOutOfList(String phrase, List<String> listOfPossibleAnswers) throws IOException
+	{
+		String answer = "";
+		
+		try
+		{
+			answer = getAnswerOutOfList(phrase, listOfPossibleAnswers);
+			return answer;
+		}
+		catch(InputArgumentException iae)
+		{
+			System.out.println(iae.getMessage());
+			return forcedOutOfList(phrase, listOfPossibleAnswers);
+		}
+	}
+
+	public LocalDateTime forcedDateTimeInOneLine(String phrase, LocalDateTime begin, LocalDateTime end)
+	{
+		
+		LocalDateTime ldt;
+		
+		try
+		{
+			ldt = getDateTimeInOneLine(phrase, begin, end);
+			return ldt;
+		}
+		catch(InputArgumentException iae)
+		{
+			System.out.println(iae.getMessage());
+			return forcedDateTimeInOneLine(phrase, begin, end);
+		}
+	}	
 }
