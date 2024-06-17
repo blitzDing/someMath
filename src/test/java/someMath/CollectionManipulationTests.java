@@ -13,8 +13,8 @@ import consoleTools.TerminalXDisplay;
 class CollectionManipulationTests
 {
 
-	static Set<Character> originSet = new HashSet<>(Arrays.asList('a', 'b', 'c', 'd'));
-	static Set<Character> otherSet = new HashSet<>(Arrays.asList('a', 'b', 'c', 'd', 'e'));
+	static Set<Character> originSet = CollectionManipulation.getSetOfFirstNLatinLetters(4);
+	static Set<Character> otherSet = CollectionManipulation.getSetOfFirstNLatinLetters(5);
 
 	@Test
 	void testPowerSet() throws CollectionException

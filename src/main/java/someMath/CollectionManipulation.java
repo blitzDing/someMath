@@ -212,4 +212,31 @@ public class CollectionManipulation
 
 		return output;
 	}
- }
+
+	public static Set<Integer> getSetOfFirstNIntegers(int n)
+	{
+
+		Set<Integer> output = new HashSet<>();
+
+		for(int i=0;i<n;i++)output.add(i);
+		
+		return output;
+	}
+
+	public static Set<Character> getSetOfFirstNLatinLetters(int n)
+	{
+
+		Set<Character> output = new HashSet<>();
+
+		
+		for(int i=0;i<n;i++)
+		{
+			int num = 'a';
+			int newNum = num+i;
+			char newChar = (char)newNum;
+			output.add(newChar);
+		}
+		
+		return output;
+	}
+}

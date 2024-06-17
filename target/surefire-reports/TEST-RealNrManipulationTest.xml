@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="DE"/>
     <property name="sun.boot.library.path" value="/home/bernstein/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_19.0.1.v20221102-1007/jre/lib"/>
-    <property name="sun.java.command" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire/surefirebooter3730659332832959420.jar /home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire 2024-06-12T17-43-20_270-jvmRun1 surefire464153949096242446tmp surefire_011114797048246025436tmp"/>
+    <property name="sun.java.command" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire/surefirebooter423521283657435845.jar /home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire 2024-06-17T03-30-21_088-jvmRun1 surefire7747576521796380214tmp surefire_05434227579038054031tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/test-classes:/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/classes:/home/bernstein/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.1/junit-jupiter-engine-5.9.1.jar:/home/bernstein/.m2/repository/org/junit/platform/junit-platform-engine/1.9.1/junit-platform-engine-1.9.1.jar:/home/bernstein/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/bernstein/.m2/repository/org/junit/platform/junit-platform-commons/1.9.1/junit-platform-commons-1.9.1.jar:/home/bernstein/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.1/junit-jupiter-api-5.9.1.jar:/home/bernstein/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-controls/20/javafx-controls-20.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-controls/20/javafx-controls-20-linux.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-graphics/20/javafx-graphics-20.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-graphics/20/javafx-graphics-20-linux.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-base/20/javafx-base-20.jar:/home/bernstein/.m2/repository/org/openjfx/javafx-base/20/javafx-base-20-linux.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -28,7 +28,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire/surefirebooter3730659332832959420.jar"/>
+    <property name="surefire.real.class.path" value="/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire/surefirebooter423521283657435845.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="19.0.1+10"/>
     <property name="user.name" value="bernstein"/>
