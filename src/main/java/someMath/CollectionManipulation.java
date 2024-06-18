@@ -154,8 +154,8 @@ public class CollectionManipulation
 	public static <T> Set<Set<T>> powerSet(Set<T> input) throws CollectionException
 	{
 
-		if(input==null)throw new IllegalArgumentException("Set can't be Null.");
-		if(input.contains(null))throw new IllegalArgumentException("Set contains Null.");
+		if(input==null)throw new CollectionException("Set can't be Null.");
+		if(input.contains(null))throw new CollectionException("Set contains Null.");
 	
 		Set<Set<T>> output = new HashSet<>();
 		if(input.size()==0)
@@ -186,6 +186,7 @@ public class CollectionManipulation
 		if(n<0) throw new CollectionException("n is to small. It is below Zero.");
 		if(n>originSet.size())throw new CollectionException("n is bigger then the Set size.");
 		if(originSet==null)throw new CollectionException("Set can't be null.");
+		if(originSet.contains(null))throw new CollectionException("Set contains null.");
 		
 		if(n==0||originSet.isEmpty()) 
 		{
@@ -211,6 +212,83 @@ public class CollectionManipulation
 		}
 
 		return output;
+	}
+	
+	public static <T extends Number> Double multiplyElementsOfList(List<T> origin, int n) throws CollectionException
+	{
+		int s = origin.size();
+		if(n>s)throw new CollectionException("Multiply index to high.");
+		if(n<0)throw new CollectionException("Multiply index to low.");
+		if(origin.contains(null))throw new CollectionException("List contains null.");
+
+		Double product = 1.0;
+		for(int i=0;i<n;i++)
+		{
+			
+			T t = origin.get(i);
+			if(t.doubleValue()==0.0)return t.doubleValue();
+			
+			product = t.doubleValue()*product;
+		}
+
+		return product;
+	}
+
+	public static <T extends Number> Double addAllElementsOfSet(Set<T> origin) throws CollectionException
+	{
+		if(origin.contains(null))throw new CollectionException("origin contains null.");
+		if(origin==null)throw new CollectionException("Set is null.");
+		
+		Double sum = 0.0;
+		if(origin.isEmpty())return sum;
+
+		for(T t: origin)
+		{
+			sum = t.doubleValue()+sum;
+		}
+
+		return sum;
+	}
+	
+	public static <T extends Number> Double multiplyAllElementsOfSet(Set<T> origin) throws CollectionException
+	{
+		
+		if(origin.contains(null))throw new CollectionException("origin contains null.");
+		if(origin==null)throw new CollectionException("Set is null.");
+		
+		Double product = 1.0;
+		if(origin.isEmpty())return 0.0;
+
+		for(T t: origin)
+		{
+			
+			if(t.doubleValue()==0.0)return t.doubleValue();
+			
+			product = t.doubleValue()*product;
+		}
+
+		return product;
+	}
+	
+	public static <T extends Number> Double addElementsOfList(List<T> origin, int n) throws CollectionException
+	{
+		if(origin.contains(null))throw new CollectionException("origin contains null.");
+		if(origin==null)throw new CollectionException("Set is null.");
+
+		int s = origin.size();
+		if(n>s)throw new CollectionException("Sum index to high.");
+		if(n<0)throw new CollectionException("Sum index to low.");
+		
+		Double sum = 0.0;
+		if(origin.isEmpty())return sum;
+
+		for(int i=0;i<n;i++)
+		{
+			T t = origin.get(i);
+			sum = t.doubleValue()+sum;
+		}
+
+		return sum;
 	}
 
 	public static Set<Integer> getSetOfFirstNIntegers(int n)

@@ -1,5 +1,5 @@
 #surefire
-#Mon Jun 17 03:30:21 CEST 2024
+#Tue Jun 18 15:58:15 CEST 2024
 childDelegation=false
 classPathUrl.0=/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/test-classes
 classPathUrl.1=/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/classes
@@ -30,7 +30,7 @@ mainCliOptions2=LOGGING_LEVEL_INFO
 mainCliOptions3=LOGGING_LEVEL_DEBUG
 mainCliOptions4=SHOW_ERRORS
 mainCliOptions5=REACTOR_FAIL_FAST
-pluginPid=23260
+pluginPid=39205
 preferTestsFromInStream=false
 providerConfiguration=org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
 reportsDirectory=/home/bernstein/Projex/Code/EclipseWorqueRooms/eclipse-workspace/myToolBoxMaven/target/surefire-reports

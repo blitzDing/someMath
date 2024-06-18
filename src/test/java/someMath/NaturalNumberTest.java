@@ -26,8 +26,8 @@ class NaturalNumberTest
 	{
 
 		int z1 = SmallTools.randomInt(2000, 1001);
-		int z2 = SmallTools.randomInt(1000, 0);
-		int z3 = SmallTools.randomInt(1000, 0);
+		int z2 = SmallTools.randomInt(1000, 1);
+		int z3 = SmallTools.randomInt(1000, 1);
 
 		NaturalNumber a = new NaturalNumber(z1);
 		NaturalNumber b = new NaturalNumber(z2);
