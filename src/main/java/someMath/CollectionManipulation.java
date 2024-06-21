@@ -214,7 +214,7 @@ public class CollectionManipulation
 		return output;
 	}
 	
-	public static <T extends Number> Double multiplyElementsOfList(List<T> origin, int n) throws CollectionException
+	public static <T extends Number> Double multiplyListElements(List<T> origin, int n) throws CollectionException
 	{
 		int s = origin.size();
 		if(n>s)throw new CollectionException("Multiply index to high.");
@@ -234,7 +234,7 @@ public class CollectionManipulation
 		return product;
 	}
 
-	public static <T extends Number> Double addAllElementsOfSet(Set<T> origin) throws CollectionException
+	public static <T extends Number> Double addSetElements(Set<T> origin) throws CollectionException
 	{
 		if(origin.contains(null))throw new CollectionException("origin contains null.");
 		if(origin==null)throw new CollectionException("Set is null.");
@@ -250,7 +250,7 @@ public class CollectionManipulation
 		return sum;
 	}
 	
-	public static <T extends Number> Double multiplyAllElementsOfSet(Set<T> origin) throws CollectionException
+	public static <T extends Number> Double multiplySetElements(Set<T> origin) throws CollectionException
 	{
 		
 		if(origin.contains(null))throw new CollectionException("origin contains null.");
@@ -270,7 +270,7 @@ public class CollectionManipulation
 		return product;
 	}
 	
-	public static <T extends Number> Double addElementsOfList(List<T> origin, int n) throws CollectionException
+	public static <T extends Number> Double addListElements(List<T> origin, int n) throws CollectionException
 	{
 		if(origin.contains(null))throw new CollectionException("origin contains null.");
 		if(origin==null)throw new CollectionException("Set is null.");
@@ -290,6 +290,35 @@ public class CollectionManipulation
 
 		return sum;
 	}
+	
+	public static <T extends Number> Double productSumSet(Set<T> set, int n) throws CollectionException
+	{
+		
+		Double ps = 0.0;
+
+		Set<Set<T>> selections = allSubSetsOfSizeN(set, n);
+		
+		int m = selections.size();
+		
+		for(Set<T> s: selections)ps = ps+multiplySetElements(s);
+		
+		return ps;
+	}
+	
+	public static <T extends Number> Double sumProductSet(Set<T> set, int n) throws CollectionException
+	{
+		
+		Double ps = 1.0;
+
+		Set<Set<T>> selections = allSubSetsOfSizeN(set, n);
+		
+		int m = selections.size();
+		
+		for(Set<T> s: selections)ps = ps*addSetElements(s);
+		
+		return ps;
+	}
+	
 
 	public static Set<Integer> getSetOfFirstNIntegers(int n)
 	{

@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.Collection;
 import java.util.List;
 
+import someMath.StringManipulation;
+
 public class TerminalXDisplay 
 {
 
@@ -12,13 +14,13 @@ public class TerminalXDisplay
 		return name + "("+p.x+", "+p.y+")";
 	}
 	
-	public static <T> String collectionToString(Collection<T> collection)
+	private static <T> String collectionToString(Collection<T> collection, int e)
 	{
 		
 		int s = collection.size();
 		int counter = 0;
 		
-		String output = "{";
+		String output = StringManipulation.customMonoRepeatChar(' ', e) + "{";
 		
 		if(!(collection instanceof List))
 		{
@@ -30,7 +32,7 @@ public class TerminalXDisplay
 				{
 					
 					Collection<?> t2 = (Collection<?>)t;
-					output = output + collectionToString(t2);
+					output = output + collectionToString(t2, e+2)+",";
 					continue;
 				}
 				if(counter==s-1)
@@ -59,7 +61,7 @@ public class TerminalXDisplay
 				{
 					
 					Collection<?> t2 = (Collection<?>)t;
-					output = output + collectionToString(t2);
+					output = output + collectionToString(t2, e+2)+",";
 					continue;
 				}
 
@@ -76,9 +78,13 @@ public class TerminalXDisplay
 				}
 			}
 		}
-		output = output + "}\n";
+		output = output + "}";//;
 		
 		return output;
 	}
 
+	public static <T> String collectionToString(Collection<T> collection)
+	{
+		return collectionToString(collection, 0);
+	}
 }

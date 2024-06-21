@@ -58,11 +58,11 @@ class CollectionManipulationTests
 		Set<Integer> set = getSetOfFirstNIntegers(5);
 		set.remove(0);
 		
-		Double p = multiplyAllElementsOfSet(set);
+		Double p = multiplySetElements(set);
 		
 		assert(p==(4.0*3*2));
 		
-		p = addAllElementsOfSet(set);
+		p = addSetElements(set);
 		
 		assert(p== 1.0+2+3+4);
 		
@@ -70,12 +70,28 @@ class CollectionManipulationTests
 		
 		Collections.sort(list);
 		
-		p = addElementsOfList(list, 3);
+		p = addListElements(list, 3);
 		
 		assert(p==6.0);
 		
-		p = multiplyElementsOfList(list, 2);
+		p = multiplyListElements(list, 2);
 		
 		assert(p==2.0);
+	}
+	
+	@Test
+	void testProductSum() throws CollectionException
+	{
+		Set<Integer> set = getSetOfFirstNIntegers(5);
+		set.remove(0);
+		
+		Double p = productSumSet(set,2);
+		
+		assert(p==((4.0*3)+(4*2)+4+(3*2)+3+2));
+		
+		p = sumProductSet(set,2);
+		
+		assert(p== (1.0+2)*(1+3)*(1+4)*(2+3)*(2+4)*(3+4));
+		
 	}
 }
