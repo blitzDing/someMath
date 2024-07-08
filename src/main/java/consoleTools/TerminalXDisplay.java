@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.Collection;
 import java.util.List;
 
+import someMath.CollectionException;
+import someMath.CollectionManipulation;
 import someMath.StringManipulation;
 
 public class TerminalXDisplay 
@@ -14,7 +16,7 @@ public class TerminalXDisplay
 		return name + "("+p.x+", "+p.y+")";
 	}
 	
-	private static <T> String collectionToString(Collection<T> collection, int e)
+	private static <T> String collectionToString(Collection<T> collection, int e) throws CollectionException
 	{
 		
 		int s = collection.size();
@@ -25,14 +27,17 @@ public class TerminalXDisplay
 		if(!(collection instanceof List))
 		{
 
+			T tt = CollectionManipulation.catchRandomElementOfCollection(collection);
+			if(tt instanceof Collection)output = output + "\n";
+			
 			for(T t: collection)
 			{
-				
+
 				if(t instanceof Collection)
 				{
 					
 					Collection<?> t2 = (Collection<?>)t;
-					output = output +"\n"+ collectionToString(t2, e+1)+",";
+					output = output + collectionToString(t2, e+1)+",";
 					continue;
 				}
 				if(counter==s-1)
@@ -52,16 +57,20 @@ public class TerminalXDisplay
 		{
 			
 			List<T> list = (List<T>)(collection);
+			T t = list.get(0);
+			
+			if(t instanceof Collection)output = output + "\n";
+
 			
 			for(int n=0;n<s;n++)
 			{
 				
-				T t = list.get(n);
+				t = list.get(n);
+
 				if(t instanceof Collection)
 				{
-					
 					Collection<?> t2 = (Collection<?>)t;
-					output = output + "\n" + collectionToString(t2, e+2)+",";
+					output = output + collectionToString(t2, e+2)+",";
 					continue;
 				}
 
@@ -83,7 +92,7 @@ public class TerminalXDisplay
 		return output;
 	}
 
-	public static <T> String collectionToString(Collection<T> collection)
+	public static <T> String collectionToString(Collection<T> collection) throws CollectionException
 	{
 		return collectionToString(collection, 0);
 	}

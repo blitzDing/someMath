@@ -1,22 +1,16 @@
 package someMath;
 
 
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import javafx.application.Platform;
 
-import static someMath.SmallNatural.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static someMath.RationalNumber.*;
-
 
 
 public class RationalNumberTest
 {
 
-	private static double prettySmall = Math.pow(10, -11);
 
 	static int zero;
 	static int one;

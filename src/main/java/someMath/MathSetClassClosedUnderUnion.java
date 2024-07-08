@@ -3,9 +3,9 @@ package someMath;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
+import consoleTools.BashSigns;
 import consoleTools.TerminalXDisplay;
 
 
@@ -49,6 +49,7 @@ public class MathSetClassClosedUnderUnion
 	{
 		
 		if(toBeTested==null)return false;
+		if(toBeTested.isEmpty())return true;
 		
 		for(Set<T> member: toBeTested)
 		{
@@ -82,20 +83,22 @@ public class MathSetClassClosedUnderUnion
 		{
 			type[n-1]=0;
 			Set<Set<Set<T>>> subSets = CollectionManipulation.allSubSetsOfSizeN(origin, n);
-			System.out.println("All SubSets of Size " + n + TerminalXDisplay.collectionToString(subSets));
-			List<Set<Set<T>>> listOfSubSets = new ArrayList<>(subSets);
+			printlnBoldAndGreen("All SubSets of Size " + n);
+			System.out.println(TerminalXDisplay.collectionToString(subSets)+"\n\n");
+			ArrayList<Set<Set<T>>> listOfSubSets = new ArrayList<>(subSets);
 			
 			for(Set<Set<T>> cutOut: listOfSubSets)
 			{
 
 				System.out.println("CutOut: " + TerminalXDisplay.collectionToString(cutOut));
 				
-				ArrayList<Set<Set<T>>> l2 = new ArrayList<>(listOfSubSets);
+				ArrayList<Set<Set<T>>> l2 = new ArrayList<>();
+				l2.addAll(listOfSubSets);
 				
 				l2.remove(cutOut);
 				assert(l2.size()+1==listOfSubSets.size());
 
-				Set<T> intersection = implode(cutOut);
+				Set<T> intersection = intersectHoleSetOfSets(cutOut);
 				System.out.println("CutOut Intersection: " + TerminalXDisplay.collectionToString(intersection));
 				
 				for(T t: intersection)
@@ -106,13 +109,14 @@ public class MathSetClassClosedUnderUnion
 					for(Set<Set<T>> subSet: l2)
 					{
 						System.out.println("Test subSet: " + TerminalXDisplay.collectionToString(subSet));
-						System.out.println("Test subset implosion: " + TerminalXDisplay.collectionToString(implode(subSet)));
+						System.out.println("Intersection of the above: " + TerminalXDisplay.collectionToString(intersectHoleSetOfSets(subSet)));
 						//System.out.println("Size: " +n+ "\n" + TerminalXDisplay.collectionToString(subSet));
-						Set<T> anotherIntersection = implode(subSet);
+						Set<T> anotherIntersection = intersectHoleSetOfSets(subSet);
 						if(anotherIntersection.contains(t))
 						{
 							isExclusive = false;
 							System.out.println(t+" is not exclusive.");
+							break;
 						}
 						else
 						{
@@ -161,9 +165,9 @@ public class MathSetClassClosedUnderUnion
 		return false;
 	}
 	
-	public static <T> Set<T> implode(Set<Set<T>> origin) throws CollectionException
+	public static <T> Set<T> intersectHoleSetOfSets(Set<Set<T>> origin) throws CollectionException
 	{
-		Set<T> output = CollectionManipulation.catchRandomElementOfSet(origin);
+		Set<T> output = CollectionManipulation.catchRandomElementOfCollection(origin);
 		
 		for(Set<T> set: origin)
 		{
@@ -172,4 +176,10 @@ public class MathSetClassClosedUnderUnion
 
 		return output;
 	}
+	
+	static void printlnBoldAndGreen(String s)
+	{
+		System.out.println(BashSigns.boldGBCPX+s+BashSigns.boldGBCSX);
+	}
+
 }

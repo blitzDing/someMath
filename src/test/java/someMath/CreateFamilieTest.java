@@ -3,12 +3,14 @@ package someMath;
 
 import org.junit.jupiter.api.Test;
 
-import someMath.MathSetClassClosedUnderUnion;
-import someMath.SmallTools;
 
 import java.util.*;
 
-class CreateFamilieTest {
+
+
+
+class CreateFamilieTest
+{
 
 	@Test
 	void test() 

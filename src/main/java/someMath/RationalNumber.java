@@ -126,6 +126,7 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 		}
 	}
 	
+	/*
 	private static void displayGroups(String s, Matcher matcher)
 	{
 		
@@ -133,7 +134,8 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 		int i = matcher.groupCount();
 		for(int m=0;m<i+1;m++)System.out.println("GroupNr: "+ m + " Group: " + matcher.group(m));
 	}
-	
+	*/
+
 	private static int[] parseString(String s) throws RNumException
 	{
 		
@@ -151,7 +153,7 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 			//displayGroups(s, compoundMatcher);
 			System.out.println("Int+Frac");
 
-			String firstSign = compoundMatcher.group(2);
+			//String firstSign = compoundMatcher.group(2);
 			String secondSign = compoundMatcher.group(5);
 			String thirdSign = compoundMatcher.group(8);
 
@@ -181,7 +183,7 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 			System.out.println("Int only");
 
 			int n = Integer.parseInt(s);
-			theParts[0] =
+			theParts[0] = n;
 			theParts[1] = 0;
 			theParts[2] = 1;
 				

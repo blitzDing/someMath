@@ -1,12 +1,8 @@
 package someMath;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
 import org.junit.jupiter.api.Test;
-import static someMath.NaturalNumber.*;
+
 
 public class CantorPairTest 
 {
@@ -18,8 +14,9 @@ public class CantorPairTest
 
 		for(int n=0;n<4;n++)
 		{
+			
+			
 			int z1 = SmallTools.randomInt(30, 1);
-			int z2 = SmallTools.randomInt(20, 1);
 			
 			NaturalNumber nn1 = new NaturalNumber(z1);
 			NaturalNumber p0 = SmallTools.cantorPairNr(NaturalNumber.zero, nn1);

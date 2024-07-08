@@ -3,24 +3,27 @@
 import org.junit.jupiter.api.Test;
 
 import someMath.CollectionException;
-import someMath.DivisionByZeroException;
-import someMath.NaturalNumberException;
-import someMath.RNumException;
-import someMath.RationalNumber;
-import someMath.SmallNatural;
 
-import static someMath.SmallNatural.*;
+import someMath.DivisionByZeroException;
+
+import someMath.NaturalNumberException;
+
+import someMath.RNumException;
+
+//import someMath.RationalNumber;
+
+
 
 public class PolynomSolverTest 
 {
 	
-	private static final double prettySmall = Math.pow(10, -11);
+	//private static final double prettySmall = Math.pow(10, -11);
 
 	@Test
 	public void testSolver() throws NaturalNumberException, RNumException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
 		
-		RationalNumber two = new RationalNumber(2, 1);
+		//RationalNumber two = new RationalNumber(2, 1);
 		
 		/*TODO:
 		//equals x²+2 = 0.

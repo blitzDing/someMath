@@ -95,7 +95,7 @@ public class ExactPeriode
 		
 		LocalDateTime newToLDT;
 
-		for(int n=0;yearsPlus.isGreaterThen(max);n++)
+		while(yearsPlus.isGreaterThen(max))
 		{
 			newToLDT = this.getToLDT().plusYears(max.getNumberCore().longValue());
 			yearsPlus.subtract(max);

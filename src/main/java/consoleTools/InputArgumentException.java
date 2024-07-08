@@ -1,13 +1,19 @@
 package consoleTools;
 
-public class InputArgumentException extends Exception 
+public class InputArgumentException extends Exception
 {
 
-	private String msg;
+	private static final long serialVersionUID = 7981318273716170338L;
+
+	final String msg;
 	
 	public InputArgumentException(String msg)
 	{
 		this.msg = msg;
-		System.out.println(msg);
+	}
+	
+	public String getMessage()
+	{
+		return msg;
 	}
 }

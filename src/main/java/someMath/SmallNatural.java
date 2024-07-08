@@ -6,6 +6,8 @@ import java.util.Objects;
 public class SmallNatural implements SubtractableAndDivideable<SmallNatural>, Cloneable, Serializable
 {
 
+	private static final long serialVersionUID = 8942842370259459331L;
+	
 	public static final String valueOutOfBounds = "Small Natural Constructor Argument out of Bounds.";
 	public static final int max = 999;
 	private final int value;
@@ -140,6 +142,11 @@ public class SmallNatural implements SubtractableAndDivideable<SmallNatural>, Cl
 		}
 	}
 	
+	public String getName()
+	{
+		return name;
+	}
+
 	public int hashCode()
 	{
 		return Objects.hash(value);

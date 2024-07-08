@@ -8,6 +8,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import consoleTools.BashSigns;
 import consoleTools.TerminalXDisplay;
 
 
@@ -53,7 +54,7 @@ class MathSetClassClosedUnderUnionTest
 		differentAndSmall.add('g');
 		differentAndSmall.add('h');
 		
-		anotherDifferentAndSmall = new HashSet();
+		anotherDifferentAndSmall = new HashSet<>();
 		anotherDifferentAndSmall.add('b');
 		anotherDifferentAndSmall.add('c');
 		anotherDifferentAndSmall.add('d');
@@ -72,29 +73,30 @@ class MathSetClassClosedUnderUnionTest
 	@Test
 	void implosionTest() throws CollectionException
 	{
-		
+		printlnBoldAndBlue("Implosion test");
+
 		Set<Set<Character>> someSets = new HashSet<>();
 		someSets.add(betweenbigAndSmall);
 		someSets.add(bigOne);
 		someSets.add(anotherDifferentAndSmall);
 		
 		System.out.println("Origin: \n" + TerminalXDisplay.collectionToString(someSets));
-		Set<Character> intersection = MathSetClassClosedUnderUnion.implode(someSets);
+		Set<Character> intersection = MathSetClassClosedUnderUnion.intersectHoleSetOfSets(someSets);
 		System.out.println("\nIntersection:\n" + TerminalXDisplay.collectionToString(intersection));
-		System.exit(0);
 	}
 
 	@Test
-	void famTestTest()
+	void famTestTest() throws CollectionException
 	{
 
-		
+		printlnBoldAndBlue("fam Test test");	
 		
 		Set<Set<Character>> fam1 = new HashSet<>();
 		fam1.add(bigOne);
 		fam1.add(smallOne);
 		fam1.add(anotherSmallOne);
 		
+		System.out.println(TerminalXDisplay.collectionToString(fam1));
 		assert(MathSetClassClosedUnderUnion.famTest(fam1));	
 		
 		Set<Set<Character>> fam2 = new HashSet<>();
@@ -121,6 +123,7 @@ class MathSetClassClosedUnderUnionTest
 	@Test
 	void typeTest() throws CollectionException
 	{
+		printlnBoldAndBlue("Type Set of Sets test");
 		Set<Set<Character>> someSets = new HashSet<>();
 		someSets.add(smallOne);
 		someSets.add(anotherSmallOne);
@@ -145,9 +148,16 @@ class MathSetClassClosedUnderUnionTest
 		System.out.println("****" + type[0] + ", " + type[1] + ", " + type[2]);
 		
 	}
+
 	@Test
 	void createFamTest()
 	{
+		printlnBoldAndBlue("Not testing create Fam.");
 		assert(true);
+	}
+	
+	void printlnBoldAndBlue(String s)
+	{
+		System.out.println(BashSigns.boldBBCPX+s+BashSigns.boldBBCSX);
 	}
 }

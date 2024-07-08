@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static someMath.RationalNumber.*;
-import static someMath.NaturalNumber.*;
+//import static someMath.NaturalNumber.*;
 public class ComplexRationalNrTest 
 {
 

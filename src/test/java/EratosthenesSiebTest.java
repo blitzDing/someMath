@@ -12,8 +12,8 @@ public class EratosthenesSiebTest
 	@Test
 	public void testPrimes()
 	{
-		EratosthenesSieb es = new EratosthenesSieb(1000);
-		List<Integer> primeList = es.getPrimeList();
+		new EratosthenesSieb(1000);
+		List<Integer> primeList = EratosthenesSieb.getPrimeList();
 		assert(primeList.get(0)==2);
 		
 		

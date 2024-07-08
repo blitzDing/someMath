@@ -1,11 +1,8 @@
 package someMath;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,8 +16,9 @@ import static someMath.CollectionManipulation.*;
 class CollectionManipulationTests
 {
 
-	static Set<Character> originSet = getSetOfFirstNLatinLetters(4);
-	static Set<Character> otherSet = getSetOfFirstNLatinLetters(5);
+	static Set<Character> originSet = getSetOfFirstNLatinLettersLowercase(4);
+	static Set<Character> otherSet = getSetOfFirstNLatinLettersLowercase(5);
+
 
 	@Test
 	void testPowerSet() throws CollectionException
@@ -54,7 +52,8 @@ class CollectionManipulationTests
 		System.out.println("3 of 5");
 		subSets = allSubSetsOfSizeN(otherSet, 3);
 		System.out.println(TerminalXDisplay.collectionToString(subSets));
-
+		
+		assert(subSets.size()==10);
 		/*
 		Set<Set<Set<Character>>> subSetsOfSize3 = allSubSetsOfSizeN(powerSet(originSet), 3);
 		System.out.println(TerminalXDisplay.collectionToString(subSetsOfSize3));

@@ -1,6 +1,8 @@
 package someMath;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -90,11 +92,25 @@ public class CollectionManipulation
 		return upStacking;
 	}
 
+	
+	public static <T> T catchRandomElementOfCollection(Collection<T> collection) throws CollectionException
+	{
+		
+		if(collection==null)throw new CollectionException("Set is Null.");
+		if(collection.isEmpty())return null;
+		
+		List<T> list = new ArrayList<>(collection);
+		
+		return catchRandomElementOfList(list);
+	}
+
+	
 	public static <T> T catchRandomElementOfSet(Set<T> set) throws CollectionException
 	{
 		
-		if(set==null||set.isEmpty())throw new CollectionException("Set is empty or Null.");
-		
+		if(set==null)throw new CollectionException("Set is Null.");
+		if(set.isEmpty())return null;
+
 		List<T> list = new ArrayList<>(set);
 		
 		return catchRandomElementOfList(list);
@@ -103,8 +119,8 @@ public class CollectionManipulation
 	public static <T> T catchRandomElementOfList(List<T> list) throws CollectionException
 	{
 		
-		if(list==null||list.isEmpty())throw new CollectionException("List is empty or Null.");
-		
+		if(list==null)throw new CollectionException("List is Null.");
+		if(list.isEmpty())return null;
 		int n = list.size();
 		int r = (int)(Math.random()*n);
 		
@@ -183,9 +199,9 @@ public class CollectionManipulation
 
 		Set<T> emptySet = new HashSet<>();
 		Set<Set<T>> output = new HashSet<>();
+		if(originSet==null)throw new CollectionException("Set can't be null.");
 		if(n<0) throw new CollectionException("n is to small. It is below Zero.");
 		if(n>originSet.size())throw new CollectionException("n is bigger then the Set size.");
-		if(originSet==null)throw new CollectionException("Set can't be null.");
 		if(originSet.contains(null))throw new CollectionException("Set contains null.");
 		
 		if(n==0||originSet.isEmpty()) 
@@ -236,8 +252,9 @@ public class CollectionManipulation
 
 	public static <T extends Number> Double addSetElements(Set<T> origin) throws CollectionException
 	{
-		if(origin.contains(null))throw new CollectionException("origin contains null.");
+
 		if(origin==null)throw new CollectionException("Set is null.");
+		if(origin.contains(null))throw new CollectionException("origin contains null.");
 		
 		Double sum = 0.0;
 		if(origin.isEmpty())return sum;
@@ -253,8 +270,8 @@ public class CollectionManipulation
 	public static <T extends Number> Double multiplySetElements(Set<T> origin) throws CollectionException
 	{
 		
-		if(origin.contains(null))throw new CollectionException("origin contains null.");
 		if(origin==null)throw new CollectionException("Set is null.");
+		if(origin.contains(null))throw new CollectionException("origin contains null.");
 		
 		Double product = 1.0;
 		if(origin.isEmpty())return 0.0;
@@ -272,8 +289,9 @@ public class CollectionManipulation
 	
 	public static <T extends Number> Double addListElements(List<T> origin, int n) throws CollectionException
 	{
-		if(origin.contains(null))throw new CollectionException("origin contains null.");
+
 		if(origin==null)throw new CollectionException("Set is null.");
+		if(origin.contains(null))throw new CollectionException("origin contains null.");
 
 		int s = origin.size();
 		if(n>s)throw new CollectionException("Sum index to high.");
@@ -298,8 +316,6 @@ public class CollectionManipulation
 
 		Set<Set<T>> selections = allSubSetsOfSizeN(set, n);
 		
-		int m = selections.size();
-		
 		for(Set<T> s: selections)ps = ps+multiplySetElements(s);
 		
 		return ps;
@@ -311,9 +327,7 @@ public class CollectionManipulation
 		Double ps = 1.0;
 
 		Set<Set<T>> selections = allSubSetsOfSizeN(set, n);
-		
-		int m = selections.size();
-		
+
 		for(Set<T> s: selections)ps = ps*addSetElements(s);
 		
 		return ps;
@@ -346,7 +360,25 @@ public class CollectionManipulation
 		return output;
 	}
 
-	public static Set<Character> getSetOfFirstNLatinLetters(int n)
+
+	public static Set<Character> getSetOfFirstNLatinLettersUppercase(int n)
+	{
+
+		Set<Character> output = new HashSet<>();
+
+		
+		for(int i=0;i<n;i++)
+		{
+			int num = 'A';
+			int newNum = num+i;
+			char newChar = (char)newNum;
+			output.add(newChar);
+		}
+		
+		return output;
+	}
+
+	public static Set<Character> getSetOfFirstNLatinLettersLowercase(int n)
 	{
 
 		Set<Character> output = new HashSet<>();
@@ -360,6 +392,26 @@ public class CollectionManipulation
 			output.add(newChar);
 		}
 		
+		return output;
+	}
+	
+	public static List<Character> getListOfFirstNLettersLowerCase(int n)
+	{
+		Set<Character> set = getSetOfFirstNLatinLettersLowercase(n);
+		
+		List<Character> output = new ArrayList<>(set);
+		Collections.sort(output);
+
+		return output;
+	}
+
+	public static List<Character> getListOfFirstNLettersUppercase(int n)
+	{
+		Set<Character> set = getSetOfFirstNLatinLettersUppercase(n);
+		
+		List<Character> output = new ArrayList<>(set);
+		Collections.sort(output);
+
 		return output;
 	}
 }

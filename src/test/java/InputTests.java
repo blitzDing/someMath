@@ -73,8 +73,7 @@ class InputTests
 	@Test
 	void testGetDateTimeInOneLine() throws InputArgumentException
 	{
-		int hour = 0;
-		int minute = 0;
+
 		String year = "0002";
 		String month = "JAN";
 		int day = 6;

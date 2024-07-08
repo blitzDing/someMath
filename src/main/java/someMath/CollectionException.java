@@ -1,9 +1,11 @@
 package someMath;
 
-public class CollectionException extends Exception 
+public class CollectionException extends Exception
 {
 
-	private final String msg;
+	private static final long serialVersionUID = -4203776761962670684L;
+
+	final String msg;
 
 	public CollectionException(String msg)
 	{
