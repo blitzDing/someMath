@@ -32,7 +32,7 @@ public class TerminalXDisplay
 				{
 					
 					Collection<?> t2 = (Collection<?>)t;
-					output = output + collectionToString(t2, e+2)+",";
+					output = output +"\n"+ collectionToString(t2, e+1)+",";
 					continue;
 				}
 				if(counter==s-1)
@@ -61,7 +61,7 @@ public class TerminalXDisplay
 				{
 					
 					Collection<?> t2 = (Collection<?>)t;
-					output = output + collectionToString(t2, e+2)+",";
+					output = output + "\n" + collectionToString(t2, e+2)+",";
 					continue;
 				}
 

@@ -330,6 +330,22 @@ public class CollectionManipulation
 		return output;
 	}
 
+	public static <T> Set<T> catchRandomNAndRemove(int n, Set<T> source) throws CollectionException
+	{
+		
+		Set<T> output = new HashSet<>();
+		if(n>source.size())throw new IllegalArgumentException("Not enough Elements in Set.");
+		
+		for(int i=0;i<n;i++)
+		{
+			T t = CollectionManipulation.catchRandomElementOfSet(source);
+			source.remove(t);
+			output.add(t);
+		}
+		
+		return output;
+	}
+
 	public static Set<Character> getSetOfFirstNLatinLetters(int n)
 	{
 

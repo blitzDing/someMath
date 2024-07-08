@@ -1,7 +1,11 @@
 package someMath;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
 
 public class MathSetClassClosedUnderUnion
 {
@@ -63,39 +67,61 @@ public class MathSetClassClosedUnderUnion
 		
 		return true;
 	}
-	
-	public static <T> boolean criticalTest(Set<Set<T>> toBeTested)
+
+	public <T> int[] typeOfSetOfSets(Set<Set<T>> origin)throws CollectionException
 	{
+		
+		int size = origin.size();
+		int [] type = new int[size];
+		
+		List<Set<T>> listOfSets = new ArrayList<>(origin);
 
-		if(!famTest(toBeTested))return false;//famTest includes null Tests.
-
-		for(Set<T> cutOut: toBeTested)
+		for(int n=1;n<size+1;n++)
 		{
-
-			Set<Set<T>> smaller = new HashSet<>();
-			smaller.addAll(toBeTested);
-			smaller.remove(cutOut);
-
-			if(famTest(smaller))return false;
+			type[n-1]=0;
+			Set<Set<Set<T>>> subSets = CollectionManipulation.allSubSetsOfSizeN(origin, n);
+			
+			for(Set<Set<T>> oneCutOut: subSets)
+			{
+				Set<Set<Set<T>>> copy = new HashSet<>(subSets);
+				copy.remove(oneCutOut);
+				
+				for(Set<T> set: oneCutOut)
+				{
+					
+				}
+			}
+		
 		}
-
-		return true;
+		/*
+		type[0]=0;
+		for(int n=0;n<size;n++)
+		{
+			List<Set<T>> copy = new ArrayList<>(origin);
+			Set<T> set = copy.get(n);
+			copy.remove(set);
+			
+			for(T t: set)
+			{
+				if(!multipleContain(t, copy))
+				{
+					type[0]++;
+					break;
+				}
+			}
+		}
+		*/
+		return null;
 	}
 	
-	
-	public static <T> Set<T> catchRandomNAndRemove(int n, Set<T> source) throws CollectionException
+	public <T, G extends Collection<H>, H extends Collection<T>> boolean multipleContain(T t, G container)
 	{
-		
-		Set<T> output = new HashSet<>();
-		if(n>source.size())throw new IllegalArgumentException("Not enough Elements in Set.");
-		
-		for(int i=0;i<n;i++)
+	
+		for(H coll: container)
 		{
-			T t = CollectionManipulation.catchRandomElementOfSet(source);
-			source.remove(t);
-			output.add(t);
+			if(coll.contains(t))return true;
 		}
-		
-		return output;
+	
+		return false;
 	}
 }

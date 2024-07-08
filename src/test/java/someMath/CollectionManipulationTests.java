@@ -26,6 +26,8 @@ class CollectionManipulationTests
 	void testPowerSet() throws CollectionException
 	{
 
+		System.out.println("\nTesting power Set.");
+
 		Set<Set<Character>> pSet = powerSet(originSet);
 		System.out.println(TerminalXDisplay.collectionToString(pSet));
 		
@@ -33,6 +35,7 @@ class CollectionManipulationTests
 		
 		pSet = powerSet(otherSet);
 		System.out.println(TerminalXDisplay.collectionToString(pSet));
+		System.out.println(BashSigns.boldRBCPX + "hi" + BashSigns.boldRBCSX);
 		
 		assert(pSet.size()==32);
 	}
@@ -40,6 +43,9 @@ class CollectionManipulationTests
 	@Test
 	void testSubSetsOfSizeN() throws CollectionException
 	{
+		
+		System.out.println("\nTesting sub Sets.");
+		System.out.println("2 of 4");
 		Set<Set<Character>> subSets = allSubSetsOfSizeN(originSet, 2);
 		System.out.println(TerminalXDisplay.collectionToString(subSets));
 		
@@ -48,13 +54,19 @@ class CollectionManipulationTests
 		System.out.println("3 of 5");
 		subSets = allSubSetsOfSizeN(otherSet, 3);
 		System.out.println(TerminalXDisplay.collectionToString(subSets));
-		
-		//assert(subSets.size()==10);
+
+		/*
+		Set<Set<Set<Character>>> subSetsOfSize3 = allSubSetsOfSizeN(powerSet(originSet), 3);
+		System.out.println(TerminalXDisplay.collectionToString(subSetsOfSize3));
+		*/
 	}
 
 	@Test
 	void testProductOfSetAndList() throws CollectionException
 	{
+		
+		System.out.println("\nTesting product of Set and List.");
+
 		Set<Integer> set = getSetOfFirstNIntegers(5);
 		set.remove(0);
 		
@@ -82,6 +94,8 @@ class CollectionManipulationTests
 	@Test
 	void testProductSum() throws CollectionException
 	{
+		System.out.println("\nTesting product Sum.");
+
 		Set<Integer> set = getSetOfFirstNIntegers(5);
 		set.remove(0);
 		
