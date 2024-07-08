@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import consoleTools.TerminalXDisplay;
+
 
 public class MathSetClassClosedUnderUnion
 {
@@ -68,27 +70,60 @@ public class MathSetClassClosedUnderUnion
 		return true;
 	}
 
-	public <T> int[] typeOfSetOfSets(Set<Set<T>> origin)throws CollectionException
+	public static <T> int[] typeOfSetOfSets(Set<Set<T>> origin)throws CollectionException
 	{
 		
 		int size = origin.size();
 		int [] type = new int[size];
 		
-		List<Set<T>> listOfSets = new ArrayList<>(origin);
+		System.out.println("Origin: \n" + TerminalXDisplay.collectionToString(origin));
 
 		for(int n=1;n<size+1;n++)
 		{
 			type[n-1]=0;
 			Set<Set<Set<T>>> subSets = CollectionManipulation.allSubSetsOfSizeN(origin, n);
+			System.out.println("All SubSets of Size " + n + TerminalXDisplay.collectionToString(subSets));
+			List<Set<Set<T>>> listOfSubSets = new ArrayList<>(subSets);
 			
-			for(Set<Set<T>> oneCutOut: subSets)
+			for(Set<Set<T>> cutOut: listOfSubSets)
 			{
-				Set<Set<Set<T>>> copy = new HashSet<>(subSets);
-				copy.remove(oneCutOut);
+
+				System.out.println("CutOut: " + TerminalXDisplay.collectionToString(cutOut));
 				
-				for(Set<T> set: oneCutOut)
+				ArrayList<Set<Set<T>>> l2 = new ArrayList<>(listOfSubSets);
+				
+				l2.remove(cutOut);
+				assert(l2.size()+1==listOfSubSets.size());
+
+				Set<T> intersection = implode(cutOut);
+				System.out.println("CutOut Intersection: " + TerminalXDisplay.collectionToString(intersection));
+				
+				for(T t: intersection)
 				{
 					
+					System.out.println("Testing: " + t);
+					boolean isExclusive = true;
+					for(Set<Set<T>> subSet: l2)
+					{
+						System.out.println("Test subSet: " + TerminalXDisplay.collectionToString(subSet));
+						System.out.println("Test subset implosion: " + TerminalXDisplay.collectionToString(implode(subSet)));
+						//System.out.println("Size: " +n+ "\n" + TerminalXDisplay.collectionToString(subSet));
+						Set<T> anotherIntersection = implode(subSet);
+						if(anotherIntersection.contains(t))
+						{
+							isExclusive = false;
+							System.out.println(t+" is not exclusive.");
+						}
+						else
+						{
+							System.out.println(t + " seems exclusive so far;");
+						}
+					}
+					if(isExclusive)
+					{
+						type[n-1]++;
+						break;
+					}
 				}
 			}
 		
@@ -111,10 +146,11 @@ public class MathSetClassClosedUnderUnion
 			}
 		}
 		*/
-		return null;
+
+		return type;
 	}
 	
-	public <T, G extends Collection<H>, H extends Collection<T>> boolean multipleContain(T t, G container)
+	public static <T, G extends Collection<H>, H extends Collection<T>> boolean multipleContain(T t, G container)
 	{
 	
 		for(H coll: container)
@@ -123,5 +159,17 @@ public class MathSetClassClosedUnderUnion
 		}
 	
 		return false;
+	}
+	
+	public static <T> Set<T> implode(Set<Set<T>> origin) throws CollectionException
+	{
+		Set<T> output = CollectionManipulation.catchRandomElementOfSet(origin);
+		
+		for(Set<T> set: origin)
+		{
+			output.retainAll(set);
+		}
+
+		return output;
 	}
 }

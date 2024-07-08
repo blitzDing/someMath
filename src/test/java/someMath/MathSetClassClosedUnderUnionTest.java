@@ -8,17 +8,21 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import consoleTools.TerminalXDisplay;
+
 
 class MathSetClassClosedUnderUnionTest 
 {
 
 	static Set<Character> bigOne;
 	
-	static Set<Character> smallOne;
-	
 	static Set<Character> anotherSmallOne;
 
+	static Set<Character> smallOne;
+
 	static Set<Character> differentAndSmall;
+	
+	static Set<Character> anotherDifferentAndSmall;
 
 	static Set<Character> betweenbigAndSmall;
 
@@ -48,6 +52,11 @@ class MathSetClassClosedUnderUnionTest
 		differentAndSmall.add('f');
 		differentAndSmall.add('g');
 		differentAndSmall.add('h');
+		
+		anotherDifferentAndSmall = new HashSet();
+		anotherDifferentAndSmall.add('b');
+		anotherDifferentAndSmall.add('c');
+		anotherDifferentAndSmall.add('d');
 
 		betweenbigAndSmall = new HashSet<>();
 		betweenbigAndSmall.add('a');
@@ -60,6 +69,21 @@ class MathSetClassClosedUnderUnionTest
 		evenSmaller.add('b');
 	}
 	
+	@Test
+	void implosionTest() throws CollectionException
+	{
+		
+		Set<Set<Character>> someSets = new HashSet<>();
+		someSets.add(betweenbigAndSmall);
+		someSets.add(bigOne);
+		someSets.add(anotherDifferentAndSmall);
+		
+		System.out.println("Origin: \n" + TerminalXDisplay.collectionToString(someSets));
+		Set<Character> intersection = MathSetClassClosedUnderUnion.implode(someSets);
+		System.out.println("\nIntersection:\n" + TerminalXDisplay.collectionToString(intersection));
+		System.exit(0);
+	}
+
 	@Test
 	void famTestTest()
 	{
@@ -94,6 +118,33 @@ class MathSetClassClosedUnderUnionTest
 		assertFalse(MathSetClassClosedUnderUnion.famTest(fam4));
 	}
 	
+	@Test
+	void typeTest() throws CollectionException
+	{
+		Set<Set<Character>> someSets = new HashSet<>();
+		someSets.add(smallOne);
+		someSets.add(anotherSmallOne);
+		someSets.add(bigOne);
+
+		int [] type = MathSetClassClosedUnderUnion.typeOfSetOfSets(someSets);
+		/*
+		assert(type.length==2);
+		assert(type[0]==2);
+		assert(type[1]==1);
+		System.out.println("Size: " + type.length);
+		System.out.println("****" + type[0] + ", " + type[1]);
+		*/
+
+		
+		//type = MathSetClassClosedUnderUnion.typeOfSetOfSets(someSets);
+		assert(type.length==3);
+		assert(type[0]==0);
+		//assert(type[1]==2);
+		assert(type[2]==1);
+		System.out.println("Size: " + type.length);
+		System.out.println("****" + type[0] + ", " + type[1] + ", " + type[2]);
+		
+	}
 	@Test
 	void createFamTest()
 	{
