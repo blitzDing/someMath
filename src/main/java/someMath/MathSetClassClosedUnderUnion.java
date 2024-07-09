@@ -71,6 +71,72 @@ public class MathSetClassClosedUnderUnion
 		return true;
 	}
 
+	public static <T> int[] typeOfSetOfSetsB(Set<Set<T>> origin)throws CollectionException
+	{
+		
+		int size = origin.size();
+		int [] type = new int[size];
+		
+		System.out.println("Origin: \n" + TerminalXDisplay.collectionToString(origin));
+
+		for(int n=1;n<size+1;n++)
+		{
+			type[n-1]=0;
+		}
+		
+		int n = 1;
+		Set<Set<Set<T>>> subSets = CollectionManipulation.allSubSetsOfSizeN(origin, n);
+		printlnBoldAndGreen("All SubSets of Size " + n);
+		System.out.println(TerminalXDisplay.collectionToString(subSets)+"\n\n");
+		ArrayList<Set<Set<T>>> listOfSubSets = new ArrayList<>(subSets);
+			
+		for(Set<Set<T>> cutOut: listOfSubSets)
+		{
+
+			printlnBoldAndGreen("New CutOut: " + TerminalXDisplay.collectionToString(cutOut));
+			
+			ArrayList<Set<Set<T>>> l2 = new ArrayList<>();
+			l2.addAll(listOfSubSets);
+			
+			l2.remove(cutOut);
+			assert(l2.size()+1==listOfSubSets.size());
+
+			Set<T> intersection = intersectHoleSetOfSets(cutOut);
+			System.out.println("CutOut Intersection: " + TerminalXDisplay.collectionToString(intersection));
+			
+			for(T t: intersection)
+			{
+				
+				System.out.println("Testing: " + t);
+				boolean isExclusive = true;
+				for(Set<Set<T>> subSet: l2)
+				{
+					System.out.println("Test subSet: " + TerminalXDisplay.collectionToString(subSet));
+					System.out.println("Intersection of the above: " + TerminalXDisplay.collectionToString(intersectHoleSetOfSets(subSet)));
+					//System.out.println("Size: " +n+ "\n" + TerminalXDisplay.collectionToString(subSet));
+					Set<T> anotherIntersection = intersectHoleSetOfSets(subSet);
+					if(anotherIntersection.contains(t))
+					{
+						isExclusive = false;
+						System.out.println(t+" is not exclusive.");
+						break;
+					}
+					else
+					{
+						System.out.println(t + " seems exclusive so far;");
+					}
+				}
+				if(isExclusive)
+				{
+					type[n-1]++;
+					break;
+				}
+			}
+		}
+
+		return type;
+	}
+
 	public static <T> int[] typeOfSetOfSets(Set<Set<T>> origin)throws CollectionException
 	{
 		
@@ -132,24 +198,6 @@ public class MathSetClassClosedUnderUnion
 			}
 		
 		}
-		/*
-		type[0]=0;
-		for(int n=0;n<size;n++)
-		{
-			List<Set<T>> copy = new ArrayList<>(origin);
-			Set<T> set = copy.get(n);
-			copy.remove(set);
-			
-			for(T t: set)
-			{
-				if(!multipleContain(t, copy))
-				{
-					type[0]++;
-					break;
-				}
-			}
-		}
-		*/
 
 		return type;
 	}

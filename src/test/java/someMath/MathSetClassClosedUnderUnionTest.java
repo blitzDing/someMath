@@ -128,8 +128,9 @@ class MathSetClassClosedUnderUnionTest
 		someSets.add(smallOne);
 		someSets.add(anotherSmallOne);
 		someSets.add(bigOne);
-
-		int [] type = MathSetClassClosedUnderUnion.typeOfSetOfSets(someSets);
+		printlnBoldAndBlue(TerminalXDisplay.collectionToString(bigOne));
+		
+		int [] type = MathSetClassClosedUnderUnion.typeOfSetOfSetsB(someSets);
 		/*
 		assert(type.length==2);
 		assert(type[0]==2);
@@ -139,11 +140,14 @@ class MathSetClassClosedUnderUnionTest
 		*/
 
 		
-		//type = MathSetClassClosedUnderUnion.typeOfSetOfSets(someSets);
+		/*
+		type = MathSetClassClosedUnderUnion.typeOfSetOfSets(someSets);
 		assert(type.length==3);
 		assert(type[0]==0);
-		//assert(type[1]==2);
+		assert(type[1]==2);
 		assert(type[2]==1);
+		*/
+
 		System.out.println("Size: " + type.length);
 		System.out.println("****" + type[0] + ", " + type[1] + ", " + type[2]);
 		
