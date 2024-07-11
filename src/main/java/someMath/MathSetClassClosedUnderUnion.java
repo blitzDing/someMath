@@ -84,7 +84,10 @@ public class MathSetClassClosedUnderUnion
 			type[n-1]=0;
 		}
 		
-		int n = 1;
+		Set<T> all = intersectHoleSetOfSets(origin);
+		
+		for(int n=1;n<size+1;n++)
+		{//Remember: This is an approach to full functionality.
 		Set<Set<Set<T>>> subSets = CollectionManipulation.allSubSetsOfSizeN(origin, n);
 		printlnBoldAndGreen("All SubSets of Size " + n);
 		System.out.println(TerminalXDisplay.collectionToString(subSets)+"\n\n");
@@ -108,14 +111,15 @@ public class MathSetClassClosedUnderUnion
 			{
 				
 				System.out.println("Testing: " + t);
+
 				boolean isExclusive = true;
 				for(Set<Set<T>> subSet: l2)
 				{
+
 					System.out.println("Test subSet: " + TerminalXDisplay.collectionToString(subSet));
 					System.out.println("Intersection of the above: " + TerminalXDisplay.collectionToString(intersectHoleSetOfSets(subSet)));
-					//System.out.println("Size: " +n+ "\n" + TerminalXDisplay.collectionToString(subSet));
-					Set<T> anotherIntersection = intersectHoleSetOfSets(subSet);
-					if(anotherIntersection.contains(t))
+
+					if(multipleContain(t, subSet))
 					{
 						isExclusive = false;
 						System.out.println(t+" is not exclusive.");
@@ -125,6 +129,7 @@ public class MathSetClassClosedUnderUnion
 					{
 						System.out.println(t + " seems exclusive so far;");
 					}
+					
 				}
 				if(isExclusive)
 				{
@@ -133,7 +138,7 @@ public class MathSetClassClosedUnderUnion
 				}
 			}
 		}
-
+		}
 		return type;
 	}
 
@@ -207,19 +212,23 @@ public class MathSetClassClosedUnderUnion
 	
 		for(H coll: container)
 		{
-			if(coll.contains(t))return true;
+			if(!coll.contains(t))return false;
 		}
 	
-		return false;
+		return true;
 	}
 	
 	public static <T> Set<T> intersectHoleSetOfSets(Set<Set<T>> origin) throws CollectionException
 	{
-		Set<T> output = CollectionManipulation.catchRandomElementOfCollection(origin);
+		
+		Set<T> output = new HashSet<>();
 		
 		for(Set<T> set: origin)
 		{
-			output.retainAll(set);
+			for(T t: set)
+			{
+				if(multipleContain(t, origin))output.add(t);
+			}
 		}
 
 		return output;

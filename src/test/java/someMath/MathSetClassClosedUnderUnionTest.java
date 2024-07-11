@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import consoleTools.BashSigns;
@@ -29,8 +30,8 @@ class MathSetClassClosedUnderUnionTest
 
 	static Set<Character> evenSmaller;
 
-	@BeforeAll
-	static void prepare()
+	@BeforeEach
+	void prepare()
 	{
 		bigOne = new HashSet<>();
 		bigOne.add('a');
@@ -80,6 +81,7 @@ class MathSetClassClosedUnderUnionTest
 		someSets.add(bigOne);
 		someSets.add(anotherDifferentAndSmall);
 		
+		
 		System.out.println("Origin: \n" + TerminalXDisplay.collectionToString(someSets));
 		Set<Character> intersection = MathSetClassClosedUnderUnion.intersectHoleSetOfSets(someSets);
 		System.out.println("\nIntersection:\n" + TerminalXDisplay.collectionToString(intersection));
@@ -128,6 +130,7 @@ class MathSetClassClosedUnderUnionTest
 		someSets.add(smallOne);
 		someSets.add(anotherSmallOne);
 		someSets.add(bigOne);
+		someSets.add(differentAndSmall);
 		printlnBoldAndBlue(TerminalXDisplay.collectionToString(bigOne));
 		
 		int [] type = MathSetClassClosedUnderUnion.typeOfSetOfSetsB(someSets);
