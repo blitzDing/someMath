@@ -73,7 +73,7 @@ public class MathSetClassClosedUnderUnion
 		return true;
 	}
 
-	public static <T> int[] typeOfSetOfSetsB(Set<Set<T>> origin)throws CollectionException
+	public static <T> int[] typeOfSetOfSets(Set<Set<T>> origin)throws CollectionException
 	{
 		
 		int size = origin.size();
