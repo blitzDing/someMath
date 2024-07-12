@@ -2,7 +2,9 @@ package someMath;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import consoleTools.BashSigns;
@@ -84,75 +86,8 @@ public class MathSetClassClosedUnderUnion
 			type[n-1]=0;
 		}
 		
-		Set<T> all = intersectHoleSetOfSets(origin);
-		
-		for(int n=1;n<size+1;n++)
-		{//Remember: This is an approach to full functionality.
-		Set<Set<Set<T>>> subSets = CollectionManipulation.allSubSetsOfSizeN(origin, n);
-		printlnBoldAndGreen("All SubSets of Size " + n);
-		System.out.println(TerminalXDisplay.collectionToString(subSets)+"\n\n");
-		ArrayList<Set<Set<T>>> listOfSubSets = new ArrayList<>(subSets);
-			
-		for(Set<Set<T>> cutOut: listOfSubSets)
-		{
-
-			printlnBoldAndGreen("New CutOut: " + TerminalXDisplay.collectionToString(cutOut));
-			
-			ArrayList<Set<Set<T>>> l2 = new ArrayList<>();
-			l2.addAll(listOfSubSets);
-			
-			l2.remove(cutOut);
-			assert(l2.size()+1==listOfSubSets.size());
-
-			Set<T> intersection = intersectHoleSetOfSets(cutOut);
-			System.out.println("CutOut Intersection: " + TerminalXDisplay.collectionToString(intersection));
-			
-			for(T t: intersection)
-			{
-				
-				System.out.println("Testing: " + t);
-
-				boolean isExclusive = true;
-				for(Set<Set<T>> subSet: l2)
-				{
-
-					System.out.println("Test subSet: " + TerminalXDisplay.collectionToString(subSet));
-					System.out.println("Intersection of the above: " + TerminalXDisplay.collectionToString(intersectHoleSetOfSets(subSet)));
-
-					if(multipleContain(t, subSet))
-					{
-						isExclusive = false;
-						System.out.println(t+" is not exclusive.");
-						break;
-					}
-					else
-					{
-						System.out.println(t + " seems exclusive so far;");
-					}
-					
-				}
-				if(isExclusive)
-				{
-					type[n-1]++;
-					break;
-				}
-			}
-		}
-		}
-		return type;
-	}
-
-	public static <T> int[] typeOfSetOfSets(Set<Set<T>> origin)throws CollectionException
-	{
-		
-		int size = origin.size();
-		int [] type = new int[size];
-		
-		System.out.println("Origin: \n" + TerminalXDisplay.collectionToString(origin));
-
 		for(int n=1;n<size+1;n++)
 		{
-			type[n-1]=0;
 			Set<Set<Set<T>>> subSets = CollectionManipulation.allSubSetsOfSizeN(origin, n);
 			printlnBoldAndGreen("All SubSets of Size " + n);
 			System.out.println(TerminalXDisplay.collectionToString(subSets)+"\n\n");
@@ -161,29 +96,30 @@ public class MathSetClassClosedUnderUnion
 			for(Set<Set<T>> cutOut: listOfSubSets)
 			{
 
-				System.out.println("CutOut: " + TerminalXDisplay.collectionToString(cutOut));
-				
+				printlnBoldAndGreen("New CutOut: " + TerminalXDisplay.collectionToString(cutOut));
+			
 				ArrayList<Set<Set<T>>> l2 = new ArrayList<>();
 				l2.addAll(listOfSubSets);
-				
+
 				l2.remove(cutOut);
 				assert(l2.size()+1==listOfSubSets.size());
 
 				Set<T> intersection = intersectHoleSetOfSets(cutOut);
 				System.out.println("CutOut Intersection: " + TerminalXDisplay.collectionToString(intersection));
-				
+			
 				for(T t: intersection)
 				{
-					
+				
 					System.out.println("Testing: " + t);
+
 					boolean isExclusive = true;
 					for(Set<Set<T>> subSet: l2)
 					{
+
 						System.out.println("Test subSet: " + TerminalXDisplay.collectionToString(subSet));
 						System.out.println("Intersection of the above: " + TerminalXDisplay.collectionToString(intersectHoleSetOfSets(subSet)));
-						//System.out.println("Size: " +n+ "\n" + TerminalXDisplay.collectionToString(subSet));
-						Set<T> anotherIntersection = intersectHoleSetOfSets(subSet);
-						if(anotherIntersection.contains(t))
+
+						if(multipleContain(t, subSet))
 						{
 							isExclusive = false;
 							System.out.println(t+" is not exclusive.");
@@ -193,6 +129,7 @@ public class MathSetClassClosedUnderUnion
 						{
 							System.out.println(t + " seems exclusive so far;");
 						}
+					
 					}
 					if(isExclusive)
 					{
@@ -201,9 +138,8 @@ public class MathSetClassClosedUnderUnion
 					}
 				}
 			}
-		
 		}
-
+		
 		return type;
 	}
 	
@@ -234,9 +170,26 @@ public class MathSetClassClosedUnderUnion
 		return output;
 	}
 	
-	static void printlnBoldAndGreen(String s)
+	public static void printlnBoldAndGreen(String s)
 	{
 		System.out.println(BashSigns.boldGBCPX+s+BashSigns.boldGBCSX);
 	}
 
+	public static <T>  Map<String, Set<T>> makeMapOfSets(Collection<Set<T>> origin) throws CollectionException
+	{
+		int size = origin.size();
+		Set<Character> names = CollectionManipulation.getSetOfFirstNLatinLettersUppercase(size);
+		Map<String, Set<T>> output = new HashMap<>();
+
+		for(Set<T> set: origin)
+		{
+			Character cName = CollectionManipulation.catchRandomElementOfSet(names);
+			String name = cName.toString();
+			output.put(name, set);
+			names.remove(cName);
+		}
+		
+		
+		return output;
+	}
 }

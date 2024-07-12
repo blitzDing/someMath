@@ -152,7 +152,7 @@ class MathSetClassClosedUnderUnionTest
 		*/
 
 		System.out.println("Size: " + type.length);
-		System.out.println("****" + type[0] + ", " + type[1] + ", " + type[2]);
+		System.out.println("****" + type[0] + ", " + type[1] + ", " + type[2] + ", " + type[3]);
 		
 	}
 
