@@ -155,17 +155,18 @@ public class MathSetClassClosedUnderUnion
 		container.add(set);
 		output.add(container);
 		
-		Set<Set<C>> copy = new HashSet<>(origin);
-		copy.remove(set);
-		
-		//This loop "Groups". it is important that C has it's equal and
+		//This loop "Groups". It is important that C has it's equal and
 		//hashCode Method overwritten and well defined.
 		for(C c: set)
 		{
-			output.add(findContainingSets(c, origin));
-		}
 
-		output.addAll(findClusters(copy));
+			Set<Set<C>> g2 = findContainingSets(c, origin);
+			g2.remove(set);
+			if(g2.isEmpty())break;
+
+			Set<Set<Set<C>>> g3 = findClusters(g2);
+			output.addAll(g3);
+		}
 
 		return output;
 	}
@@ -174,6 +175,7 @@ public class MathSetClassClosedUnderUnion
 	{
 
 		Set<Set<C>> output = new HashSet<>();
+
 		if(!multipleContain(c, origin))return output;
 		
 		for(Set<C> set: origin)
