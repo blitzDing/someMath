@@ -143,6 +143,47 @@ public class MathSetClassClosedUnderUnion
 		return type;
 	}
 	
+	public static <C> Set<Set<Set<C>>> findClusters(Set<Set<C>> origin) throws CollectionException
+	{
+
+		Set<Set<Set<C>>> output = new HashSet<>();
+		if(origin.isEmpty())return output;
+
+
+		Set<C> set = CollectionManipulation.catchRandomElementOfSet(origin);
+		Set<Set<C>> container = new HashSet<>();
+		container.add(set);
+		output.add(container);
+		
+		Set<Set<C>> copy = new HashSet<>(origin);
+		copy.remove(set);
+		
+		//This loop "Groups". it is important that C has it's equal and
+		//hashCode Method overwritten and well defined.
+		for(C c: set)
+		{
+			output.add(findContainingSets(c, origin));
+		}
+
+		output.addAll(findClusters(copy));
+
+		return output;
+	}
+	
+	public static <C> Set<Set<C>> findContainingSets(C c, Set<Set<C>> origin)
+	{
+
+		Set<Set<C>> output = new HashSet<>();
+		if(!multipleContain(c, origin))return output;
+		
+		for(Set<C> set: origin)
+		{
+			if(set.contains(c))output.add(set);
+		}
+
+		return output;
+	}
+	
 	public static <T, G extends Collection<H>, H extends Collection<T>> boolean multipleContain(T t, G container)
 	{
 	
