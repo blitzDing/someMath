@@ -165,8 +165,14 @@ public class MathSetClassClosedUnderUnion
 			if(g2.isEmpty())break;
 
 			Set<Set<Set<C>>> g3 = findClusters(g2);
-			output.addAll(g3);
+			
+			for(Set<Set<C>> g4: g3)container.addAll(g4);
 		}
+
+		Set<Set<C>> copy = new HashSet<>(origin);
+		copy.removeAll(container);
+
+		output.addAll(findClusters(copy));
 
 		return output;
 	}
