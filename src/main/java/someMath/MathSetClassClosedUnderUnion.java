@@ -146,21 +146,27 @@ public class MathSetClassClosedUnderUnion
 	public static <C> Set<Set<C>> traverseCluster(Set<C> set, Set<Set<C>> origin)
 	{
 		
+		Set<Set<C>> output = new HashSet<>();
+
 		if(set==null||origin==null)throw new IllegalArgumentException("Null Arguments.");
+		if(origin.isEmpty())return output;
 		if(!origin.contains(set))throw new IllegalArgumentException("Arguments are not valide.");
 		
-		Set<Set<C>> output = new HashSet<>();
 		
 		for(C c: set)
 		{
-			Set<Set<C>> containers = findContainingSets(c, origin);
-			output.addAll(containers);
+			Set<Set<C>> cluster = findContainingSets(c, origin);
+			output.addAll(cluster);
 			
-			for(Set<C> set2: containers)output.addAll(traverseCluster(set2, origin));
+			Set<Set<C>> clusterCopy = new HashSet<>(origin);
+			clusterCopy.removeAll(cluster);
+	
+			for(Set<C> set2: clusterCopy)output.addAll(traverseCluster(set2, origin));
 		}
 
 		return output;
 	}
+
 	public static <C> Set<Set<Set<C>>> findClusters(Set<Set<C>> origin) throws CollectionException
 	{
 
