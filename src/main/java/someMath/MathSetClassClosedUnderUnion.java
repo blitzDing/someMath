@@ -143,6 +143,24 @@ public class MathSetClassClosedUnderUnion
 		return type;
 	}
 	
+	public static <C> Set<Set<C>> traverseCluster(Set<C> set, Set<Set<C>> origin)
+	{
+		
+		if(set==null||origin==null)throw new IllegalArgumentException("Null Arguments.");
+		if(!origin.contains(set))throw new IllegalArgumentException("Arguments are not valide.");
+		
+		Set<Set<C>> output = new HashSet<>();
+		
+		for(C c: set)
+		{
+			Set<Set<C>> containers = findContainingSets(c, origin);
+			output.addAll(containers);
+			
+			for(Set<C> set2: containers)output.addAll(traverseCluster(set2, origin));
+		}
+
+		return output;
+	}
 	public static <C> Set<Set<Set<C>>> findClusters(Set<Set<C>> origin) throws CollectionException
 	{
 
@@ -151,27 +169,12 @@ public class MathSetClassClosedUnderUnion
 
 
 		Set<C> set = CollectionManipulation.catchRandomElementOfSet(origin);
-		Set<Set<C>> container = new HashSet<>();
-		container.add(set);
-		output.add(container);
+		Set<Set<C>> cluster = traverseCluster(set, origin);
+		output.add(cluster);
 		
-		//This loop "Groups". It is important that C has it's equal and
-		//hashCode Method overwritten and well defined.
-		for(C c: set)
-		{
-
-			Set<Set<C>> g2 = findContainingSets(c, origin);
-			g2.remove(set);
-			if(g2.isEmpty())break;
-
-			Set<Set<Set<C>>> g3 = findClusters(g2);
-			
-			for(Set<Set<C>> g4: g3)container.addAll(g4);
-		}
-
 		Set<Set<C>> copy = new HashSet<>(origin);
-		copy.removeAll(container);
-
+		copy.removeAll(cluster);
+		
 		output.addAll(findClusters(copy));
 
 		return output;
