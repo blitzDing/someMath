@@ -158,10 +158,13 @@ public class MathSetClassClosedUnderUnion
 			Set<Set<C>> cluster = findContainingSets(c, origin);
 			output.addAll(cluster);
 			
-			Set<Set<C>> clusterCopy = new HashSet<>(origin);
-			clusterCopy.removeAll(cluster);
+			Set<Set<C>> copy = new HashSet<>(origin);
+			copy.removeAll(cluster);
 	
-			for(Set<C> set2: clusterCopy)output.addAll(traverseCluster(set2, origin));
+			for(Set<C> set2: copy)
+			{
+				output.addAll(traverseCluster(set2, origin));
+			}
 		}
 
 		return output;
