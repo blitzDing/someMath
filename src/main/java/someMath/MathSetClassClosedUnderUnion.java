@@ -160,7 +160,10 @@ public class MathSetClassClosedUnderUnion
 			Set<Set<C>> copy = new HashSet<>(origin);
 			copy.remove(set);
 
-			for(Set<C> set2: cluster)output.addAll(traverseCluster(set2, copy));
+			for(Set<C> set2: cluster)
+			{
+				if(!set.equals(set2))output.addAll(traverseCluster(set2, copy));
+			}
 		}
 
 		return output;
@@ -189,8 +192,6 @@ public class MathSetClassClosedUnderUnion
 	{
 
 		Set<Set<C>> output = new HashSet<>();
-
-		if(!multipleContain(c, origin))return output;
 		
 		for(Set<C> set: origin)
 		{

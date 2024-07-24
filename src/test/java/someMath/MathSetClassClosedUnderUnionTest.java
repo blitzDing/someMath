@@ -13,6 +13,7 @@ import static consoleTools.TerminalXDisplay.*;
 
 import static someMath.MathSetClassClosedUnderUnion.*;
 
+
 class MathSetClassClosedUnderUnionTest 
 {
 
@@ -111,28 +112,102 @@ class MathSetClassClosedUnderUnionTest
 	}
 
 	@Test
-	void traversAndFindClustersTest() throws CollectionException
+	void findClusterTest() throws CollectionException
 	{
-		printlnBoldAndBlue("Traverse and find Clusters test");
+		printlnBoldAndBlue("Find Cluster test");
 
 		Set<Set<Character>> someSets = new HashSet<>();
 		
-		someSets.add(bigOne);
-		someSets.add(smallOne);
-		someSets.add(anotherSmallOne);
+		Set<Set<Character>> clusterA = new HashSet<>();
+		Set<Set<Character>> clusterB = new HashSet<>();
+		Set<Set<Character>> clusterC = new HashSet<>();
 		
-		someSets.add(differentAndSmall);
-		someSets.add(alsoDifferent);
-		someSets.add(clusterBSet);
+		clusterA.add(bigOne);
+		clusterA.add(smallOne);
+		clusterA.add(anotherSmallOne);//cluster A
+		someSets.addAll(clusterA);
 		
-		someSets.add(xotic);
-
-
+		clusterB.add(differentAndSmall);
+		clusterB.add(alsoDifferent);
+		clusterB.add(clusterBSet);//cluster B
+		someSets.addAll(clusterB);
+		
+		clusterC.add(xotic);//cluster C
+		someSets.addAll(clusterC);
+		
 		Set<Set<Set<Character>>> clusters = findClusters(someSets);
 		
 		System.out.println(collectionToString(clusters));
 		
 		assert(clusters.size()==3);
+		assert(clusters.contains(clusterA));
+		assert(clusters.contains(clusterB));
+		assert(clusters.contains(clusterC));
+	}
+
+	@Test
+	void traversClusterTest() throws CollectionException
+	{
+		printlnBoldAndBlue("Traverse Cluster test");
+
+		Set<Set<Character>> someSets = new HashSet<>();
+		
+		Set<Set<Character>> clusterA = new HashSet<>();
+		Set<Set<Character>> clusterB = new HashSet<>();
+		Set<Set<Character>> clusterC = new HashSet<>();
+		
+		clusterA.add(bigOne);
+		clusterA.add(smallOne);
+		clusterA.add(anotherSmallOne);//cluster A
+		someSets.addAll(clusterA);
+		
+		clusterB.add(differentAndSmall);
+		clusterB.add(alsoDifferent);
+		clusterB.add(clusterBSet);//cluster B
+		someSets.addAll(clusterB);
+		
+		clusterC.add(xotic);//cluster C
+		someSets.addAll(clusterC);
+		
+		Set<Set<Character>> cluster = traverseCluster(bigOne, someSets);
+		
+		System.out.println(collectionToString(cluster));
+		
+		assert(cluster.size()==3);
+		assert(cluster.equals(clusterA));
+	}
+
+	@Test
+	void findContainingSetsTest() throws CollectionException
+	{
+		printlnBoldAndBlue("find Containg Sets test");
+
+		Set<Set<Character>> someSets = new HashSet<>();
+		Set<Set<Character>> clusterA = new HashSet<>();
+		Set<Set<Character>> clusterB = new HashSet<>();
+		Set<Set<Character>> clusterC = new HashSet<>();
+		
+		clusterA.add(bigOne);
+		clusterA.add(smallOne);
+		clusterA.add(anotherSmallOne);//cluster A
+		someSets.addAll(clusterA);
+		
+		clusterB.add(differentAndSmall);
+		clusterB.add(alsoDifferent);
+		clusterB.add(clusterBSet);//cluster B
+		someSets.addAll(clusterB);
+		
+		clusterC.add(xotic);//cluster C
+		someSets.addAll(clusterC);
+		
+		Character chara = (Character)'c';
+		
+		Set<Set<Character>> containers = findContainingSets(chara, someSets);
+		
+		assert(containers.size()==3);
+		assert(containers.containsAll(clusterA));
+		
+		System.out.println(collectionToString(containers));
 	}
 
 	@Test
