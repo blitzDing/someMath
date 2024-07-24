@@ -5,13 +5,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import consoleTools.BashSigns;
-import consoleTools.TerminalXDisplay;
+import static consoleTools.BashSigns.*;
+import static consoleTools.TerminalXDisplay.*;
 
+import static someMath.MathSetClassClosedUnderUnion.*;
 
 class MathSetClassClosedUnderUnionTest 
 {
@@ -24,11 +24,17 @@ class MathSetClassClosedUnderUnionTest
 
 	static Set<Character> differentAndSmall;
 	
+	static Set<Character> alsoDifferent;
+	
+	static Set<Character> clusterBSet;
+	
 	static Set<Character> anotherDifferentAndSmall;
 
 	static Set<Character> betweenbigAndSmall;
 
 	static Set<Character> evenSmaller;
+	
+	static Set<Character> xotic;
 
 	@BeforeEach
 	void prepare()
@@ -55,6 +61,16 @@ class MathSetClassClosedUnderUnionTest
 		differentAndSmall.add('g');
 		differentAndSmall.add('h');
 		
+		alsoDifferent = new HashSet<>();
+		alsoDifferent.add('g');
+		alsoDifferent.add('h');
+		alsoDifferent.add('i');
+		
+		clusterBSet = new HashSet<>();
+		clusterBSet.add('i');
+		clusterBSet.add('j');
+		clusterBSet.add('k');
+		
 		anotherDifferentAndSmall = new HashSet<>();
 		anotherDifferentAndSmall.add('b');
 		anotherDifferentAndSmall.add('c');
@@ -69,6 +85,11 @@ class MathSetClassClosedUnderUnionTest
 		evenSmaller = new HashSet<>();
 		evenSmaller.add('a');
 		evenSmaller.add('b');
+		
+		xotic = new HashSet<>();
+		xotic.add('x');
+		xotic.add('y');
+		xotic.add('z');
 	}
 	
 	@Test
@@ -77,14 +98,41 @@ class MathSetClassClosedUnderUnionTest
 		printlnBoldAndBlue("Implosion test");
 
 		Set<Set<Character>> someSets = new HashSet<>();
+		someSets.add(bigOne);
+		someSets.add(smallOne);
 		someSets.add(betweenbigAndSmall);
 		someSets.add(bigOne);
 		someSets.add(anotherDifferentAndSmall);
 		
 		
-		System.out.println("Origin: \n" + TerminalXDisplay.collectionToString(someSets));
+		System.out.println("Origin: \n" + collectionToString(someSets));
 		Set<Character> intersection = MathSetClassClosedUnderUnion.intersectHoleSetOfSets(someSets);
-		System.out.println("\nIntersection:\n" + TerminalXDisplay.collectionToString(intersection));
+		System.out.println("\nIntersection:\n" + collectionToString(intersection));
+	}
+
+	@Test
+	void traversAndFindClustersTest() throws CollectionException
+	{
+		printlnBoldAndBlue("Traverse and find Clusters test");
+
+		Set<Set<Character>> someSets = new HashSet<>();
+		
+		someSets.add(bigOne);
+		someSets.add(smallOne);
+		someSets.add(anotherSmallOne);
+		
+		someSets.add(differentAndSmall);
+		someSets.add(alsoDifferent);
+		someSets.add(clusterBSet);
+		
+		someSets.add(xotic);
+
+
+		Set<Set<Set<Character>>> clusters = findClusters(someSets);
+		
+		System.out.println(collectionToString(clusters));
+		
+		assert(clusters.size()==3);
 	}
 
 	@Test
@@ -98,7 +146,7 @@ class MathSetClassClosedUnderUnionTest
 		fam1.add(smallOne);
 		fam1.add(anotherSmallOne);
 		
-		System.out.println(TerminalXDisplay.collectionToString(fam1));
+		System.out.println(collectionToString(fam1));
 		assert(MathSetClassClosedUnderUnion.famTest(fam1));	
 		
 		Set<Set<Character>> fam2 = new HashSet<>();
@@ -131,7 +179,7 @@ class MathSetClassClosedUnderUnionTest
 		someSets.add(anotherSmallOne);
 		someSets.add(bigOne);
 		someSets.add(differentAndSmall);
-		printlnBoldAndBlue(TerminalXDisplay.collectionToString(bigOne));
+		printlnBoldAndBlue(collectionToString(bigOne));
 		
 		int [] type = MathSetClassClosedUnderUnion.typeOfSetOfSets(someSets);
 		/*
@@ -169,6 +217,6 @@ class MathSetClassClosedUnderUnionTest
 	
 	void printlnBoldAndBlue(String s)
 	{
-		System.out.println(BashSigns.boldBBCPX+s+BashSigns.boldBBCSX);
+		System.out.println(boldBBCPX+s+boldBBCSX);
 	}
 }

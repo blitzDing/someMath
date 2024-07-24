@@ -7,9 +7,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import consoleTools.BashSigns;
-import consoleTools.TerminalXDisplay;
-
+import static consoleTools.BashSigns.*;
+import static consoleTools.TerminalXDisplay.*;
+import static someMath.CollectionManipulation.*;
 
 public class MathSetClassClosedUnderUnion
 {
@@ -79,7 +79,7 @@ public class MathSetClassClosedUnderUnion
 		int size = origin.size();
 		int [] type = new int[size];
 		
-		System.out.println("Origin: \n" + TerminalXDisplay.collectionToString(origin));
+		System.out.println("Origin: \n" + collectionToString(origin));
 
 		for(int n=1;n<size+1;n++)
 		{
@@ -88,15 +88,15 @@ public class MathSetClassClosedUnderUnion
 		
 		for(int n=1;n<size+1;n++)
 		{
-			Set<Set<Set<T>>> subSets = CollectionManipulation.allSubSetsOfSizeN(origin, n);
+			Set<Set<Set<T>>> subSets = allSubSetsOfSizeN(origin, n);
 			printlnBoldAndGreen("All SubSets of Size " + n);
-			System.out.println(TerminalXDisplay.collectionToString(subSets)+"\n\n");
+			System.out.println(collectionToString(subSets)+"\n\n");
 			ArrayList<Set<Set<T>>> listOfSubSets = new ArrayList<>(subSets);
 			
 			for(Set<Set<T>> cutOut: listOfSubSets)
 			{
 
-				printlnBoldAndGreen("New CutOut: " + TerminalXDisplay.collectionToString(cutOut));
+				printlnBoldAndGreen("New CutOut: " + collectionToString(cutOut));
 			
 				ArrayList<Set<Set<T>>> l2 = new ArrayList<>();
 				l2.addAll(listOfSubSets);
@@ -105,7 +105,7 @@ public class MathSetClassClosedUnderUnion
 				assert(l2.size()+1==listOfSubSets.size());
 
 				Set<T> intersection = intersectHoleSetOfSets(cutOut);
-				System.out.println("CutOut Intersection: " + TerminalXDisplay.collectionToString(intersection));
+				System.out.println("CutOut Intersection: " + collectionToString(intersection));
 			
 				for(T t: intersection)
 				{
@@ -116,8 +116,8 @@ public class MathSetClassClosedUnderUnion
 					for(Set<Set<T>> subSet: l2)
 					{
 
-						System.out.println("Test subSet: " + TerminalXDisplay.collectionToString(subSet));
-						System.out.println("Intersection of the above: " + TerminalXDisplay.collectionToString(intersectHoleSetOfSets(subSet)));
+						System.out.println("Test subSet: " + collectionToString(subSet));
+						System.out.println("Intersection of the above: " + collectionToString(intersectHoleSetOfSets(subSet)));
 
 						if(multipleContain(t, subSet))
 						{
@@ -143,7 +143,7 @@ public class MathSetClassClosedUnderUnion
 		return type;
 	}
 	
-	public static <C> Set<Set<C>> traverseCluster(Set<C> set, Set<Set<C>> origin)
+	public static <C> Set<Set<C>> traverseCluster(Set<C> set, Set<Set<C>> origin) throws CollectionException
 	{
 		
 		Set<Set<C>> output = new HashSet<>();
@@ -151,20 +151,16 @@ public class MathSetClassClosedUnderUnion
 		if(set==null||origin==null)throw new IllegalArgumentException("Null Arguments.");
 		if(origin.isEmpty())return output;
 		if(!origin.contains(set))throw new IllegalArgumentException("Arguments are not valide.");
-		
-		
+
 		for(C c: set)
 		{
 			Set<Set<C>> cluster = findContainingSets(c, origin);
 			output.addAll(cluster);
 			
 			Set<Set<C>> copy = new HashSet<>(origin);
-			copy.removeAll(cluster);
-	
-			for(Set<C> set2: copy)
-			{
-				output.addAll(traverseCluster(set2, origin));
-			}
+			copy.remove(set);
+
+			for(Set<C> set2: cluster)output.addAll(traverseCluster(set2, copy));
 		}
 
 		return output;
@@ -177,7 +173,7 @@ public class MathSetClassClosedUnderUnion
 		if(origin.isEmpty())return output;
 
 
-		Set<C> set = CollectionManipulation.catchRandomElementOfSet(origin);
+		Set<C> set = catchRandomElementOfSet(origin);
 		Set<Set<C>> cluster = traverseCluster(set, origin);
 		output.add(cluster);
 		
@@ -233,18 +229,18 @@ public class MathSetClassClosedUnderUnion
 	
 	public static void printlnBoldAndGreen(String s)
 	{
-		System.out.println(BashSigns.boldGBCPX+s+BashSigns.boldGBCSX);
+		System.out.println(boldGBCPX+s+boldGBCSX);
 	}
 
 	public static <T>  Map<String, Set<T>> makeMapOfSets(Collection<Set<T>> origin) throws CollectionException
 	{
 		int size = origin.size();
-		Set<Character> names = CollectionManipulation.getSetOfFirstNLatinLettersUppercase(size);
+		Set<Character> names = getSetOfFirstNLatinLettersUppercase(size);
 		Map<String, Set<T>> output = new HashMap<>();
 
 		for(Set<T> set: origin)
 		{
-			Character cName = CollectionManipulation.catchRandomElementOfSet(names);
+			Character cName = catchRandomElementOfSet(names);
 			String name = cName.toString();
 			output.put(name, set);
 			names.remove(cName);
