@@ -188,6 +188,22 @@ public class MathSetClassClosedUnderUnion
 		return output;
 	}
 	
+	public static <C> boolean isAbundand(C c, Set<Set<C>> origin)
+	{
+		
+		int size = origin.size();
+		int count = 0;
+		
+		for(Set<C> set: origin)
+		{
+			if(set.contains(c))count++;
+		}
+		
+		double rate = (double)count/(double)size;
+		
+		return (rate>=0.5);
+	}
+
 	public static <C> Set<Set<C>> findContainingSets(C c, Set<Set<C>> origin)
 	{
 

@@ -211,6 +211,22 @@ class MathSetClassClosedUnderUnionTest
 	}
 
 	@Test
+	void abundanceTest() throws CollectionException
+	{
+		
+		printlnBoldAndBlue("Abundance Test test");
+		
+		int n = 7;
+		Set<Character> main = CollectionManipulation.getSetOfFirstNLatinLettersLowercase(n);
+		Set<Set<Character>> powerSet = CollectionManipulation.powerSet(main);
+	
+		
+		for(Character c2: main)
+		{
+			assert(isAbundand(c2, powerSet));
+		}
+	}
+	@Test
 	void famTestTest() throws CollectionException
 	{
 
