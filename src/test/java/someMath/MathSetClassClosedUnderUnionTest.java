@@ -217,7 +217,7 @@ class MathSetClassClosedUnderUnionTest
 		printlnBoldAndBlue("Abundance Test test");
 		
 		int n = 7;
-		Set<Character> main = CollectionManipulation.getSetOfFirstNLatinLettersLowercase(n);
+		Set<Character> main = CollectionManipulation.getSetOfFirstNLatinLettersLowerCase(n);
 		Set<Set<Character>> powerSet = CollectionManipulation.powerSet(main);
 	
 		

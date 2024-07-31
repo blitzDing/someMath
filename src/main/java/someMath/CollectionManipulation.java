@@ -378,7 +378,7 @@ public class CollectionManipulation
 		return output;
 	}
 
-	public static Set<Character> getSetOfFirstNLatinLettersLowercase(int n)
+	public static Set<Character> getSetOfFirstNLatinLettersLowerCase(int n)
 	{
 
 		Set<Character> output = new HashSet<>();
@@ -397,7 +397,7 @@ public class CollectionManipulation
 	
 	public static List<Character> getListOfFirstNLettersLowerCase(int n)
 	{
-		Set<Character> set = getSetOfFirstNLatinLettersLowercase(n);
+		Set<Character> set = getSetOfFirstNLatinLettersLowerCase(n);
 		
 		List<Character> output = new ArrayList<>(set);
 		Collections.sort(output);
@@ -405,7 +405,7 @@ public class CollectionManipulation
 		return output;
 	}
 
-	public static List<Character> getListOfFirstNLettersUppercase(int n)
+	public static List<Character> getListOfFirstNLettersUpperCase(int n)
 	{
 		Set<Character> set = getSetOfFirstNLatinLettersUppercase(n);
 		
@@ -413,5 +413,15 @@ public class CollectionManipulation
 		Collections.sort(output);
 
 		return output;
+	}
+	
+	public static <E> Set<E> implode(Set<Set<E>> origin)
+	{
+		
+		Set<E> implosion = new HashSet<>();
+		
+		for(Set<E> set: origin)implosion.addAll(set);
+		
+		return implosion;
 	}
 }

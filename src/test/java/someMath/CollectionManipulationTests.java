@@ -16,8 +16,8 @@ import static someMath.CollectionManipulation.*;
 class CollectionManipulationTests
 {
 
-	static Set<Character> originSet = getSetOfFirstNLatinLettersLowercase(4);
-	static Set<Character> otherSet = getSetOfFirstNLatinLettersLowercase(5);
+	static Set<Character> originSet = getSetOfFirstNLatinLettersLowerCase(4);
+	static Set<Character> otherSet = getSetOfFirstNLatinLettersLowerCase(5);
 
 
 	@Test
