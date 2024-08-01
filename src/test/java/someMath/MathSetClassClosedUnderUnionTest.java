@@ -8,7 +8,6 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static consoleTools.BashSigns.*;
 import static consoleTools.TerminalXDisplay.*;
 
 import static someMath.MathSetClassClosedUnderUnion.*;
@@ -96,7 +95,7 @@ class MathSetClassClosedUnderUnionTest
 	@Test
 	void implosionTest() throws CollectionException
 	{
-		printlnBoldAndBlue("Implosion test");
+		printBoldAndBlue("Implosion test");
 
 		Set<Set<Character>> someSets = new HashSet<>();
 		someSets.add(bigOne);
@@ -114,7 +113,7 @@ class MathSetClassClosedUnderUnionTest
 	@Test
 	void findClusterTest() throws CollectionException
 	{
-		printlnBoldAndBlue("Find Cluster test");
+		printBoldAndBlue("Find Cluster test");
 
 		Set<Set<Character>> someSets = new HashSet<>();
 		
@@ -148,7 +147,7 @@ class MathSetClassClosedUnderUnionTest
 	@Test
 	void traversClusterTest() throws CollectionException
 	{
-		printlnBoldAndBlue("Traverse Cluster test");
+		printBoldAndBlue("Traverse Cluster test");
 
 		Set<Set<Character>> someSets = new HashSet<>();
 		
@@ -180,7 +179,7 @@ class MathSetClassClosedUnderUnionTest
 	@Test
 	void findContainingSetsTest() throws CollectionException
 	{
-		printlnBoldAndBlue("find Containg Sets test");
+		printBoldAndBlue("find Containg Sets test");
 
 		Set<Set<Character>> someSets = new HashSet<>();
 		Set<Set<Character>> clusterA = new HashSet<>();
@@ -214,7 +213,7 @@ class MathSetClassClosedUnderUnionTest
 	void abundanceTest() throws CollectionException
 	{
 		
-		printlnBoldAndBlue("Abundance Test test");
+		printBoldAndBlue("Abundance Test test");
 		
 		int n = 7;
 		Set<Character> main = CollectionManipulation.getSetOfFirstNLatinLettersLowerCase(n);
@@ -230,7 +229,7 @@ class MathSetClassClosedUnderUnionTest
 	void famTestTest() throws CollectionException
 	{
 
-		printlnBoldAndBlue("fam Test test");	
+		printBoldAndBlue("fam Test test");	
 		
 		Set<Set<Character>> fam1 = new HashSet<>();
 		fam1.add(bigOne);
@@ -264,13 +263,13 @@ class MathSetClassClosedUnderUnionTest
 	@Test
 	void typeTest() throws CollectionException
 	{
-		printlnBoldAndBlue("Type Set of Sets test");
+		printBoldAndBlue("Type Set of Sets test");
 		Set<Set<Character>> someSets = new HashSet<>();
 		someSets.add(smallOne);
 		someSets.add(anotherSmallOne);
 		someSets.add(bigOne);
 		someSets.add(differentAndSmall);
-		printlnBoldAndBlue(collectionToString(bigOne));
+		printBoldAndBlue(collectionToString(bigOne));
 		
 		int [] type = MathSetClassClosedUnderUnion.typeOfSetOfSets(someSets);
 		/*
@@ -302,12 +301,7 @@ class MathSetClassClosedUnderUnionTest
 	@Test
 	void createFamTest()
 	{
-		printlnBoldAndBlue("Not testing create Fam.");
+		printBoldAndBlue("Not testing create Fam.");
 		assert(true);
-	}
-	
-	void printlnBoldAndBlue(String s)
-	{
-		System.out.println(boldBBCPX+s+boldBBCSX);
 	}
 }

@@ -9,9 +9,9 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import consoleTools.BashSigns;
-import consoleTools.TerminalXDisplay;
 
 import static someMath.CollectionManipulation.*;
+import static consoleTools.TerminalXDisplay.*;
 
 class CollectionManipulationTests
 {
@@ -24,36 +24,92 @@ class CollectionManipulationTests
 	void testPowerSet() throws CollectionException
 	{
 
-		System.out.println("\nTesting power Set.");
+		printBoldAndBlue("\nTesting power Set.");
 
 		Set<Set<Character>> pSet = powerSet(originSet);
-		System.out.println(TerminalXDisplay.collectionToString(pSet));
+		System.out.println(collectionToString(pSet));
 		
 		assert(pSet.size()==16);
 		
 		pSet = powerSet(otherSet);
-		System.out.println(TerminalXDisplay.collectionToString(pSet));
+		System.out.println(collectionToString(pSet));
 		System.out.println(BashSigns.boldRBCPX + "hi" + BashSigns.boldRBCSX);
 		
 		assert(pSet.size()==32);
 	}
 	
 	@Test
-	void testSubSetsOfSizeN() throws CollectionException
+	void combinationsWithRepition() throws CollectionException
 	{
 		
-		System.out.println("\nTesting sub Sets.");
-		System.out.println("2 of 4");
-		Set<Set<Character>> subSets = allSubSetsOfSizeN(originSet, 2);
-		System.out.println(TerminalXDisplay.collectionToString(subSets));
+		printBoldAndBlue("\nTesting Combinations with Repition.");
+		int n = originSet.size();
+		int k = 2;
+		System.out.println(n + " choose " + k + " with Repition.");
+		Set<List<Character>> combis = combinationsOfSizeNWithRepition(originSet, k);
+		System.out.println(collectionToString(combis));
 		
-		assert(subSets.size()==6);
+		assert(combis.size()==SmallTools.nChooseK(n+k-1, k));
 
-		System.out.println("3 of 5");
-		subSets = allSubSetsOfSizeN(otherSet, 3);
-		System.out.println(TerminalXDisplay.collectionToString(subSets));
+		n = otherSet.size();
+		k = 3;
+		System.out.println(n + " choose " + k + " with Repition.");
+		combis = combinationsOfSizeNWithRepition(otherSet, k);
+		System.out.println(collectionToString(combis));
 		
-		assert(subSets.size()==10);
+		assert(combis.size()==SmallTools.nChooseK(n+k-1, k));
+		/*
+		Set<Set<Set<Character>>> subSetsOfSize3 = allSubSetsOfSizeN(powerSet(originSet), 3);
+		System.out.println(TerminalXDisplay.collectionToString(subSetsOfSize3));
+		*/
+	}
+	
+	@Test
+	void combinationsOfSizeN() throws CollectionException
+	{
+		
+		printBoldAndBlue("\nTesting Combinations without Repition.");
+		int n = originSet.size();
+		int k = 2;
+		System.out.println(n + " Choose " + k);
+		Set<Set<Character>> combis = combinationsOfSizeNWithoutRepition(originSet, k);
+		System.out.println(collectionToString(combis));
+		
+		assert(combis.size()==SmallTools.nChooseK(n, k));
+
+		n= otherSet.size();
+		k= 3;
+		System.out.println(n + " Choose " + k);
+		combis = combinationsOfSizeNWithoutRepition(otherSet, k);
+		System.out.println(collectionToString(combis));
+		
+		assert(combis.size()==SmallTools.nChooseK(n, k));
+		/*
+		Set<Set<Set<Character>>> subSetsOfSize3 = allSubSetsOfSizeN(powerSet(originSet), 3);
+		System.out.println(TerminalXDisplay.collectionToString(subSetsOfSize3));
+		*/
+	}
+
+	@Test
+	void variationsWithRepition() throws CollectionException
+	{
+		
+		printBoldAndBlue("\nTesting Variations with Reptition.");
+		int n = originSet.size();
+		int k= 2;
+		System.out.println( k + " out of " + n);
+		Set<List<Character>> variations = variationsOfSizeNWithRepition(originSet, k);
+		System.out.println(collectionToString(variations));
+		
+		assert((double)(variations.size())==Math.pow(n, k));
+
+		n = otherSet.size();
+		k = 3;
+		System.out.println(k + " out of " + n);
+		variations = variationsOfSizeNWithRepition(otherSet, k);
+		System.out.println(collectionToString(variations));
+		
+		assert((double)(variations.size())==Math.pow(n, k));
 		/*
 		Set<Set<Set<Character>>> subSetsOfSize3 = allSubSetsOfSizeN(powerSet(originSet), 3);
 		System.out.println(TerminalXDisplay.collectionToString(subSetsOfSize3));
@@ -64,7 +120,7 @@ class CollectionManipulationTests
 	void testProductOfSetAndList() throws CollectionException
 	{
 		
-		System.out.println("\nTesting product of Set and List.");
+		printBoldAndBlue("\nTesting product of Set and List.");
 
 		Set<Integer> set = getSetOfFirstNIntegers(5);
 		set.remove(0);
@@ -93,7 +149,7 @@ class CollectionManipulationTests
 	@Test
 	void testProductSum() throws CollectionException
 	{
-		System.out.println("\nTesting product Sum.");
+		printBoldAndBlue("\nTesting product Sum.");
 
 		Set<Integer> set = getSetOfFirstNIntegers(5);
 		set.remove(0);

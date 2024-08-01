@@ -5,8 +5,9 @@ import java.util.Collection;
 import java.util.List;
 
 import someMath.CollectionException;
-import someMath.CollectionManipulation;
-import someMath.StringManipulation;
+import static someMath.CollectionManipulation.*;
+import static someMath.StringManipulation.*;
+import static consoleTools.BashSigns.*;
 
 public class TerminalXDisplay 
 {
@@ -22,12 +23,12 @@ public class TerminalXDisplay
 		int s = collection.size();
 		int counter = 0;
 		
-		String output = StringManipulation.customMonoRepeatChar(' ', e) + "{";
+		String output = customMonoRepeatChar(' ', e) + "{";
 		
 		if(!(collection instanceof List))
 		{
 
-			T tt = CollectionManipulation.catchRandomElementOfCollection(collection);
+			T tt = catchRandomElementOfCollection(collection);
 			if(tt instanceof Collection)output = output + "\n";
 			
 			for(T t: collection)
@@ -96,4 +97,16 @@ public class TerminalXDisplay
 	{
 		return collectionToString(collection, 0);
 	}
+
+	public static void printBoldAndGreen(String s)
+	{
+		System.out.println(boldGBCPX+s+boldGBCSX);
+	}
+
+	public static void printBoldAndBlue(String s)
+	{
+		System.out.println(boldBBCPX+s+boldBBCSX);
+	}
+	
+	
 }

@@ -24,6 +24,20 @@ public class SmallTools
 	private static final int standartDeepnessForRoot = 3;
     	
 	
+	public static int faculty(int n)
+	{
+		if(n==0||n==1)return 1;
+		
+		return n*faculty(n-1);
+	}
+
+	public static int nChooseK(int n, int k)
+	{
+		if(k>n)throw new IllegalArgumentException("k bigger than n!");
+		
+		return (faculty(n))/(faculty(n-k)*faculty(k));
+	}
+
 	public static int dezimalstellenVonInt(int n)
 	{
 		

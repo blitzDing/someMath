@@ -46,8 +46,6 @@ class FamViewsTest
 	@Test
 	void test() throws CollectionException
 	{
-		int n = 26;
-		Set<Character> main = getSetOfFirstNLatinLettersLowerCase(n);
 		Set<Set<Character>> fam = createFamilie(basis);
 	
 		Set<Character> implodedBasis = implode(basis);

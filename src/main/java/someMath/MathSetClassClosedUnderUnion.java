@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static consoleTools.BashSigns.*;
 import static consoleTools.TerminalXDisplay.*;
 import static someMath.CollectionManipulation.*;
 
@@ -88,15 +87,15 @@ public class MathSetClassClosedUnderUnion
 		
 		for(int n=1;n<size+1;n++)
 		{
-			Set<Set<Set<T>>> subSets = allSubSetsOfSizeN(origin, n);
-			printlnBoldAndGreen("All SubSets of Size " + n);
+			Set<Set<Set<T>>> subSets = combinationsOfSizeNWithoutRepition(origin, n);
+			printBoldAndGreen("All SubSets of Size " + n);
 			System.out.println(collectionToString(subSets)+"\n\n");
 			ArrayList<Set<Set<T>>> listOfSubSets = new ArrayList<>(subSets);
 			
 			for(Set<Set<T>> cutOut: listOfSubSets)
 			{
 
-				printlnBoldAndGreen("New CutOut: " + collectionToString(cutOut));
+				printBoldAndGreen("New CutOut: " + collectionToString(cutOut));
 			
 				ArrayList<Set<Set<T>>> l2 = new ArrayList<>();
 				l2.addAll(listOfSubSets);
@@ -244,11 +243,6 @@ public class MathSetClassClosedUnderUnion
 		return output;
 	}
 	
-	public static void printlnBoldAndGreen(String s)
-	{
-		System.out.println(boldGBCPX+s+boldGBCSX);
-	}
-
 	public static <T>  Map<String, Set<T>> makeMapOfSets(Collection<Set<T>> origin) throws CollectionException
 	{
 		int size = origin.size();

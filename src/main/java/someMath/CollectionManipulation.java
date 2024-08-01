@@ -194,7 +194,133 @@ public class CollectionManipulation
 		return output;
 	}
 	
-	public static <T> Set<Set<T>> allSubSetsOfSizeN(Set<T> originSet, int n) throws CollectionException
+	public static <T> Set<List<T>> permutationsWithoutRepition(Set<T> originSet)throws CollectionException
+	{
+		
+		List<T> emptyList = new ArrayList<>();
+		
+		Set<List<T>> output = new HashSet<>();
+		if(originSet==null)throw new CollectionException("Set can't be null.");
+		if(originSet.contains(null))throw new CollectionException("Set contains null.");
+		
+		int n = originSet.size();
+		
+		if(n==0) 
+		{
+			output.add(emptyList);
+			return output;
+		}
+
+		for(T t: originSet)
+		{		
+			Set<T> copy = new HashSet<>(originSet);
+			copy.remove(t);
+
+			for(List<T> list: permutationsWithoutRepition(copy))
+			{
+				list.add(t);
+				output.add(list);
+			}
+		}
+
+		return output;
+	}
+	public static <T> Set<List<T>> permutationsWithRepition(Set<T> originSet) throws CollectionException
+	{
+		
+		
+		List<T> emptyList = new ArrayList<>();
+		Set<List<T>> output = new HashSet<>();
+		if(originSet==null)throw new CollectionException("Set can't be null.");
+		if(originSet.contains(null))throw new CollectionException("Set contains null.");
+		
+		int n = originSet.size();
+		
+		if(n==0) 
+		{
+			output.add(emptyList);
+			return output;
+		}
+
+		for(T t: originSet)
+		{		
+			Set<T> copy = new HashSet<>(originSet);
+			copy.remove(t);
+
+			for(List<T> list: permutationsWithRepition(copy))
+			{
+				list.add(t);
+				output.add(list);
+			}
+		}
+
+		return output;
+	}
+
+	public static <T> Set<List<T>> variationsOfSizeNWithRepition(Set<T> originSet, int n) throws CollectionException
+	{
+		
+		List<T> emptyList = new ArrayList<>();
+		Set<List<T>> output = new HashSet<>();
+		if(originSet==null)throw new CollectionException("Set can't be null.");
+		if(n<0) throw new CollectionException("n is to small. It is below Zero.");
+		if(originSet.contains(null))throw new CollectionException("Set contains null.");
+		
+		if(n==0||originSet.isEmpty()) 
+		{
+			output.add(emptyList);
+			return output;
+		}
+
+		for(T t: originSet)
+		{
+
+			for(List<T> list: variationsOfSizeNWithRepition(originSet, n-1))
+			{
+				list.add(t);
+				output.add(list);
+			}
+		}
+		
+		return output;
+	}
+
+	public static <T> Set<List<T>> combinationsOfSizeNWithRepition(Set<T> originSet, int n) throws CollectionException
+	{
+		
+		List<T> emptyList = new ArrayList<>();
+		Set<List<T>> output = new HashSet<>();
+		if(originSet==null)throw new CollectionException("Set can't be null.");
+		if(n<0) throw new CollectionException("n is to small. It is below Zero.");
+		if(originSet.contains(null))throw new CollectionException("Set contains null.");
+		
+		if(n==0||originSet.isEmpty()) 
+		{
+			output.add(emptyList);
+			return output;
+		}
+
+		for(T t: originSet)
+		{
+		
+			Set<T> copy = new HashSet<>(originSet);
+		
+			for(T t2: originSet)
+			{
+				copy.remove(t2);
+				for(List<T> list: combinationsOfSizeNWithRepition(copy, n-1))
+				{
+					
+					list.add(t);
+					output.add(list);
+				}
+			}
+		}
+		
+		return output;
+	}
+	
+	public static <T> Set<Set<T>> combinationsOfSizeNWithoutRepition(Set<T> originSet, int n) throws CollectionException
 	{
 
 		Set<T> emptySet = new HashSet<>();
@@ -221,7 +347,7 @@ public class CollectionManipulation
 			Set<T> copy = new HashSet<>(originSet);
 			copy.remove(t);
 
-			for(Set<T> set: allSubSetsOfSizeN(copy, n))
+			for(Set<T> set: combinationsOfSizeNWithoutRepition(copy, n))
 			{
 				output.add(set);
 			}
@@ -314,7 +440,7 @@ public class CollectionManipulation
 		
 		Double ps = 0.0;
 
-		Set<Set<T>> selections = allSubSetsOfSizeN(set, n);
+		Set<Set<T>> selections = combinationsOfSizeNWithoutRepition(set, n);
 		
 		for(Set<T> s: selections)ps = ps+multiplySetElements(s);
 		
@@ -326,7 +452,7 @@ public class CollectionManipulation
 		
 		Double ps = 1.0;
 
-		Set<Set<T>> selections = allSubSetsOfSizeN(set, n);
+		Set<Set<T>> selections = combinationsOfSizeNWithoutRepition(set, n);
 
 		for(Set<T> s: selections)ps = ps*addSetElements(s);
 		
