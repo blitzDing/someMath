@@ -2,6 +2,7 @@ package someMath;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -58,10 +59,51 @@ class CollectionManipulationTests
 		System.out.println(collectionToString(combis));
 		
 		assert(combis.size()==SmallTools.nChooseK(n+k-1, k));
-		/*
-		Set<Set<Set<Character>>> subSetsOfSize3 = allSubSetsOfSizeN(powerSet(originSet), 3);
-		System.out.println(TerminalXDisplay.collectionToString(subSetsOfSize3));
-		*/
+	}
+	
+	@Test
+	void permutationsWithRepitionTest() throws CollectionException
+	{
+		
+		printBoldAndBlue("\nTesting Permutations with Repition.");
+		List<Character> originList = new ArrayList<>(Arrays.asList('a', 'b', 'a', 'b', 'b'));
+		int n = originList.size();
+		int k1 = 3;
+		int k2 = 2;;
+		System.out.println("Permutation of " + n + " k1:" + k1 + " k2:" + k2);
+		Set<List<Character>> permutations = permutationsWithRepition(originList);
+		System.out.println(collectionToString(permutations));
+		
+		assert(permutations.size()==SmallTools.faculty(n)/(SmallTools.faculty(k1)*SmallTools.faculty(k2)));
+
+		originList = new ArrayList<>(Arrays.asList('a', 'a', 'a', 'b', 'b', 'c', 'c'));
+		n = originList.size();
+		int k3 = 2;
+		System.out.println("Permutation of " + n + " k1:" + k1 + " k2:" + k2 + " k3:" +k3);
+		permutations = permutationsWithRepition(originList);
+		System.out.println(collectionToString(permutations));
+		
+		assert(permutations.size()==SmallTools.faculty(n)/(SmallTools.faculty(k1)*SmallTools.faculty(k2)*SmallTools.faculty(k3)));
+	}
+
+	@Test
+	void permutationsWithoutRepitionTest() throws CollectionException
+	{
+		
+		printBoldAndBlue("\nTesting Permutations without Repition.");
+		int n = originSet.size();
+		System.out.println("Permutation of " + n);
+		Set<List<Character>> permutations = permutationsWithoutRepition(originSet);
+		System.out.println(collectionToString(permutations));
+		
+		assert(permutations.size()==SmallTools.faculty(n));
+
+		n= otherSet.size();
+		System.out.println("Permutations of " + n);
+		permutations = permutationsWithoutRepition(otherSet);
+		System.out.println(collectionToString(permutations));
+		
+		assert(permutations.size()==SmallTools.faculty(n));
 	}
 	
 	@Test
@@ -84,10 +126,6 @@ class CollectionManipulationTests
 		System.out.println(collectionToString(combis));
 		
 		assert(combis.size()==SmallTools.nChooseK(n, k));
-		/*
-		Set<Set<Set<Character>>> subSetsOfSize3 = allSubSetsOfSizeN(powerSet(originSet), 3);
-		System.out.println(TerminalXDisplay.collectionToString(subSetsOfSize3));
-		*/
 	}
 
 	@Test
@@ -110,10 +148,6 @@ class CollectionManipulationTests
 		System.out.println(collectionToString(variations));
 		
 		assert((double)(variations.size())==Math.pow(n, k));
-		/*
-		Set<Set<Set<Character>>> subSetsOfSize3 = allSubSetsOfSizeN(powerSet(originSet), 3);
-		System.out.println(TerminalXDisplay.collectionToString(subSetsOfSize3));
-		*/
 	}
 
 	@Test

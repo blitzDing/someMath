@@ -225,26 +225,27 @@ public class CollectionManipulation
 
 		return output;
 	}
-	public static <T> Set<List<T>> permutationsWithRepition(Set<T> originSet) throws CollectionException
+	public static <T extends Comparable<T>> Set<List<T>> permutationsWithRepition(List<T> originList) throws CollectionException
 	{
 		
 		
 		List<T> emptyList = new ArrayList<>();
 		Set<List<T>> output = new HashSet<>();
-		if(originSet==null)throw new CollectionException("Set can't be null.");
-		if(originSet.contains(null))throw new CollectionException("Set contains null.");
+		if(originList==null)throw new CollectionException("Set can't be null.");
+		if(originList.contains(null))throw new CollectionException("Set contains null.");
 		
-		int n = originSet.size();
-		
+		int n = originList.size();
+
 		if(n==0) 
 		{
 			output.add(emptyList);
 			return output;
 		}
 
-		for(T t: originSet)
+		for(int i=0;i<originList.size();i++)
 		{		
-			Set<T> copy = new HashSet<>(originSet);
+			T t = originList.get(i);
+			List<T> copy = new ArrayList<>(originList);
 			copy.remove(t);
 
 			for(List<T> list: permutationsWithRepition(copy))
@@ -285,7 +286,7 @@ public class CollectionManipulation
 		return output;
 	}
 
-	public static <T extends Comparable> Set<List<T>> combinationsOfSizeNWithRepition(Set<T> originSet, int n) throws CollectionException
+	public static <T extends Comparable<T>> Set<List<T>> combinationsOfSizeNWithRepition(Set<T> originSet, int n) throws CollectionException
 	{
 		
 		List<T> emptyList = new ArrayList<>();
