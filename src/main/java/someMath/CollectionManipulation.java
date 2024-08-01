@@ -285,7 +285,7 @@ public class CollectionManipulation
 		return output;
 	}
 
-	public static <T> Set<List<T>> combinationsOfSizeNWithRepition(Set<T> originSet, int n) throws CollectionException
+	public static <T extends Comparable> Set<List<T>> combinationsOfSizeNWithRepition(Set<T> originSet, int n) throws CollectionException
 	{
 		
 		List<T> emptyList = new ArrayList<>();
@@ -300,18 +300,22 @@ public class CollectionManipulation
 			return output;
 		}
 
-		for(T t: originSet)
+		List<T> sortedList = new ArrayList<>(originSet);
+		Collections.sort(sortedList);
+		
+		for(int i=0;i<sortedList.size();i++)
 		{
 		
-			Set<T> copy = new HashSet<>(originSet);
-		
-			for(T t2: originSet)
+			T t = sortedList.get(i);
+			
+			for(int j=0;j<sortedList.size();j++)
 			{
-				copy.remove(t2);
-				for(List<T> list: combinationsOfSizeNWithRepition(copy, n-1))
+				
+				for(List<T> list: combinationsOfSizeNWithRepition(originSet, n-1))
 				{
 					
 					list.add(t);
+					Collections.sort(list);
 					output.add(list);
 				}
 			}
