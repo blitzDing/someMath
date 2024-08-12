@@ -24,6 +24,19 @@ public class SmallTools
 	private static final int standartDeepnessForRoot = 3;
     	
 	
+	public static double lambertW(double p)
+	{
+		
+		double x0=(p/2);
+		
+		for(int i=0;i<60;i++)
+		{
+			x0=(0.5)*(x0+(p/(Math.pow(Math.E, x0))));
+		}
+		
+		return x0;
+	}
+
 	public static int faculty(int n)
 	{
 		if(n==0||n==1)return 1;
