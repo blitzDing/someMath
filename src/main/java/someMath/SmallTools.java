@@ -23,29 +23,30 @@ public class SmallTools
 
 	private static final int standartDeepnessForRoot = 3;
     	
-	public static double superRoot(double p)
+	public static double superRoot(double p, double x0)
 	{
-		double x0=(p/2);
+
+		if(x0<=0||x0==1)throw new IllegalArgumentException("Illegal start value!");
+		if(p<=0)throw new IllegalArgumentException("Can't apply W-Function to a value lower or exact Zero.");
+
+		double value = (0.5)*(x0+(Math.log(p)/(Math.log(x0))));
+		double erg = Math.pow(value, value);
 		
-		for(int i=0;i<240;i++)
-		{
-			x0=(0.5)*(x0+(Math.log(p)/Math.log(x0)));//Turns out log works better than x^(x-1)!!
-		}
+		if(erg-p<prettySmall)return value;
+		else return superRoot(p, value);
 		
-		return x0;
 	}
 
-	public static double lambertW(double p)
+	public static double lambertW(double p, double x0)
 	{
+		if(x0<=0||x0==1)throw new IllegalArgumentException("Illegal start Value!");
+		if(p<=0)throw new IllegalArgumentException("Can't apply W-Function to a value lower or exact Zero.");
 		
-		double x0=(p/2);
+		double value = (0.5)*(x0+(p/(Math.pow(Math.E, x0))));
+		double erg = value*Math.pow(Math.E, value);
 		
-		for(int i=0;i<60;i++)
-		{
-			x0=(0.5)*(x0+(p/(Math.pow(Math.E, x0))));
-		}
-		
-		return x0;
+		if(erg-p<prettySmall)return value;
+		else return lambertW(p, value);
 	}
 
 	public static int faculty(int n)
