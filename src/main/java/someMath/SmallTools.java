@@ -23,7 +23,18 @@ public class SmallTools
 
 	private static final int standartDeepnessForRoot = 3;
     	
-	
+	public static double superRoot(double p)
+	{
+		double x0=(p/2);
+		
+		for(int i=0;i<240;i++)
+		{
+			x0=(0.5)*(x0+(Math.log(p)/Math.log(x0)));//Turns out log works better than x^(x-1)!!
+		}
+		
+		return x0;
+	}
+
 	public static double lambertW(double p)
 	{
 		
