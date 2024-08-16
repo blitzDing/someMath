@@ -23,30 +23,45 @@ public class SmallTools
 
 	private static final int standartDeepnessForRoot = 3;
     	
-	public static double superRoot(double p, double x0)
+	public static double superRoot(double p)
 	{
 
-		if(x0<=0||x0==1)throw new IllegalArgumentException("Illegal start value!");
 		if(p<=0)throw new IllegalArgumentException("Can't apply W-Function to a value lower or exact Zero.");
+
+		double startValue = 2.0;
+		return sRootHelp(p, startValue);
+	}
+
+	private static double sRootHelp(double p, double x0)
+	{
+		if(x0<=0||x0==1)throw new IllegalArgumentException("Illegal start value!");
 
 		double value = (0.5)*(x0+(Math.log(p)/(Math.log(x0))));
 		double erg = Math.pow(value, value);
 		
 		if(erg-p<prettySmall)return value;
-		else return superRoot(p, value);
-		
+		else return sRootHelp(p, value);
 	}
 
-	public static double lambertW(double p, double x0)
+	public static double lambertW(double p)
 	{
-		if(x0<=0||x0==1)throw new IllegalArgumentException("Illegal start Value!");
+
 		if(p<=0)throw new IllegalArgumentException("Can't apply W-Function to a value lower or exact Zero.");
+		
+		double startValue = 2.0;
+		return lambertWHelp(p, startValue);
+	}
+
+	private static double lambertWHelp(double p, double x0)
+	{
+		
+		if(x0<=0||x0==1)throw new IllegalArgumentException("Illegal start Value!");
 		
 		double value = (0.5)*(x0+(p/(Math.pow(Math.E, x0))));
 		double erg = value*Math.pow(Math.E, value);
 		
 		if(erg-p<prettySmall)return value;
-		else return lambertW(p, value);
+		else return lambertWHelp(p, value);
 	}
 
 	public static int faculty(int n)

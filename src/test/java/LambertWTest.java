@@ -12,11 +12,11 @@ class LambertWTest
 	{
 		double lambert = 1;
 		double value =lambert*Math.pow(Math.E, lambert);
-		assert(Math.abs(lambert-lambertW(value,2))<prettySmall);
+		assert(Math.abs(lambert-lambertW(value))<prettySmall);
 		
 		lambert = 2;
 		value =lambert*Math.pow(Math.E, lambert);
-		assert(Math.abs(lambert-lambertW(value,2))<prettySmall);
+		assert(Math.abs(lambert-lambertW(value))<prettySmall);
 		System.out.println("lamberW(" + lambert + ") = " + value);
 	}
 
@@ -26,12 +26,12 @@ class LambertWTest
 		
 		double root1= 5.5;
 		double t = Math.pow(root1, root1);
-		System.out.println("superRoot("+t+") = " + superRoot(t,2));
-		assert(Math.abs(root1-superRoot(t,2))<prettySmall);
+		System.out.println("superRoot("+t+") = " + superRoot(t));
+		assert(Math.abs(root1-superRoot(t))<prettySmall);
 		
 		root1= 6.4;
 		t = Math.pow(root1, root1);
-		System.out.println("superRoot("+t+") = " + superRoot(t,2));
-		assert(Math.abs(root1-superRoot(t,2))<prettySmall);
+		System.out.println("superRoot("+t+") = " + superRoot(t));
+		assert(Math.abs(root1-superRoot(t))<prettySmall);
 	}
 }
