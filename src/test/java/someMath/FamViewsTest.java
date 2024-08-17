@@ -27,8 +27,14 @@ class FamViewsTest
 
 	static Set<Set<Character>> basis;
 
-	@BeforeEach
+	
 	void prep()
+	{
+		
+	}
+
+	@Test
+	void test() throws CollectionException
 	{
 		
 		A = new HashSet<>(Arrays.asList('a', 'b', 'x'));
@@ -41,27 +47,90 @@ class FamViewsTest
 		H = new HashSet<>(Arrays.asList('j', 'm', 'p'));
 
 		basis = new HashSet<>(Arrays.asList(A, B, C, D, E, F, G, H));
-	}
 
-	@Test
-	void test() throws CollectionException
-	{
+		printBoldAndBlue("Basis = A bis H");
 		Set<Set<Character>> fam = createFamilie(basis);
 	
 		Set<Character> implodedBasis = implode(basis);
-
-		System.out.println("Fam Size: " + fam.size());
-		System.out.println(collectionToString(fam));
-		for(Character c: implodedBasis)
-		{
-			System.out.println(c + " is abundand: " + isAbundand(c, fam));
-		
-			Set<Set<Character>> sets = findContainingSets(c, fam);
-			System.out.println("Nr. of Sets containing " + c + ": " + sets.size());
-			//System.out.println(collectionToString(sets));
-		}
-		
-		System.out.println(collectionToString(fam));
+		displayContentOfFamByAbundance(fam);
 	}
 
+	@Test
+	void test2() throws CollectionException
+	{
+
+		printBoldAndBlue("Basis = {A, B, C, D, E, F, G, H}");
+		A = new HashSet<>(Arrays.asList('a', 'b', 'c', 'y'));
+		B = new HashSet<>(Arrays.asList('d', 'e', 'f', 'y'));
+		C = new HashSet<>(Arrays.asList('g', 'h', 'i', 'y'));
+		D = new HashSet<>(Arrays.asList('j', 'k', 'l', 'y'));
+		E = new HashSet<>(Arrays.asList('m', 'n', 'o', 'y'));
+		F = new HashSet<>(Arrays.asList('p', 'q', 'r', 'y'));
+		G = new HashSet<>(Arrays.asList('s', 't', 'u', 'y'));
+		H = new HashSet<>(Arrays.asList('v', 'w', 'x', 'y'));
+
+		basis = new HashSet<>(Arrays.asList(A, B, C, D, E, F, G, H));
+
+		Set<Set<Character>> fam = createFamilie(basis);
+		displayContentOfFamByAbundance(fam);
+	}
+
+	@Test
+	void test3() throws CollectionException
+	{
+
+		printBoldAndBlue("Basis = {A, B, C, D, E, F}");
+		A = new HashSet<>(Arrays.asList('a', 'b', 'c', 'y'));
+		B = new HashSet<>(Arrays.asList('d', 'e', 'f', 'y'));
+		C = new HashSet<>(Arrays.asList('g', 'h', 'i', 'y'));
+		D = new HashSet<>(Arrays.asList('j', 'k', 'l', 'x'));
+		E = new HashSet<>(Arrays.asList('m', 'n', 'o', 'x'));
+		F = new HashSet<>(Arrays.asList('p', 'q', 'r', 'x'));
+
+		basis = new HashSet<>(Arrays.asList(A, B, C, D, E, F));
+
+		Set<Set<Character>> fam = createFamilie(basis);
+		displayContentOfFamByAbundance(fam);
+
+	}
+
+	@Test
+	void test4() throws CollectionException
+	{
+
+		printBoldAndBlue("Basis = {A, B, C, D, E, F}");
+		A = new HashSet<>(Arrays.asList('a', 'b', 'c', 'y'));
+		B = new HashSet<>(Arrays.asList('d', 'e', 'f', 'y'));
+		C = new HashSet<>(Arrays.asList('g', 'h', 'i', 'z'));
+		D = new HashSet<>(Arrays.asList('j', 'k', 'l', 'z'));
+		E = new HashSet<>(Arrays.asList('m', 'n', 'o', 'x'));
+		F = new HashSet<>(Arrays.asList('p', 'q', 'r', 'x'));
+
+		basis = new HashSet<>(Arrays.asList(A, B, C, D, E, F));
+
+		Set<Set<Character>> fam = createFamilie(basis);
+		displayContentOfFamByAbundance(fam);
+	}
+	
+	void displayContentOfFamByAbundance(Set<Set<Character>> fam) throws CollectionException
+	{
+		Set<Character> implodedFam = implode(fam);
+
+		System.out.println("Fam Size: " + fam.size());
+		printBoldAndYellow(collectionToString(fam));
+		int cnt = 0;
+		for(Character c: implodedFam)
+		{
+			if(!isAbundand(c, fam))
+			{
+				
+				printBoldAndRed(c + " is not abundand: ");
+		
+				Set<Set<Character>> sets = findContainingSets(c, fam);
+				System.out.println("Nr. of Sets containing " + c + ": " + sets.size());
+			}
+			else cnt++;
+		}
+		if(cnt==implodedFam.size())printBoldAndYellow("Everything is abundand");
+	}
 }

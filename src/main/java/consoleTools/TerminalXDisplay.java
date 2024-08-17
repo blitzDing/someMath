@@ -108,5 +108,14 @@ public class TerminalXDisplay
 		System.out.println(boldBBCPX+s+boldBBCSX);
 	}
 	
+	public static void printBoldAndYellow(String s)
+	{
+		System.out.println(boldYBCPX+s+boldYBCSX);
+	}
+
+	public static void printBoldAndRed(String s)
+	{
+		System.out.println(boldRBCPX+s+boldRBCSX);
+	}
 	
 }
