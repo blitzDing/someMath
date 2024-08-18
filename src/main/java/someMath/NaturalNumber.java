@@ -2,14 +2,22 @@ package someMath;
 
 import java.math.BigInteger;
 import java.util.Objects;
+import static consoleTools.TerminalXDisplay.*;
 
 //Even so it implements addition, subtraction, multiplication and division this is
 // NOT a mathematical Group!!!!
-public class NaturalNumber implements SubtractableAndDivideable<NaturalNumber>, Cloneable
+public class NaturalNumber extends Number implements SubtractableAndDivideable<NaturalNumber>, Cloneable
 {
 
-	private final BigInteger numberCore;
+	private static boolean toBigWarningOn = false;
 	
+	private final BigInteger numberCore;
+
+	/*Remember:*/
+	private final BigInteger maxIntBI = BigInteger.valueOf(Integer.MAX_VALUE);
+	private final BigInteger maxLongBI = BigInteger.valueOf(Long.MAX_VALUE);
+	private final BigInteger maxDoubleBI = BigInteger.TEN.pow(307);
+	private final BigInteger maxFloatBI = BigInteger.TEN.pow(35);	
 	public static final BigInteger biZero = new BigInteger("0");
 	public static final BigInteger biOne = new BigInteger("1");
 	
@@ -145,17 +153,7 @@ public class NaturalNumber implements SubtractableAndDivideable<NaturalNumber>, 
 	    
 	    return true;
 	}
-	
-	public double doubleApproximation()
-	{
-		return this.numberCore.doubleValue();
-	}
-	
-	public int integerApproximation()
-	{
-		return this.numberCore.intValue();
-	}
-	
+
 	public String toString()
 	{
 		return numberCore + "";
@@ -174,5 +172,46 @@ public class NaturalNumber implements SubtractableAndDivideable<NaturalNumber>, 
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public double doubleValue()
+	{
+		if(!toBigWarningOn && (numberCore.compareTo(maxIntBI)>0))printBoldAndRed("Bigger then IntMax!");
+		return numberCore.intValue();
+
+	}
+
+	@Override
+	public float floatValue()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int intValue()
+	{
+		if(!toBigWarningOn && (numberCore.compareTo(maxIntBI)>0))printBoldAndRed("Bigger then IntMax!");
+
+		return numberCore.intValue();
+	}
+
+	@Override
+	public long longValue() 
+	{
+		if(!toBigWarningOn && (numberCore.compareTo(maxLongBI)>0))printBoldAndRed("Bigger then LongMax!");
+
+		return numberCore.longValue();
+	}
+	
+	public static void activateToBigWarning()
+	{
+		toBigWarningOn = true;
+	}
+	
+	public static void deActivateToBigWarning()
+	{
+		toBigWarningOn = false;
 	}
 }
