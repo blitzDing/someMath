@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javafx.util.Pair;
 
@@ -361,6 +362,16 @@ public class CollectionManipulation
 		return output;
 	}
 	
+	public static <T> Set<List<T>> discriminate(Set<List<T>> origin, Predicate<List<T>> predicate)
+	{
+		
+		Set<List<T>> output = new HashSet<>();
+		
+		for(List<T> list: origin)if(predicate.test(list))output.add(list);
+
+		return output;
+	}
+
 	public static <T extends Number> Double multiplyListElements(List<T> origin, int n) throws CollectionException
 	{
 		int s = origin.size();
