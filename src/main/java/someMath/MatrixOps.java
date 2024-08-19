@@ -184,15 +184,26 @@ public class MatrixOps
 
 		if(rows>2)
 		{
-			int r = (int)(Math.random()*2);
-			boolean doDevelopeByRow = (r==1);
-		
-			//boolean doDevelopeByCol = !doDevelopeByRow;//No need
-			//(Nr. of) rows = (Nr. of) columns because this Matrix is quadratic;
-		
-			int i = (int)(Math.random()*rows);
-				
-			return developeDet(matrix, i, doDevelopeByRow);
+			//Just Develop by row Zero!!!Could be any row!!!
+			int rowNr = 0;
+			List<X> row = rowAsList(matrix, rowNr);
+			X sum = row.get(0).getNeutralZero();
+
+			int cnt = 0;
+			for(X x: row)
+			{
+
+				X minusOne = sum.getNeutralZero().subtract(sum.getNeutralOne());
+				Matrix<X> sub = subMatrixOfElement(matrix, rowNr, cnt);
+
+				X toAdd = minusOne.multiplyWith(getDeterminant(sub));
+				if(cnt%2==0)toAdd = toAdd.multiplyWith(minusOne);
+
+				sum = sum.add(toAdd);
+				cnt++;
+			}
+
+			return sum;
 		}
 		
 		throw new IllegalArgumentException("At least Two Rows are needed.");

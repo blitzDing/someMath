@@ -6,7 +6,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javafx.util.Pair;
 
@@ -372,6 +375,21 @@ public class CollectionManipulation
 		return output;
 	}
 
+	public static <T> Set<List<T>> discriminateByIndexWrapper(Set<List<T>> origin, BiPredicate<List<T>, List<Integer>> biPredicate)
+	{
+		
+		Set<List<T>> output = new HashSet<>();
+		
+		for(List<T> list: origin)
+		{
+			int begin = 0;
+			int end = list.size()-1;
+		    List<Integer> indizes = IntStream.rangeClosed(begin, end).boxed().collect(Collectors.toList());  
+			if(biPredicate.test(list, indizes))output.add(list);
+		}
+
+		return output;
+	}
 	public static <T extends Number> Double multiplyListElements(List<T> origin, int n) throws CollectionException
 	{
 		int s = origin.size();

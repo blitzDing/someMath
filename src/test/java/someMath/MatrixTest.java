@@ -48,5 +48,21 @@ public class MatrixTest
 		assert(x1.value.equals(2.0));
 		assert(x2.value.equals(5.0));
 
+		fValues = new DoubleFMT[3][3];
+		fValues[0][0] = new DoubleFMT(1.0);
+		fValues[0][1] = new DoubleFMT(0.0);
+		fValues[0][2] = new DoubleFMT(0.0);
+		fValues[1][0] = new DoubleFMT(0.0);
+		fValues[1][1] = new DoubleFMT(1.0);
+		fValues[1][2] = new DoubleFMT(0.0);
+		fValues[2][0] = new DoubleFMT(0.0);
+		fValues[2][1] = new DoubleFMT(0.0);
+		fValues[2][2] = new DoubleFMT(1.0);
+		
+		m = new Matrix<>(fValues);
+		det = (DoubleFMT) MatrixOps.getDeterminant(m);
+		
+		System.out.println(m + "\n" + det.toString());
+		
 	}
 }

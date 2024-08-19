@@ -29,7 +29,7 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 		 * Cannot create a Array of Generic Type: "MultiplyableAndAddable<E>[][]" 
 		 * The line below causes the Suppress Warning. How can i get rid of This?
 		 */
-		valArr = (E[][]) new MultiplyableAndAddable[rows][columns];
+		valArr = (E[][]) new SubtractableAndDivideable[rows][columns];
 		
 		BiConsumer<Integer, Integer> bic = (n,m)-> valArr[n][m] = values.get(n*columns+m);
 		MatrixOps.walkThrouMatrix(this, bic);
