@@ -147,7 +147,7 @@ public class MatrixOps
 		int rows = matrix.getRows();
 		
 		@SuppressWarnings("unchecked")
-		E[][] newValArr = (E[][]) new MultiplyableAndAddable[columns][rows];
+		E[][] newValArr = (E[][]) new SubtractableAndDivideable[columns][rows];
 		
 		//It is important that the indices are Switched that way.
 		//And not the other way around because the walk thru is 
@@ -205,7 +205,7 @@ public class MatrixOps
 
 			return sum;
 		}
-		
+
 		throw new IllegalArgumentException("At least Two Rows are needed.");
 	}
 
