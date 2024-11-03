@@ -68,24 +68,31 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 	{
 		return valArr[row][column];
 	}
-		
-	
 
-	public Matrix<E> getColumn(int m)
+	public Matrix<E> getColumn(int column)
 	{
 		
 		List<E> list = new ArrayList<>();
 		
-		for(int i=0;i<rows;i++)list.add(valArr[i][m]);
+		for(int i=0;i<rows;i++)list.add(valArr[i][column]);
 		
 		Matrix<E> outputRowMatrix = new Matrix<E>(rows, 1, list);
 		
 		return outputRowMatrix;
 	}
+	
+	public void setColumn(List<E> list, int column)
+	{
+		for(int i=0;i<rows;i++)valArr[i][column]=list.get(i);
+	}
+	
+	public void setColumn(Matrix<E> input, int column)
+	{
+		for(int i=0;i<rows;i++)valArr[i][column]=input.valArr[i][0];
+	}
 
 	public Matrix<E> getRow(int n)
 	{
-		
 		List<E> list = new ArrayList<>();
 		
 		for(int i=0;i<columns;i++)list.add(valArr[n][i]);
@@ -95,7 +102,18 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 		return outputRowMatrix;
 	}
 	
+	public void setRow(List<E> list, int row)
+	{
+		for(int i=0;i<columns;i++)valArr[row][i]=list.get(i);
+	}
+
+	public void setRow(Matrix<E> input, int row)
+	{
+		for(int i=0;i<columns;i++)valArr[row][i]=input.valArr[0][i];
+	}
+
 	public boolean isQuadratic() {return isQuadratic;}
+
 	//It is important that the values of Type E have a good overwritten toString Method.
 	public String toString()
 	{

@@ -25,7 +25,8 @@ public class MatrixTest
 		
 		Matrix<DoubleFMT> m = new Matrix<>(fValues);
 		DoubleFMT det = (DoubleFMT) MatrixOps.getDeterminant(m);
-		
+		assert(det.value==10.0);
+
 		System.out.println(m + "\n" + det.toString() + "\n" + a11);
 		
 		Set<DoubleFMT> eigenvalues = m.getEigenvalues();
@@ -64,5 +65,52 @@ public class MatrixTest
 		
 		System.out.println(m + "\n" + det.toString());
 		
+	}
+	
+	@Test
+	public void testSetAndGetRowsAndColumns()
+	{
+
+		DoubleFMT[][]fValues = new DoubleFMT[2][2];
+		DoubleFMT a11 = new DoubleFMT(3.0);
+		fValues[0][0] = a11;
+		fValues[0][1] = new DoubleFMT(1.0);
+		fValues[1][0] = new DoubleFMT(2.0);
+		fValues[1][1] = new DoubleFMT(4.0);
+		
+		Matrix<DoubleFMT> m = new Matrix<>(fValues);
+		
+		Matrix<DoubleFMT> rowZero = m.getRow(0);
+		
+		assert(rowZero.getColumns()==2);
+		assert(rowZero.getRows()==1);
+		
+		for(int x=0;x<rowZero.getColumns();x++)
+		{
+			for(int y=0;y<rowZero.getRows();y++)
+			{
+				assert(fValues[y][x]==rowZero.getValue(y, x));
+
+			}
+		}
+
+		Matrix<DoubleFMT> rowOne = m.getRow(1);
+		assert(!rowOne.equals(rowZero));
+		
+		m.setRow(rowZero, 1);
+		rowOne = m.getRow(1);
+		assert(rowOne.equals(rowZero));
+		
+		//Reset
+		m = new Matrix<>(fValues);
+		
+		Matrix<DoubleFMT> columnZero = m.getColumn(0);
+		Matrix<DoubleFMT> columnOne = m.getColumn(1);
+		assert(!columnOne.equals(columnZero));
+		
+		m.setColumn(columnZero, 1);
+		columnOne = m.getColumn(1);
+		assert(columnOne.equals(columnZero));
+
 	}
 }
