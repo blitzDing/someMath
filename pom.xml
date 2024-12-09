@@ -58,4 +58,18 @@
 
   </build>
   
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>org.openjfx</groupId>
+  			<artifactId>javafx-controls</artifactId>
+  			<version>21</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>org.junit.jupiter</groupId>
+  			<artifactId>junit-jupiter-engine</artifactId>
+  			<version>5.9.1</version>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
 </project>
