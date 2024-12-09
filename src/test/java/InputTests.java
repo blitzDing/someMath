@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
-class InputTests 
+public class InputTests 
 {
 
 	
 	LocalDateTime ancient;
 	
 	@BeforeEach
-	void prepare()
+	public void prepare()
 	{
 		
 		ancient = LocalDateTime.of(LocalDate.of(2, 1, 1), LocalTime.of(0, 0));
@@ -33,7 +33,7 @@ class InputTests
 	}
 	
 	@Test
-	void testGetString() 
+	public void testGetString() 
 	{
 		
 		String gruß = "Hi";
@@ -46,7 +46,7 @@ class InputTests
 	}
 	
 	@Test
-	void testGetDateTime() throws InputArgumentException
+	public void testGetDateTime() throws InputArgumentException
 	{
 		int hour = 0;
 		int minute = 0;
@@ -71,7 +71,7 @@ class InputTests
 	}
 
 	@Test
-	void testGetDateTimeInOneLine() throws InputArgumentException
+	public void testGetDateTimeInOneLine() throws InputArgumentException
 	{
 
 		String year = "0002";

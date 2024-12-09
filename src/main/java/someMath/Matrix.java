@@ -312,6 +312,10 @@ public class Matrix<E extends SubtractableAndDivideable<E>> implements Subtracta
 		return set;
 	}
 	
+	public int hashCode()
+	{
+		return Objects.hash(valArr);
+	}
 	
 	public boolean equals(Object obj)
 	{

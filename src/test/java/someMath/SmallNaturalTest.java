@@ -6,7 +6,7 @@ public class SmallNaturalTest
 {
 
 	@Test
-	void isGreaterTest() throws NaturalNumberException
+	public void isGreaterTest() throws NaturalNumberException
 	{
 		int z1 = SmallTools.randomInt(500, 0);
 		int z2 = SmallTools.randomInt(500, 0);
@@ -21,7 +21,7 @@ public class SmallNaturalTest
 	}
 
 	@Test
-	void subtractionAdditionMultiplicationTest() throws NaturalNumberException, RNumException, CloneNotSupportedException, DivisionByZeroException, CollectionException
+	public void subtractionAdditionMultiplicationTest() throws NaturalNumberException, RNumException, CloneNotSupportedException, DivisionByZeroException, CollectionException
 	{
 
 		int z1 = SmallTools.randomInt(31, 21);
@@ -52,7 +52,7 @@ public class SmallNaturalTest
 	}
 
 	@Test
-	void divisonTest() throws NaturalNumberException, DivisionByZeroException, CollectionException, RNumException, CloneNotSupportedException
+	public void divisonTest() throws NaturalNumberException, DivisionByZeroException, CollectionException, RNumException, CloneNotSupportedException
 	{
 		
 		SmallNatural a = new SmallNatural(17);

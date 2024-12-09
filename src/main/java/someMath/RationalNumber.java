@@ -341,11 +341,6 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 		
 		return this.add(minus);
 	}
-	
-	public int hashCode()
-	{
-		return Objects.hash(integerPart, numerator, denominator);
-	}
 
 	public boolean isGreaterThen(RationalNumber other) throws NaturalNumberException, RNumException, DivisionByZeroException, CollectionException
 	{
@@ -378,8 +373,14 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 		return false;
 	}
 
+	public int hashCode()
+	{
+		return Objects.hash(toString());
+	}
+	
 	public boolean equals(Object obj)
 	{
+		if(obj==null)return false;
 		
 		if (obj == this) return true;
 		
@@ -388,11 +389,9 @@ public class RationalNumber implements Cloneable, SubtractableAndDivideable<Rati
 	    
 	    
 	    if(this.toString().trim().equals("-0")&&other.toString().trim().equals("0"))return true;
-	    if(other.toString().trim().equals("-0")&&this.toString().trim().endsWith("0"))return true;
+	    if(other.toString().trim().equals("-0")&&this.toString().trim().equals("0"))return true;
 	    
-	    if(!this.toString().equals(other.toString()))return false;
-	    
-	    return true;
+	    return (this.toString().equals(other.toString()));
 	}
 
 	public String toString()

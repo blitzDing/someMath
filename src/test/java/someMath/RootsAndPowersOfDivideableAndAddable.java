@@ -3,11 +3,11 @@ package someMath;
 
 import org.junit.jupiter.api.Test;
 
-class RootsAndPowersOfDivideableAndAddable
+public class RootsAndPowersOfDivideableAndAddable
 {
 
 	@Test
-	void test() throws Exception
+	public void test() throws Exception
 	{
 				
 		ComplexNrDouble cnd = new ComplexNrDouble(0, 1);

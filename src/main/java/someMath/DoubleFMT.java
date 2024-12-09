@@ -1,6 +1,8 @@
 package someMath;
 
-           //FMT=ForMathTools
+import java.util.Objects;
+
+//FMT=ForMathTools
 public class DoubleFMT implements SubtractableAndDivideable<DoubleFMT>
 {
 	
@@ -55,19 +57,6 @@ public class DoubleFMT implements SubtractableAndDivideable<DoubleFMT>
 		return new DoubleFMT(this.value - e.value);
 	}
 	
-	public boolean equals(Object obj)
-	{
-		
-		if (obj == this) return true;
-		
-	    if (!(obj instanceof DoubleFMT)) return false;
-	    DoubleFMT other = (DoubleFMT)obj;
-	    
-	    if(!(other.value.equals(this.value)))return false;
-	
-	    return true;
-	}
-	
 	public String toString()
 	{
 		return value.toString();
@@ -77,5 +66,23 @@ public class DoubleFMT implements SubtractableAndDivideable<DoubleFMT>
 	public DoubleFMT divideBy(DoubleFMT t) 
 	{
 		return new DoubleFMT(value/t.value);
+	}
+	
+	public int hashCode()
+	{
+		return Objects.hash(value);
+	}
+	
+	public boolean equals(Object other)
+	{
+		if(other==null)return false;
+		
+		if(other==this)return true;
+		
+		if(getClass()!=other.getClass())return false;
+		
+		DoubleFMT otherDFMT = (DoubleFMT)other;
+		
+		return value.equals(otherDFMT.value);
 	}
 }

@@ -3,11 +3,11 @@ package someMath;
 
 import org.junit.jupiter.api.Test;
 
-class NaturalNumberTest
+public class NaturalNumberTest
 {
 
 	@Test
-	void isGreaterTest() throws NaturalNumberException
+	public void isGreaterTest() throws NaturalNumberException
 	{
 		int z1 = SmallTools.randomInt(1000, 0);
 		int z2 = SmallTools.randomInt(1000, 0);
@@ -22,7 +22,7 @@ class NaturalNumberTest
 	}
 
 	@Test
-	void subtractionAdditionMultiplicationTest() throws NaturalNumberException
+	public void subtractionAdditionMultiplicationTest() throws NaturalNumberException
 	{
 
 		int z1 = SmallTools.randomInt(2000, 1001);
@@ -53,7 +53,7 @@ class NaturalNumberTest
 	}
 
 	@Test
-	void divisonTest() throws NaturalNumberException, DivisionByZeroException, CollectionException, RNumException
+	public void divisonTest() throws NaturalNumberException, DivisionByZeroException, CollectionException, RNumException
 	{
 		
 		NaturalNumber a = new NaturalNumber(17);

@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class MatrixViewTest 
+public class MatrixViewTest 
 {
 
 	@Test
-	void test() throws NaturalNumberException, CollectionException, RNumException, CloneNotSupportedException, DivisionByZeroException
+	public void test() throws NaturalNumberException, CollectionException, RNumException, CloneNotSupportedException, DivisionByZeroException
 	{
 		
 		DoubleFMT[][]fValues = new DoubleFMT[3][3];

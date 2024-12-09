@@ -14,7 +14,8 @@ import consoleTools.BashSigns;
 import static someMath.CollectionManipulation.*;
 import static consoleTools.TerminalXDisplay.*;
 
-class CollectionManipulationTests
+
+public class CollectionManipulationTests
 {
 
 	static Set<Character> originSet = getSetOfFirstNLatinLettersLowerCase(4);
@@ -22,7 +23,7 @@ class CollectionManipulationTests
 
 
 	@Test
-	void testPowerSet() throws CollectionException
+	public void testPowerSet() throws CollectionException
 	{
 
 		printBoldAndBlue("\nTesting power Set.");
@@ -40,7 +41,7 @@ class CollectionManipulationTests
 	}
 	
 	@Test
-	void combinationsWithRepition() throws CollectionException
+	public void combinationsWithRepition() throws CollectionException
 	{
 		
 		printBoldAndBlue("\nTesting Combinations with Repition.");
@@ -62,7 +63,7 @@ class CollectionManipulationTests
 	}
 	
 	@Test
-	void permutationsWithRepitionTest() throws CollectionException
+	public void permutationsWithRepitionTest() throws CollectionException
 	{
 		
 		printBoldAndBlue("\nTesting Permutations with Repition.");
@@ -87,7 +88,7 @@ class CollectionManipulationTests
 	}
 
 	@Test
-	void permutationsWithoutRepitionTest() throws CollectionException
+	public void permutationsWithoutRepitionTest() throws CollectionException
 	{
 		
 		printBoldAndBlue("\nTesting Permutations without Repition.");
@@ -107,7 +108,7 @@ class CollectionManipulationTests
 	}
 	
 	@Test
-	void combinationsOfSizeN() throws CollectionException
+	public void combinationsOfSizeN() throws CollectionException
 	{
 		
 		printBoldAndBlue("\nTesting Combinations without Repition.");
@@ -129,7 +130,7 @@ class CollectionManipulationTests
 	}
 
 	@Test
-	void variationsWithRepition() throws CollectionException
+	public void variationsWithRepition() throws CollectionException
 	{
 		
 		printBoldAndBlue("\nTesting Variations with Reptition.");
@@ -151,7 +152,7 @@ class CollectionManipulationTests
 	}
 
 	@Test
-	void testProductOfSetAndList() throws CollectionException
+	public void testProductOfSetAndList() throws CollectionException
 	{
 		
 		printBoldAndBlue("\nTesting product of Set and List.");
@@ -181,7 +182,7 @@ class CollectionManipulationTests
 	}
 	
 	@Test
-	void testProductSum() throws CollectionException
+	public void testProductSum() throws CollectionException
 	{
 		printBoldAndBlue("\nTesting product Sum.");
 

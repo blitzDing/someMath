@@ -186,7 +186,7 @@ public class RationalNumberTest
 	}
 	
 	@Test
-	void additionTest() throws RNumException, NaturalNumberException, DivisionByZeroException, CollectionException, CloneNotSupportedException
+	public void additionTest() throws RNumException, NaturalNumberException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
 
 		System.out.println("\nAddition Test Rational Numbers");
@@ -198,7 +198,7 @@ public class RationalNumberTest
 	}
 	
 	@Test
-	void integerExponentTest() throws RNumException, NaturalNumberException, DivisionByZeroException, CollectionException, CloneNotSupportedException
+	public void integerExponentTest() throws RNumException, NaturalNumberException, DivisionByZeroException, CollectionException, CloneNotSupportedException
 	{
 
 		System.out.println("\nTesting taking two a integer Power (not neccesarly natural number)");

@@ -10,11 +10,11 @@ import someMath.NaturalNumberException;
 import someMath.NaturalNumber;
 import static someMath.NaturalNumber.*;
 
-class ExactPeriodeTest
+public class ExactPeriodeTest
 {
 
 	@Test
-	void epTest() throws NaturalNumberException
+	public void epTest() throws NaturalNumberException
 	{
 		
 		LocalDateTime fromLDT = LocalDateTime.of(2023, 2, 27, 0, 0);//The funny February.

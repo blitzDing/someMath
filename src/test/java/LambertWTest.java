@@ -4,11 +4,11 @@ import static someMath.SmallTools.*;
 
 import static consoleTools.TerminalXDisplay.*;
 
-class LambertWTest
+public class LambertWTest
 {
 
 	@Test
-	void testLambertW()
+	public void testLambertW()
 	{
 		double lambert = 1;
 		double value =lambert*Math.pow(Math.E, lambert);
@@ -21,7 +21,7 @@ class LambertWTest
 	}
 
 	@Test
-	void testSuperRoot()
+	public void testSuperRoot()
 	{
 		
 		double root1= 5.5;

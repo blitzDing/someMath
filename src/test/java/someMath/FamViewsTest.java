@@ -10,9 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static someMath.CollectionManipulation.*;
-import static someMath.MathSetClassClosedUnderUnion.*;
+
 import static consoleTools.TerminalXDisplay.*;
-class FamViewsTest
+
+import static someMath.MathSetClosedUnderUnion.*;
+
+public class FamViewsTest
 {
 
 	static Set<Character> A;
@@ -28,13 +31,13 @@ class FamViewsTest
 	static Set<Set<Character>> basis;
 
 	
-	void prep()
+	public void prep()
 	{
 		
 	}
 
 	@Test
-	void test() throws CollectionException
+	public void test() throws CollectionException
 	{
 		
 		A = new HashSet<>(Arrays.asList('a', 'b', 'x'));
@@ -56,7 +59,7 @@ class FamViewsTest
 	}
 
 	@Test
-	void test2() throws CollectionException
+	public void test2() throws CollectionException
 	{
 
 		printBoldAndBlue("Basis = {A, B, C, D, E, F, G, H}");
@@ -76,7 +79,7 @@ class FamViewsTest
 	}
 
 	@Test
-	void test3() throws CollectionException
+	public void test3() throws CollectionException
 	{
 
 		printBoldAndBlue("Basis = {A, B, C, D, E, F}");
@@ -95,7 +98,7 @@ class FamViewsTest
 	}
 
 	@Test
-	void test4() throws CollectionException
+	public void test4() throws CollectionException
 	{
 
 		printBoldAndBlue("Basis = {A, B, C, D, E, F}");
@@ -112,7 +115,7 @@ class FamViewsTest
 		displayContentOfFamByAbundance(fam);
 	}
 	
-	void displayContentOfFamByAbundance(Set<Set<Character>> fam) throws CollectionException
+	public void displayContentOfFamByAbundance(Set<Set<Character>> fam) throws CollectionException
 	{
 		Set<Character> implodedFam = implode(fam);
 

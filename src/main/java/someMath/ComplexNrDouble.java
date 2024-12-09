@@ -165,9 +165,8 @@ public class ComplexNrDouble implements SubtractableAndDivideable<ComplexNrDoubl
 	    if (!(obj instanceof ComplexNrDouble)) return false;
 	    
 	    ComplexNrDouble other = (ComplexNrDouble)obj;
-	    if(!((other.real== this.real)&&(other.imaginary==this.imaginary)))return false;
 	    
-	    return true;
+	    return ((other.real== this.real)&&(other.imaginary==this.imaginary));
 	}
 	
 	public String toString()

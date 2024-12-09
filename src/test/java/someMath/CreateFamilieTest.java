@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
+import static someMath.MathSetClosedUnderUnion.*;
 
 
-
-class CreateFamilieTest
+public class CreateFamilieTest
 {
 
 	@Test
-	void test() 
+	public void test() 
 	{
 		
 		Set<Character> one = new HashSet<>();
@@ -32,7 +32,7 @@ class CreateFamilieTest
 		origin.add(two);
 		origin.add(three);
 		
-		Set<Set<Character>> output = MathSetClassClosedUnderUnion.createFamilie(origin);
+		Set<Set<Character>> output = createFamilie(origin);
 
 		System.out.println("\nOrigin:");
 		for(Set<Character> e: origin)

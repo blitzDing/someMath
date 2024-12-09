@@ -10,14 +10,14 @@ import allgemein.SimpleLogger;
 import fileShortCuts.TextAndObjSaveAndLoad;
 
 
-class SimpleLoggerTest 
+public class SimpleLoggerTest 
 {
 
 	final String msgHeadOfFile = "Log Test File";
 	final String pathStr = "someResources/logTestFile";
 	
 	@Test
-	void test() throws IOException
+	public void test() throws IOException
 	{
 		SimpleLogger sl = new SimpleLogger(pathStr, msgHeadOfFile);
 		sl.saveLog();

@@ -9,12 +9,11 @@ import consoleTools.TerminalTableDisplay;
 
 
 
-class StringMatrixTest 
+public class StringMatrixTest 
 {
 
-
 	@Test
-	void anotherTest()
+	public void anotherTest()
 	{
 		
 		List<String> headers = Arrays.asList("Name", "Status", "Time");

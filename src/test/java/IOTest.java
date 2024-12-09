@@ -11,7 +11,7 @@ import javafx.util.Pair;
 
 
 
-class IOTest 
+public class IOTest 
 {
 
 	String dir = "someResources/";
@@ -89,5 +89,4 @@ class IOTest
 		
 		assert(path.toFile().delete());
 	}		
-
 }

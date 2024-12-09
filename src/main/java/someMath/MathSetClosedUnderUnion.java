@@ -7,10 +7,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static consoleTools.BashSigns.*;
 import static consoleTools.TerminalXDisplay.*;
 import static someMath.CollectionManipulation.*;
 
-public class MathSetClassClosedUnderUnion
+public class MathSetClosedUnderUnion
 {
 
 	public static <T> Set<Set<T>> createFamilie(Set<Set<T>> origin)
@@ -72,6 +73,7 @@ public class MathSetClassClosedUnderUnion
 		return true;
 	}
 
+	/*
 	public static <T> int[] typeOfSetOfSets(Set<Set<T>> origin)throws CollectionException
 	{
 		
@@ -87,17 +89,17 @@ public class MathSetClassClosedUnderUnion
 		
 		for(int n=1;n<size+1;n++)
 		{
-			Set<Set<Set<T>>> subSets = combinationsOfSizeNWithoutRepition(origin, n);
-			printBoldAndGreen("All SubSets of Size " + n);
+			Set<Set<T>> subSets = allSubSetsOfSizeN(origin, n);
+			printlnBoldAndGreen("All SubSets of Size " + n);
 			System.out.println(collectionToString(subSets)+"\n\n");
-			ArrayList<Set<Set<T>>> listOfSubSets = new ArrayList<>(subSets);
+			ArrayList<Set<T>> listOfSubSets = new ArrayList<>(subSets);
 			
-			for(Set<Set<T>> cutOut: listOfSubSets)
+			for(Set<T> cutOut: listOfSubSets)
 			{
 
-				printBoldAndGreen("New CutOut: " + collectionToString(cutOut));
+				printlnBoldAndGreen("New CutOut: " + collectionToString(cutOut));
 			
-				ArrayList<Set<Set<T>>> l2 = new ArrayList<>();
+				ArrayList<Set<T>> l2 = new ArrayList<>();
 				l2.addAll(listOfSubSets);
 
 				l2.remove(cutOut);
@@ -141,7 +143,20 @@ public class MathSetClassClosedUnderUnion
 		
 		return type;
 	}
+	*/
 	
+	private static <T> Set<Set<T>> allSubSetsOfSizeN(Set<Set<T>> origin, int n) {
+		
+		Set<Set<T>> output = new HashSet<>();
+		
+		for(Set<T> set: origin)
+		{
+			if(set.size()==n)output.add(set);
+		}
+		
+		return output;
+	}
+
 	public static <C> Set<Set<C>> traverseCluster(Set<C> set, Set<Set<C>> origin) throws CollectionException
 	{
 		
@@ -243,6 +258,11 @@ public class MathSetClassClosedUnderUnion
 		return output;
 	}
 	
+	public static void printlnBoldAndGreen(String s)
+	{
+		System.out.println(boldGBCPX+s+boldGBCSX);
+	}
+
 	public static <T>  Map<String, Set<T>> makeMapOfSets(Collection<Set<T>> origin) throws CollectionException
 	{
 		int size = origin.size();

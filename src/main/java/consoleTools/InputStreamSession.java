@@ -146,7 +146,7 @@ public class InputStreamSession
 		}
 		
 		int n = getNrInput(chooseANumber, minNrForOutOfList, size);
-		
+		if(n>size||n<0) throw new InputArgumentException(answerOutOfBounds);
 		return answerList.get(n-1);
 	}
 	

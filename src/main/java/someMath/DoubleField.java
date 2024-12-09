@@ -1,5 +1,7 @@
 package someMath;
 
+import java.util.Objects;
+
 public class DoubleField implements SubtractableAndDivideable<DoubleField>
 {
 
@@ -67,4 +69,22 @@ public class DoubleField implements SubtractableAndDivideable<DoubleField>
 	{
 		return core;
 	}
+	
+	public int hashCode()
+	{
+		return Objects.hash(core);
+	}
+	
+	public boolean equals(Object other)
+	{
+		if(other==null)return false;
+		
+		if(this==other)return true;
+		
+		if(this.getClass()!=other.getClass())return false;
+		
+		DoubleField otherAsDF = (DoubleField)other;
+	
+		return core.equals(otherAsDF.core);
+	}		
 }

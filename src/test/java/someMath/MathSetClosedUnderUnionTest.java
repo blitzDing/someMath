@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 
 import static consoleTools.TerminalXDisplay.*;
 
-import static someMath.MathSetClassClosedUnderUnion.*;
+import static someMath.MathSetClosedUnderUnion.*;
 
 
-class MathSetClassClosedUnderUnionTest 
+public class MathSetClosedUnderUnionTest 
 {
 
 	static Set<Character> bigOne;
@@ -37,7 +37,7 @@ class MathSetClassClosedUnderUnionTest
 	static Set<Character> xotic;
 
 	@BeforeEach
-	void prepare()
+	public void prepare()
 	{
 		bigOne = new HashSet<>();
 		bigOne.add('a');
@@ -93,7 +93,7 @@ class MathSetClassClosedUnderUnionTest
 	}
 	
 	@Test
-	void implosionTest() throws CollectionException
+	public void implosionTest() throws CollectionException
 	{
 		printBoldAndBlue("Implosion test");
 
@@ -106,12 +106,12 @@ class MathSetClassClosedUnderUnionTest
 		
 		
 		System.out.println("Origin: \n" + collectionToString(someSets));
-		Set<Character> intersection = MathSetClassClosedUnderUnion.intersectHoleSetOfSets(someSets);
+		Set<Character> intersection = intersectHoleSetOfSets(someSets);
 		System.out.println("\nIntersection:\n" + collectionToString(intersection));
 	}
 
 	@Test
-	void findClusterTest() throws CollectionException
+	public void findClusterTest() throws CollectionException
 	{
 		printBoldAndBlue("Find Cluster test");
 
@@ -145,7 +145,7 @@ class MathSetClassClosedUnderUnionTest
 	}
 
 	@Test
-	void traversClusterTest() throws CollectionException
+	public void traversClusterTest() throws CollectionException
 	{
 		printBoldAndBlue("Traverse Cluster test");
 
@@ -177,7 +177,7 @@ class MathSetClassClosedUnderUnionTest
 	}
 
 	@Test
-	void findContainingSetsTest() throws CollectionException
+	public void findContainingSetsTest() throws CollectionException
 	{
 		printBoldAndBlue("find Containg Sets test");
 
@@ -210,7 +210,7 @@ class MathSetClassClosedUnderUnionTest
 	}
 
 	@Test
-	void abundanceTest() throws CollectionException
+	public void abundanceTest() throws CollectionException
 	{
 		
 		printBoldAndBlue("Abundance Test test");
@@ -226,7 +226,7 @@ class MathSetClassClosedUnderUnionTest
 		}
 	}
 	@Test
-	void famTestTest() throws CollectionException
+	public void famTestTest() throws CollectionException
 	{
 
 		printBoldAndBlue("fam Test test");	
@@ -237,7 +237,7 @@ class MathSetClassClosedUnderUnionTest
 		fam1.add(anotherSmallOne);
 		
 		System.out.println(collectionToString(fam1));
-		assert(MathSetClassClosedUnderUnion.famTest(fam1));	
+		assert(famTest(fam1));	
 		
 		Set<Set<Character>> fam2 = new HashSet<>();
 		fam1.add(bigOne);
@@ -245,23 +245,24 @@ class MathSetClassClosedUnderUnionTest
 		fam1.add(smallOne);
 		fam1.add(evenSmaller);
 
-		assert(MathSetClassClosedUnderUnion.famTest(fam2));
+		assert(famTest(fam2));
 
 		Set<Set<Character>> fam3 = new HashSet<>();
 		fam3.add(smallOne);
 		fam3.add(anotherSmallOne);
 		
-		assertFalse(MathSetClassClosedUnderUnion.famTest(fam3));
+		assertFalse(famTest(fam3));
 
 		Set<Set<Character>> fam4 = new HashSet<>();
 		fam4.add(bigOne);
 		fam4.add(differentAndSmall);
 		
-		assertFalse(MathSetClassClosedUnderUnion.famTest(fam4));
+		assertFalse(famTest(fam4));
 	}
 	
+	/*
 	@Test
-	void typeTest() throws CollectionException
+	public void typeTest() throws CollectionException
 	{
 		printBoldAndBlue("Type Set of Sets test");
 		Set<Set<Character>> someSets = new HashSet<>();
@@ -271,23 +272,19 @@ class MathSetClassClosedUnderUnionTest
 		someSets.add(differentAndSmall);
 		printBoldAndBlue(collectionToString(bigOne));
 		
-		int [] type = MathSetClassClosedUnderUnion.typeOfSetOfSets(someSets);
-		/*
+		int [] type = typeOfSetOfSets(someSets);
+		
 		assert(type.length==2);
 		assert(type[0]==2);
 		assert(type[1]==1);
 		System.out.println("Size: " + type.length);
 		System.out.println("****" + type[0] + ", " + type[1]);
-		*/
 
-		
-		/*
 		type = MathSetClassClosedUnderUnion.typeOfSetOfSets(someSets);
 		assert(type.length==3);
 		assert(type[0]==0);
 		assert(type[1]==2);
 		assert(type[2]==1);
-		*/
 
 
 		System.out.println("\n\n");
@@ -297,9 +294,10 @@ class MathSetClassClosedUnderUnionTest
 		 System.out.println(n + "-->" + type[n]);
 		}
 	}
-
+    */
+	
 	@Test
-	void createFamTest()
+	public void createFamTest()
 	{
 		printBoldAndBlue("Not testing create Fam.");
 		assert(true);
