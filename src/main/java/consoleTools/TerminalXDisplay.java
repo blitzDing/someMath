@@ -4,7 +4,8 @@ import java.awt.Point;
 import java.util.Collection;
 import java.util.List;
 
-import someMath.CollectionException;
+import someMath.exceptions.CollectionException;
+
 import static someMath.CollectionManipulation.*;
 import static someMath.StringManipulation.*;
 import static consoleTools.BashSigns.*;

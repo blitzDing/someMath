@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.*;
 import java.util.function.BiConsumer;
 
+import someMath.exceptions.CollectionException;
+import someMath.exceptions.DivisionByZeroException;
+import someMath.exceptions.NaturalNumberException;
+import someMath.exceptions.RNumException;
+
 //It is important that the values of Type E have a good overwritten toString Method. 
 //and the Type E must overwrite equals Too.
 //I'm looking for a way to enforce that E is of Type: "Mathematical Body."

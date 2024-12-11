@@ -2,13 +2,10 @@
 
 import org.junit.jupiter.api.Test;
 
-import someMath.CollectionException;
-
-import someMath.DivisionByZeroException;
-
-import someMath.NaturalNumberException;
-
-import someMath.RNumException;
+import someMath.exceptions.CollectionException;
+import someMath.exceptions.DivisionByZeroException;
+import someMath.exceptions.NaturalNumberException;
+import someMath.exceptions.RNumException;
 
 //import someMath.RationalNumber;
 

@@ -6,6 +6,10 @@ import java.math.BigInteger;
 import java.util.*;
 
 import javafx.util.Pair;
+import someMath.exceptions.CollectionException;
+import someMath.exceptions.DivisionByZeroException;
+import someMath.exceptions.NaturalNumberException;
+import someMath.exceptions.RNumException;
 
 import static someMath.NaturalNumber.*;
 

@@ -5,6 +5,11 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import someMath.exceptions.CollectionException;
+import someMath.exceptions.DivisionByZeroException;
+import someMath.exceptions.NaturalNumberException;
+import someMath.exceptions.RNumException;
+
 
 public class RationalNumber implements Cloneable, SubtractableAndDivideable<RationalNumber>
 {

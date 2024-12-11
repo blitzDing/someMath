@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import someMath.exceptions.CollectionException;
+
 import static consoleTools.BashSigns.*;
 import static consoleTools.TerminalXDisplay.*;
 import static someMath.CollectionManipulation.*;

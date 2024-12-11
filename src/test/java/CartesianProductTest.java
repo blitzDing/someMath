@@ -5,8 +5,8 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-import someMath.CollectionException;
 import someMath.CollectionManipulation;
+import someMath.exceptions.CollectionException;
 
 
 public class CartesianProductTest 

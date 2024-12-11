@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+import someMath.exceptions.CollectionException;
+import someMath.exceptions.DivisionByZeroException;
+import someMath.exceptions.NaturalNumberException;
+import someMath.exceptions.RNumException;
+
 public class MatrixOps 
 {
 

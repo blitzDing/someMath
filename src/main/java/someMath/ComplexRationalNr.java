@@ -5,6 +5,11 @@ import static someMath.RationalNumber.*;
 
 import java.util.Objects;
 
+import someMath.exceptions.CollectionException;
+import someMath.exceptions.DivisionByZeroException;
+import someMath.exceptions.NaturalNumberException;
+import someMath.exceptions.RNumException;
+
 public class ComplexRationalNr implements SubtractableAndDivideable<ComplexRationalNr>
 {
 

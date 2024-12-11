@@ -10,6 +10,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import consoleTools.BashSigns;
+import someMath.exceptions.CollectionException;
 
 import static someMath.CollectionManipulation.*;
 import static consoleTools.TerminalXDisplay.*;

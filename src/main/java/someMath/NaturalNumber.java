@@ -2,85 +2,77 @@ package someMath;
 
 import java.math.BigInteger;
 import java.util.Objects;
-import static consoleTools.TerminalXDisplay.*;
+
+import someMath.exceptions.CollectionException;
+import someMath.exceptions.DivisionByZeroException;
+import someMath.exceptions.NaturalNumberException;
+import someMath.exceptions.RNumException;
+
 
 //Even so it implements addition, subtraction, multiplication and division this is
 // NOT a mathematical Group!!!!
-public class NaturalNumber extends Number implements SubtractableAndDivideable<NaturalNumber>, Cloneable
+public class NaturalNumber extends Number implements Cloneable
 {
-
-	private static boolean toBigWarningOn = false;
 	
-	private final BigInteger numberCore;
+	private final Integer numberCore;
 
 	/*Remember:*/
-	private final BigInteger maxIntBI = BigInteger.valueOf(Integer.MAX_VALUE);
-	private final BigInteger maxLongBI = BigInteger.valueOf(Long.MAX_VALUE);
-	private final BigInteger maxDoubleBI = BigInteger.TEN.pow(307);
-	private final BigInteger maxFloatBI = BigInteger.TEN.pow(35);	
+	public final Integer min = 0;
+	public final Integer max = Integer.MAX_VALUE;
 	public static final BigInteger biZero = new BigInteger("0");
 	public static final BigInteger biOne = new BigInteger("1");
 	
 	public static final NaturalNumber zero = new NaturalNumber("0");
 	public static final NaturalNumber one = new NaturalNumber("1");
 	
-	public NaturalNumber(BigInteger numberCore) throws NaturalNumberException
+	public NaturalNumber(Integer numberCore) throws NaturalNumberException
 	{
-		if(numberCore.compareTo(biZero)<0)throw new NaturalNumberException("Can't work with negative Integers.");
+		if(numberCore<0)throw new NaturalNumberException("Can't work with negative Integers.");
 
 		this.numberCore = numberCore;
 	}
 
-	public NaturalNumber(int numberCore) throws NaturalNumberException
-	{
-		if(numberCore<0)throw new NaturalNumberException("Can't work with negative Integers.");
-				
-		this.numberCore = new BigInteger(""+numberCore);
-	}
 	
 	private NaturalNumber(String s)
 	{
-		this.numberCore = new BigInteger(s);
+		this.numberCore = Integer.parseInt(s);
 	}
-
-	@Override
+	
 	public boolean hasNeutralZero()
 	{
 		return true;
 	}
 
-	@Override
+	
 	public boolean hasNeutralOne() 
 	{
 		return true;
 	}
 
-	@Override
 	public NaturalNumber getNeutralZero() throws NaturalNumberException
 	{
 		return new NaturalNumber(0);
 	}
 
-	@Override
+
 	public NaturalNumber getNeutralOne() throws NaturalNumberException
 	{
 		return new NaturalNumber(1);
 	}
 
-	@Override
+	
 	public NaturalNumber multiplyWith(NaturalNumber e) throws NaturalNumberException
 	{
 		
 		if(this.equals(zero)||e.equals(zero))return zero;
-		BigInteger p = numberCore.multiply(e.getNumberCore());
+		Integer p = numberCore*e.numberCore;
 		
 		return new NaturalNumber(p);
 	}
 
-	@Override
 	public NaturalNumber add(NaturalNumber e) throws NaturalNumberException 
 	{
-		BigInteger s = numberCore.add(e.getNumberCore());
+		Integer s = numberCore + e.numberCore;
 		
 		return new NaturalNumber(s);
 	}
@@ -88,13 +80,12 @@ public class NaturalNumber extends Number implements SubtractableAndDivideable<N
 	public NaturalNumber subtract(NaturalNumber e) throws NaturalNumberException
 	{
 		
-		BigInteger s = numberCore.subtract(e.getNumberCore());
+		Integer s = numberCore - e.numberCore;
 		
 		return new NaturalNumber(s);//Throws Exception if e is greater Then this.
 	}
 	
 	/**Careful is rounded down like integer division.*/
-	@Override
 	public NaturalNumber divideBy(NaturalNumber t)
 			throws DivisionByZeroException, NaturalNumberException, CollectionException, RNumException
 	{
@@ -118,21 +109,12 @@ public class NaturalNumber extends Number implements SubtractableAndDivideable<N
 	
 	public boolean isGreaterThen(NaturalNumber n)
 	{
-		if(this.getNumberCore().compareTo(n.numberCore)>0)return true;
-		
-		return false;
+		return (numberCore-n.numberCore>0);
 	}
 	
 	public boolean isSmallerThen(NaturalNumber n)
 	{
-		if(this.getNumberCore().compareTo(n.numberCore)<0)return true;
-		
-		return false;
-	}
-
-	public BigInteger getNumberCore()
-	{
-		return numberCore;
+		return (numberCore-n.numberCore<0);
 	}
 	
 	public int hashCode()
@@ -149,7 +131,7 @@ public class NaturalNumber extends Number implements SubtractableAndDivideable<N
 	    
 	    NaturalNumber other = (NaturalNumber)obj;
 	    
-	    if(!other.getNumberCore().equals(numberCore))return false;
+	    if(!other.numberCore.equals(numberCore))return false;
 	    
 	    return true;
 	}
@@ -165,10 +147,9 @@ public class NaturalNumber extends Number implements SubtractableAndDivideable<N
 		{
 			return new NaturalNumber(numberCore);
 		}
-		catch (NaturalNumberException e) 
+		catch (NaturalNumberException e)
 		{
-			
-			System.out.println("Shouldn't happen!");
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -177,31 +158,25 @@ public class NaturalNumber extends Number implements SubtractableAndDivideable<N
 	@Override
 	public double doubleValue()
 	{
-		if(!toBigWarningOn && (numberCore.compareTo(maxIntBI)>0))printBoldAndRed("Bigger then IntMax!");
-		return numberCore.intValue();
+		return numberCore.doubleValue();
 
 	}
 
 	@Override
 	public float floatValue()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return numberCore.floatValue();
 	}
 
 	@Override
 	public int intValue()
 	{
-		if(!toBigWarningOn && (numberCore.compareTo(maxIntBI)>0))printBoldAndRed("Bigger then IntMax!");
-
 		return numberCore.intValue();
 	}
 
 	@Override
 	public long longValue() 
 	{
-		if(!toBigWarningOn && (numberCore.compareTo(maxLongBI)>0))printBoldAndRed("Bigger then LongMax!");
-
 		return numberCore.longValue();
 	}
 	

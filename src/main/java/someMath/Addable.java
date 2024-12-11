@@ -1,18 +1,29 @@
 package someMath;
 
+import someMath.exceptions.CollectionException;
+import someMath.exceptions.DivisionByZeroException;
+import someMath.exceptions.NaturalNumberException;
+import someMath.exceptions.RNumException;
+
 /*
  * Any Class implementing this Interface
  * should make the Generic 'E' identical 
  * to its own type. Also important for 
  * Matrixes is a equal method overwrite.
 */
-public interface Addable<E>
+public abstract class Addable<E>
 {
 	
-	public boolean hasNeutralZero();
+	public final E zero;
 	
-	public E add(E e) throws NaturalNumberException, RNumException, CloneNotSupportedException
-, CollectionException, DivisionByZeroException;
 	
-	public E getNeutralZero() throws NaturalNumberException;
-}
+	public Addable(E zero)
+	{
+		this.zero = zero;
+	}
+	
+	public abstract boolean hasNeutralZero();
+	
+	public abstract E add(E e) throws NaturalNumberException, RNumException, CloneNotSupportedException, 
+	CollectionException, DivisionByZeroException;
+	}

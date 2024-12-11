@@ -8,6 +8,8 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import someMath.exceptions.CollectionException;
+
 import static consoleTools.TerminalXDisplay.*;
 
 import static someMath.MathSetClosedUnderUnion.*;

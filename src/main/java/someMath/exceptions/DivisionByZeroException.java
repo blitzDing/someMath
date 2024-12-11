@@ -1,4 +1,4 @@
-package someMath;
+package someMath.exceptions;
 
 public class DivisionByZeroException extends Exception
 {

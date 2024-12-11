@@ -1,16 +1,28 @@
 package someMath;
 
+import someMath.exceptions.CollectionException;
+import someMath.exceptions.DivisionByZeroException;
+import someMath.exceptions.NaturalNumberException;
+import someMath.exceptions.RNumException;
+
 /*
  * Any Class implementing this Interface
  * should make the Generic 'E' identical 
  * to its own type.
 */
-public interface Multiplyable<E> 
+public abstract class Multiplyable<E> 
 {
 	
-	public boolean hasNeutralOne();
+	public final E one;
+
+	public Multiplyable(E one)
+	{
+		this.one = one;
+	}
 	
-	public E multiplyWith(E e) throws NaturalNumberException, RNumException, CloneNotSupportedException, DivisionByZeroException, CollectionException;
+	public abstract boolean hasNeutralOne();
 	
-	public E getNeutralOne() throws NaturalNumberException;
+	public abstract E multiplyWith(E e) throws NaturalNumberException, RNumException, CloneNotSupportedException, DivisionByZeroException, CollectionException;
+	
+	public abstract E getNeutralOne() throws NaturalNumberException;
 }

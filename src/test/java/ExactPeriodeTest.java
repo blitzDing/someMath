@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import allgemein.ExactPeriode;
 import allgemein.LittleTimeTools;
-import someMath.NaturalNumberException;
 import someMath.NaturalNumber;
+import someMath.exceptions.NaturalNumberException;
+
 import static someMath.NaturalNumber.*;
 
 public class ExactPeriodeTest
