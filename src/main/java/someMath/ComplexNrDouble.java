@@ -1,9 +1,10 @@
 package someMath;
 
 import java.util.Objects;
+import java.util.Set;
 
 
-public class ComplexNrDouble implements SubtractableAndDivideable<ComplexNrDouble>
+public class ComplexNrDouble
 {
 
 	private final double real;
@@ -11,11 +12,40 @@ public class ComplexNrDouble implements SubtractableAndDivideable<ComplexNrDoubl
 	
 	public ComplexNrDouble(double real, double imaginary)
 	{
-		
 		this.real = real;
 		this.imaginary = imaginary;
 	}
 	
+	public double getRealPart() {return real;}
+	
+	public double getImaginaryPart() {return imaginary;}
+
+	public int hashCode()
+	{
+		return Objects.hash(real, imaginary);
+	}
+	
+	public boolean equals(Object obj)
+	{
+		if (obj == this) return true;
+		
+	    if (!(obj instanceof ComplexNrDouble)) return false;
+	    
+	    ComplexNrDouble other = (ComplexNrDouble)obj;
+	    
+	    return ((other.real== this.real)&&(other.imaginary==this.imaginary));
+	}
+	
+	public String toString()
+	{
+		
+		if(imaginary<0) return real + " -i" + Math.abs(imaginary);
+		
+		return real + " + i" + imaginary;
+	}
+
+
+	/*
 	///Written with capital Letter because of Math Standards.
 	//
 	public double Arg()
@@ -33,46 +63,8 @@ public class ComplexNrDouble implements SubtractableAndDivideable<ComplexNrDoubl
 		return new ComplexNrDouble(real, -imaginary);
 	}
 
-	@Override
-	public ComplexNrDouble multiplyWith(ComplexNrDouble e) 
-	{
+	
 		
-		double newReal = this.real*e.real - this.imaginary*e.imaginary;
-		double newImaginary = this.real*e.imaginary + this.imaginary*e.real;
-		
-		return new ComplexNrDouble(newReal, newImaginary);
-	}
-
-	@Override
-	public ComplexNrDouble divideBy(ComplexNrDouble e)
-	{
-
-		ComplexNrDouble fresh = this.multiplyWith(e.getConjugate());
-
-		double divisor = e.multiplyWith(e.getConjugate()).real;
-
-		
-		return new ComplexNrDouble(fresh.real/divisor, fresh.imaginary/divisor);
-	}
-	
-	@Override
-	public ComplexNrDouble add(ComplexNrDouble e) 
-	{
-	
-		return new ComplexNrDouble(this.real + e.real, this.imaginary + e.imaginary);
-	}
-	
-	public double getRealPart() {return real;}
-	
-	public double getImaginaryPart() {return imaginary;}
-	
-	@Override
-	public ComplexNrDouble subtract(ComplexNrDouble e) 
-	{
-		
-		return new ComplexNrDouble(this.real - e.real, this.imaginary - e.imaginary);
-	}
-	
 	public ComplexNrDouble polarRepresentation()
 	{
 		
@@ -114,7 +106,7 @@ public class ComplexNrDouble implements SubtractableAndDivideable<ComplexNrDoubl
 		
 		return new ComplexNrDouble(x,y);
 	}
-	
+
 	public ComplexNrDouble toThePowerOf(ComplexNrDouble exponent)
 	{
 
@@ -127,54 +119,6 @@ public class ComplexNrDouble implements SubtractableAndDivideable<ComplexNrDoubl
 		
 		return new ComplexNrDouble(x, y);
 	}
-	
-	@Override
-	public boolean hasNeutralOne() 
-	
-	{
-		return true;
-	}
-
-	@Override
-	public boolean hasNeutralZero()
-	{
-		return true;
-	}
-	
-	@Override
-	public ComplexNrDouble getNeutralOne() 
-	{
-		return new ComplexNrDouble(1,0);
-	}
-
-	@Override
-	public ComplexNrDouble getNeutralZero() 
-	{
-		return new ComplexNrDouble(0,0);
-	}
-
-	public int hashCode()
-	{
-		return Objects.hash(real, imaginary);
-	}
-	
-	public boolean equals(Object obj)
-	{
-		if (obj == this) return true;
-		
-	    if (!(obj instanceof ComplexNrDouble)) return false;
-	    
-	    ComplexNrDouble other = (ComplexNrDouble)obj;
-	    
-	    return ((other.real== this.real)&&(other.imaginary==this.imaginary));
-	}
-	
-	public String toString()
-	{
-		
-		if(imaginary<0) return real + " -i" + Math.abs(imaginary);
-		
-		return real + " + i" + imaginary;
-	}
+	*/
 
 }
