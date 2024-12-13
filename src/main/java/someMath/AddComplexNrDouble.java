@@ -1,16 +1,18 @@
 package someMath;
 
+import someMath.exceptions.MathException;
+
 public class AddComplexNrDouble extends Operation<ComplexNrDouble>
 {
 
 	public static final String add = "ComplexAdd";
 	
-	public AddComplexNrDouble()
+	public AddComplexNrDouble() throws MathException
 	{
-		super(add, new ComplexNrDouble(0,0));
+		super(add, new ComplexNrDouble(0,0),2,Integer.MAX_VALUE);
 	}
 	
-	public ComplexNrDouble execute(ComplexNrDouble...aCouple)
+	protected ComplexNrDouble execute(ComplexNrDouble...aCouple)
 	{
 		double x = getNeutrum().getRealPart();
 		double y = getNeutrum().getRealPart();

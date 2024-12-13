@@ -33,4 +33,9 @@ public class Operations<E>
 	{
 		return definedOperations.get(name);
 	}
+	
+	public void setOperation(Operation<E> op)
+	{
+		definedOperations.put(op.getName(), op);
+	}
 }
