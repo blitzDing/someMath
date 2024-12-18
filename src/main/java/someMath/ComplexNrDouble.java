@@ -1,12 +1,16 @@
 package someMath;
 
 import java.util.Objects;
-import java.util.Set;
+
 
 
 public class ComplexNrDouble
 {
 
+	private final ComplexNrDouble zero = new ComplexNrDouble(0, 0);
+	private final ComplexNrDouble one = new ComplexNrDouble(1, 0);
+	private final ComplexNrDouble i = new ComplexNrDouble(0,1);
+	
 	private final double real;
 	private final double imaginary;
 	
