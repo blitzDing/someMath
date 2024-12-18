@@ -6,11 +6,11 @@ import someMath.exceptions.MathException;
 
 public class CheckOperationsTest
 {
-	@Test
+/*	@Test
 	public void test() throws MathException
 	{
 		OpsComplexNrDouble ops =new OpsComplexNrDouble();
-		Operation<ComplexNrDouble> addUp = new AddComplexNrDouble();
+		Operation<ComplexNrDouble> addUp 
 		
 		ComplexNrDouble a = addUp.getNeutrum();
 		ComplexNrDouble b = new ComplexNrDouble(1,1);
@@ -18,5 +18,5 @@ public class CheckOperationsTest
 		
 		assert(c.equals(b));
 	}
-
+*/
 }

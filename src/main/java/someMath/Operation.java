@@ -1,16 +1,23 @@
 package someMath;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+
+
 import someMath.exceptions.MathException;
 
-public abstract class Operation<E>
+public class Operation<E>
 {
 	
 	private final String name;
 	private final E neutrum;
 	private final int minOperands;
 	private final int maxOperands;
+	private final Function<List<E>, E> op;
 	
-	public Operation(String name, E neutrum, int minOperands, int maxOperands) throws MathException
+	public Operation(String name, E neutrum, int minOperands, int maxOperands, Function<List<E>, E> op) throws MathException
 	{
 		this.name = name;
 		this.neutrum = neutrum;
@@ -19,16 +26,18 @@ public abstract class Operation<E>
 
 		this.minOperands = minOperands;
 		this.maxOperands = maxOperands;
+		this.op = op;
 	}
 	
-	//Must be overwritten to be useful.
-	protected abstract E execute(E...e1);
-
-	//This is the workhorse and the one the user should execute.
-	public final E act(E...e1) throws MathException
-	{
-		if(!checkOperands(e1))throw new MathException("Nr of Operands not valide.");
-		else return execute(e1);
+	public E operate(E... operands) throws MathException
+	{		
+		int size = operands.length;
+		if(size>maxOperands||size<minOperands)throw new MathException("Not the right nr of Operands");
+		
+		
+		List<E> operandsAsList = Arrays.asList(operands);
+		
+		return op.apply(operandsAsList);
 	}
 
 	public Boolean hasNeutralElement()
@@ -45,10 +54,4 @@ public abstract class Operation<E>
 	{
 		return name; 
 	}
-	
-	private boolean checkOperands(E[] eArray)
-	{
-		int size = eArray.length;
-		return (size<=maxOperands&&size>=minOperands);
 	}
-}

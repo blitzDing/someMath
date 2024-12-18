@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import someMath.exceptions.MathException;
+
 public class Operations<E>
 {	
 	
@@ -18,10 +20,10 @@ public class Operations<E>
 		}
 	}
 
-	public E execute(String name, E e1, E e2)
+	public E execute(String name, E e1, E e2) throws MathException
 	{
 		Operation<E> op = definedOperations.get(name);
-		return op.execute(e1, e2);
+		return op.operate(e1, e2);
 	}
 
 	public E getNeutrumOfOperation(String name)
