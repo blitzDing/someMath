@@ -15,11 +15,11 @@ public class NaturalNumberTest
 		
 		NaturalNumberOps nno = new NaturalNumberOps();
 		
-		NaturalNumber c = nno.execute(nno.addFuncName, a, b);
+		NaturalNumber c = nno.add(a, b);
 		
 		assert(c.equals(b));
 		
-		NaturalNumber d = nno.execute(nno.addFuncName, b, c);
+		NaturalNumber d = nno.add(b, c);
 		
 		assert(d.isGreaterThen(b));
 	}

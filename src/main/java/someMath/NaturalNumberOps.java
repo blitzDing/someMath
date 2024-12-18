@@ -10,7 +10,7 @@ import someMath.exceptions.MathException;
 public class NaturalNumberOps extends Operations<NaturalNumber>
 {
 
-	public static final String addFuncName = "Add";
+	public static final String addFuncName = "add";
 
 	Function<List<NaturalNumber>, NaturalNumber> addFunc = (list)->
 	{
