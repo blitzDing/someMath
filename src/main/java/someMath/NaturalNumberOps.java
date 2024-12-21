@@ -10,8 +10,6 @@ import someMath.exceptions.MathException;
 public class NaturalNumberOps extends Operations<NaturalNumber>
 {
 
-	public static final String addFuncName = "add";
-
 	Function<List<NaturalNumber>, NaturalNumber> addFunc = (list)->
 	{
 		
@@ -41,7 +39,7 @@ public class NaturalNumberOps extends Operations<NaturalNumber>
 	private NaturalNumberOps(Set<Operation<NaturalNumber>> set) throws MathException, NaturalNumberException
 	{
 		super(set);
-		add = new Operation<>(addFuncName, NaturalNumber.zero, 2, Integer.MAX_VALUE, addFunc);
+		add = new Operation<>(super.add, NaturalNumber.zero, 2, Integer.MAX_VALUE, addFunc);
 		setOperation(add);
 	}
 
