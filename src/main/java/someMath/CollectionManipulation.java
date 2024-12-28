@@ -1,5 +1,6 @@
 package someMath;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,8 +11,9 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import javafx.util.Pair;
+
+import someMath.exceptions.*;
 
 
 public class CollectionManipulation 
