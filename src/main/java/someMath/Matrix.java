@@ -9,22 +9,26 @@ import someMath.exceptions.MathException;
 //TODO: exclude operations try tests(Old&&New) and later transfer operations to matrixOps.
 //It is important that the values of Type E have a good overwritten toString Method. 
 //and the Type E must overwrite equals Too.
-//I'm looking for a way to enforce that E is of Type: "Mathematical Body."
-public class Matrix<E extends Operations<E>>
+//I'm looking for a way to enforce that E is of Type: "Mathematical Field."
+public class Matrix<E, O extends Operations<E>>
 {
 
 	private final List<E> valList;
 	private final int rows;
 	private final int columns;
+	private final Operations<E> mOps;//Remember:Mathematischer Körper
 	private final boolean isQuadratic;
 	
-	public Matrix(int rows, int columns, List<E> values)
+	public Matrix(Operations<E> mOps, int rows, List<E> values)
 	{
-	
-		if(columns*rows!=values.size()) throw new IllegalArgumentException("Values don't Fit");
+	    int size = values.size();
+	    int cols =(int)(size/rows);
+	    
+		if(cols*rows!=values.size()) throw new IllegalArgumentException("Values don't Fit");
 		if(values.remove(null)) throw new IllegalArgumentException("Please no Null values.");
 		this.rows = rows;
-		this.columns = columns;
+		this.columns = cols;
+		this.mOps = mOps;
 		isQuadratic = (rows==columns);
 		
 		/*
@@ -37,7 +41,7 @@ public class Matrix<E extends Operations<E>>
 		walkThrouMatrix(this, bic);
 	}
 	
-	public Matrix(E[][] valArr)
+	public Matrix(Operations<E> mOps, E[][] valArr)
 	{
 		
 		valList = new ArrayList<>();
@@ -57,7 +61,7 @@ public class Matrix<E extends Operations<E>>
 				else valList.set(n*columns+m, valArr[n][m]);
 			}
 		}
-		
+		this.mOps = mOps;
 		isQuadratic = (rows==columns);
 	}
 
@@ -72,14 +76,14 @@ public class Matrix<E extends Operations<E>>
 		return valList.get(row*columns+column);
 	}
 
-	public Matrix<E> getColumn(int column)
+	public Matrix<E, O> getColumn(int column)
 	{
 		
 		List<E> list = new ArrayList<>();
 		
 		for(int i=0;i<rows;i++)list.add(getValue(i, column));
 		
-		Matrix<E> outputRowMatrix = new Matrix<E>(rows, 1, list);
+		Matrix<E, O> outputRowMatrix = new Matrix<E, O>(mOps, rows, list);
 		
 		return outputRowMatrix;
 	}
@@ -89,18 +93,18 @@ public class Matrix<E extends Operations<E>>
 		for(int i=0;i<rows;i++)valList.set(i*columns +column, list.get(i));
 	}
 	
-	public void setColumn(Matrix<E> input, int column)
+	public void setColumn(Matrix<E, O> input, int column)
 	{
 		for(int i=0;i<rows;i++)valList.set(i*columns + column, input.getValue(i,0));
 	}
 
-	public Matrix<E> getRow(int n)
+	public Matrix<E, O> getRow(int n)
 	{
 		List<E> list = new ArrayList<>();
 		
 		for(int i=0;i<columns;i++)list.add(getValue(n, i));
 		
-		Matrix<E> outputRowMatrix = new Matrix<E>(1, columns, list);
+		Matrix<E, O> outputRowMatrix = new Matrix<E, O>(mOps, 1, list);
 		
 		return outputRowMatrix;
 	}
@@ -110,12 +114,17 @@ public class Matrix<E extends Operations<E>>
 		for(int i=0;i<columns;i++)valList.set(row*columns + i, list.get(i));
 	}
 
-	public void setRow(Matrix<E> input, int row)
+	public void setRow(Matrix<E, O> input, int row)
 	{
 		for(int i=0;i<columns;i++)valList.set(row*columns+i, input.getValue(0, i));
 	}
 
 	public boolean isQuadratic() {return isQuadratic;}
+	
+	public Operations<E> getFieldOps()//Remember this new Method!!!!!!
+	{
+		return mOps;
+	}
 
 	//It is important that the values of Type E have a good overwritten toString Method.
 	public String toString()
@@ -147,9 +156,7 @@ public class Matrix<E extends Operations<E>>
 		}
 
 		return output;
-	}	
-
-
+	}
 
 	public Class<E> getEnclosedType()
 	{
@@ -158,8 +165,6 @@ public class Matrix<E extends Operations<E>>
 		
 		return (Class<E>) e.getClass();
 	}
-	
-
 	
 	public int hashCode()
 	{
@@ -191,13 +196,14 @@ public class Matrix<E extends Operations<E>>
 	    {
 	    	if(!other.getValue(n, m).equals(this.getValue(n, m)))check[0] = false;
 	    };
+	    
 	    walkThrouMatrix(this, bic);
 	    
 	    return check[0];
 	}
 
 	
-	public void walkThrouMatrix(Matrix<E> matrix, BiConsumer<Integer, Integer> bic)
+	public static <O, T extends Operations<O>> void walkThrouMatrix(Matrix<O, T> matrix, BiConsumer<Integer, Integer> bic)
 	{
 		
 		for(int n=0;n<matrix.getRows();n++)
@@ -208,6 +214,4 @@ public class Matrix<E extends Operations<E>>
 			}
 		}
 	}
-
-
 }

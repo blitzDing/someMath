@@ -9,14 +9,16 @@ import java.util.function.Function;
 
 import someMath.exceptions.MathException;
 
-public class MatrixOps <E extends Operations<E>> extends Operations<Matrix<E>>
+public class MatrixOps <E, O extends Operations<E>>
 {	
+
+	Operations<Matrix<E, O>> ops;
 	
-	public final Function<List<Matrix<E>>, Matrix<E>> addFunc = (matrixList)->
+	public final Function<List<Matrix<E, O>>, Matrix<E, O>> addFunc = (matrixList)->
 	{
 		
-		Matrix<E> a = matrixList.get(0);
-		Matrix<E> b = matrixList.get(0);
+		Matrix<E, O> a = matrixList.get(0);
+		Matrix<E, O> b = matrixList.get(1);
 
 		int rows = a.getRows();
 		int columns = a.getColumns();
@@ -27,7 +29,7 @@ public class MatrixOps <E extends Operations<E>> extends Operations<Matrix<E>>
 		{
 			try
 			{
-				newValArr.add(a.getValue(n, m).add(b.getValue(n, m)));
+				newValArr.add( ( a.getValue(n, m).add(b.getValue(n, m)) ) );
 			}
 			catch (MathException e)
 			{
@@ -35,21 +37,21 @@ public class MatrixOps <E extends Operations<E>> extends Operations<Matrix<E>>
 			}
 		};
 		
-		walkThrouMatrix(a, bic);
+		Matrix.walkThrouMatrix(a, bic);
 	
-		return new Matrix<E>(rows, columns, newValArr);
+		return null;//Remember: !!!!!new Matrix<E, O>(rows, columns, newValArr);
 	};
 
-	Function<List<Matrix<E>>, Matrix<E>> multiplyFunc =(matrixist) ->
+	Function<List<Matrix<E, O>>, Matrix<E, O>> multiplyFunc =(matrixist) ->
 	{
 
-		Matrix<E> t = matrixist.get(0);
-		Matrix<E> a = matrixist.get(0);
+		Matrix<E, O> a = matrixist.get(0);
+		Matrix<E, O> b = matrixist.get(0);
 		
-		if(!(t.getColumns()==a.getRows())) throw new IllegalArgumentException("Can't Multiply these Matrixes.");
-		int newRows = t.getRows();
-		int newColumns = a.getColumns();
-		E someValue = t.getValue(0, 0);
+		if(!(a.getColumns()==b.getRows())) throw new IllegalArgumentException("Can't Multiply these Matrixes.");
+		int newRows = a.getRows();
+		int newColumns = b.getColumns();
+		E someValue = a.getValue(0, 0);
 		
 		List<E> newValues = new ArrayList<>();
 		
@@ -57,13 +59,15 @@ public class MatrixOps <E extends Operations<E>> extends Operations<Matrix<E>>
 		{
 			for(int m=0;m<newColumns;m++)
 			{
-				E currentValue = someValue.getNeutrumOfOperation(someValue.multiply);
+				
+				E e = ops.getNeutrumOfOperation("");
+				E currentValue = someValue.getNeutrumOfOperation("");
 			
-				for(int i=0;i<t.getColumns();i++)
+				for(int i=0;i<a.getColumns();i++)
 				{
 					try
 					{
-						currentValue = currentValue.add(t.getValue(n, i).multiply(a.getValue(i, m)));
+						currentValue = currentValue.add(t.getValue(n, i));
 					}
 					catch (MathException e)
 					{
@@ -74,7 +78,7 @@ public class MatrixOps <E extends Operations<E>> extends Operations<Matrix<E>>
 			}
 		}
 		
-		return new Matrix<E>(t.getRows(),a.getColumns(),newValues);
+		return new Matrix<E, O>(a.getRows(),b.getColumns(),newValues);
 	};
 
 	/*
@@ -188,19 +192,20 @@ public class MatrixOps <E extends Operations<E>> extends Operations<Matrix<E>>
 
 		return new Matrix<E>(rows, columns, listOfValues);
 	}
-	 */
 
-	Operation<Matrix<E>> add;
-	Operation<Matrix<E>> multiply;
-	Operations<Matrix<E>> opsMat;
+
+	Operation<Matrix<E, O>> add;
+	Operation<Matrix<E, O>> multiply;
+	Operations<Matrix<E, O>> opsMat;
 	
-	public MatrixOps(Set<Operation<Matrix<E>>> set) throws MathException
+	public MatrixOps(Set<Operation<Matrix<E, O>>> set) throws MathException
 	{
-		super(set);
-		add = new Operation(super.add, null,2, Integer.MAX_VALUE, addFunc);
-		multiply = new Operation(super.multiply, null, 2, 2, multiplyFunc);
-		setOperation(add);
-		setOperation(multiply);
+		ops = new Operations<>(set);
+		
+		add = new Operation(ops.add, null,2, Integer.MAX_VALUE, addFunc);
+		multiply = new Operation(ops.multiply, null, 2, 2, multiplyFunc);
+		ops.setOperation(add);
+		ops.setOperation(multiply);
 	}
-	
+	*/
 }

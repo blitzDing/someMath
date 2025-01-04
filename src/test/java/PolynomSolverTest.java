@@ -3,9 +3,12 @@
 import org.junit.jupiter.api.Test;
 
 import someMath.exceptions.CollectionException;
+
 import someMath.exceptions.DivisionByZeroException;
-import someMath.exceptions.NaturalNumberException;
-import someMath.exceptions.RNumException;
+
+import someMath.NaturalNumberException;
+
+//import someMath.RNumException;
 
 //import someMath.RationalNumber;
 
@@ -14,7 +17,7 @@ import someMath.exceptions.RNumException;
 public class PolynomSolverTest 
 {
 	
-	//private static final double prettySmall = Math.pow(10, -11);
+	/*private static final double prettySmall = Math.pow(10, -11);
 
 	@Test
 	public void testSolver() throws NaturalNumberException, RNumException, DivisionByZeroException, CollectionException, CloneNotSupportedException
@@ -31,6 +34,7 @@ public class PolynomSolverTest
 		assert(Math.abs(z.getImaginaryPart())-Math.sqrt(2)<=prettySmall);
 		
 		System.out.println(set);
-		*/
+		
 	}
+	*/
 }

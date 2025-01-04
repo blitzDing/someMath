@@ -8,7 +8,7 @@ import java.util.Set;
 
 import someMath.exceptions.MathException;
 
-public class Operations<E>
+public class Operations<O>
 {	
 	
 	public final String add = "add";
@@ -21,94 +21,99 @@ public class Operations<E>
 
 	public final Set<String> opNames = new HashSet<>(Arrays.asList(add, multiply, minus, divide, pow, root, log));
 
-	public final Map<String, Operation<E>> definedOperations = new HashMap<>();
+	public final Map<String, Operation<O>> definedOperations = new HashMap<>();
 
-	public Operations(Set<Operation<E>> set)
+	public Operations(Set<Operation<O>> set)
 	{
 		
-		for(Operation<E> op: set)
+		for(Operation<O> op: set)
 		{
 			definedOperations.put(op.getName(), op);
 		}
 	}
 
-	public E execute(String name, E e1, E e2) throws MathException
+	public O execute(String name, O o1, O o2) throws MathException
 	{
-		Operation<E> op = definedOperations.get(name);
-		return op.operate(e1, e2);
+		Operation<O> op = definedOperations.get(name);
+		return op.operate(o1, o2);
 	}
 
-	public E add(E...eArray) throws MathException
+	public O add(O...oArray) throws MathException
 	{
 		
 		if(!definedOperations.containsKey(add))throw new MathException("Addition not defined!");
-		Operation<E> op = definedOperations.get(add);
-		return op.operate(eArray);
+		Operation<O> op = definedOperations.get(add);
+		return op.operate(oArray);
 	}
 
-	public E multiply(E...eArray) throws MathException
+	public O multiply(O...oArray) throws MathException
 	{
 		
 		if(!definedOperations.containsKey(multiply))throw new MathException("Multiplication not defined!");
-		Operation<E> op = definedOperations.get(multiply);
-		return op.operate(eArray);
+		Operation<O> op = definedOperations.get(multiply);
+		return op.operate(oArray);
 	}
 
-	public E minus(E...eArray) throws MathException
+	public O minus(O...oArray) throws MathException
 	{
 		
 		if(!definedOperations.containsKey(minus))throw new MathException("Subtraction not defined!");
-		Operation<E> op = definedOperations.get(minus);
-		return op.operate(eArray);
+		Operation<O> op = definedOperations.get(minus);
+		return op.operate(oArray);
 	}
 
-	public E dived(E...eArray) throws MathException
+	public O dived(O...oArray) throws MathException
 	{
 		
 		if(!definedOperations.containsKey(divide))throw new MathException("Division not defined!");
-		Operation<E> op = definedOperations.get(divide);
-		return op.operate(eArray);
+		Operation<O> op = definedOperations.get(divide);
+		return op.operate(oArray);
 	}
 
-	public E pow(E...eArray) throws MathException
+	public O pow(O...oArray) throws MathException
 	{
 		
 		if(!definedOperations.containsKey(pow))throw new MathException("Exponentiation not defined!");
-		Operation<E> op = definedOperations.get(pow);
-		return op.operate(eArray);
+		Operation<O> op = definedOperations.get(pow);
+		return op.operate(oArray);
 	}
 
-	public E root(E...eArray) throws MathException
+	public O root(O...oArray) throws MathException
 	{
 		
 		if(!definedOperations.containsKey(root))throw new MathException("Root not defined!");
-		Operation<E> op = definedOperations.get(root);
-		return op.operate(eArray);
+		Operation<O> op = definedOperations.get(root);
+		return op.operate(oArray);
 	}
 	
-	public E log(E...eArray) throws MathException
+	public O log(O...oArray) throws MathException
 	{
 		
 		if(!definedOperations.containsKey(log))throw new MathException("Logarithim not defined!");
-		Operation<E> op = definedOperations.get(log);
-		return op.operate(eArray);
+		Operation<O> op = definedOperations.get(log);
+		return op.operate(oArray);
 	}
 
-	public E getNeutrumOfOperation(String name)
+	public O getNeutrumOfOperation(String name)
 	{
 		
-		Operation<E> op = definedOperations.get(name);
+		Operation<O> op = definedOperations.get(name);
 	
 		return op.getNeutrum();
 	}
 	
-	public Operation<E> getOperation(String name)
+	public Operation<O> getOperation(String name)
 	{
 		return definedOperations.get(name);
 	}
 	
-	public void setOperation(Operation<E> op)
+	public void setOperation(Operation<O> op)
 	{
 		definedOperations.put(op.getName(), op);
+	}
+
+	public <E extends Operations<O>> E add(E value) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

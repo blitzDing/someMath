@@ -5,8 +5,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import javafx.util.Pair;
-import someMath.CollectionManipulation;
 import someMath.exceptions.CollectionException;
+import someMath.CollectionManipulation;
 
 public class BetweenWhichElementsTest 
 {
