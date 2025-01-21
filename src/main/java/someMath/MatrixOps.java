@@ -14,6 +14,7 @@ public class MatrixOps <E, O extends Operations<E>>
 
 	Operations<Matrix<E, O>> ops;
 	
+	/*TODO:
 	public final Function<List<Matrix<E, O>>, Matrix<E, O>> addFunc = (matrixList)->
 	{
 		
@@ -41,7 +42,7 @@ public class MatrixOps <E, O extends Operations<E>>
 	
 		return null;//Remember: !!!!!new Matrix<E, O>(rows, columns, newValArr);
 	};
-
+  
 	Function<List<Matrix<E, O>>, Matrix<E, O>> multiplyFunc =(matrixist) ->
 	{
 
@@ -81,8 +82,7 @@ public class MatrixOps <E, O extends Operations<E>>
 		return new Matrix<E, O>(a.getRows(),b.getColumns(),newValues);
 	};
 
-	/*
-	 * 
+
 	 * 	@Override
 	public Matrix<E> divideBy(Matrix<E> t) throws NaturalNumberException, CollectionException, RNumException, CloneNotSupportedException, DivisionByZeroException
 	{
