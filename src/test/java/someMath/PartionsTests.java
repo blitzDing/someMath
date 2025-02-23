@@ -14,8 +14,12 @@ public class PartionsTests
 	@Test
 	public void summandsBiggerTest() throws CollectionException
 	{
-		Set<List<Integer>> set =Partitions.summandsBiggerSet(2, 2, 4);
-	
+		
+		int minSize = 1;
+		int nrOfSummands = 3;
+		int sum = 6;
+		Set<List<Integer>> set =Partitions.summandsBiggerSet(minSize, nrOfSummands, sum);
+		
 		System.out.println(set);
 	}
 }

@@ -32,7 +32,7 @@ public class Partitions
 			return output;
 		}
 		
-		for(int i=minSizeOfSummand;i<sum;i++)
+		for(int i=minSizeOfSummand;i<nrOfSummands*minSizeOfSummand;i++)
 		{
 			List<Integer> list = new ArrayList<>();
 			list.add(i);
