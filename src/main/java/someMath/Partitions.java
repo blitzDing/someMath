@@ -41,14 +41,18 @@ public class Partitions
 			
 			if(i*(nrOfSummands-1)>sum)continue;
 			
-			List<Integer> list = new ArrayList<>();
-			list.add(i);
 			Set<List<Integer>> set =summandsBiggerSet(i, nrOfSummands-1, sum-i);
 			if(set.isEmpty())continue;
 			
-			for(List<Integer> listRight: set)list.addAll(listRight);
+			for(List<Integer> listRight: set)
+			{
+				List<Integer> list = new ArrayList<>();
+				list.add(i);
+				list.addAll(listRight);
+				output.add(list);
+			}
 			
-			output.add(list);
+			
 		}
 
 		return output;
