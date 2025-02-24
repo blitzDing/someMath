@@ -15,6 +15,10 @@ public class Partitions
 		
 		if(minSizeOfSummand*nrOfSummands>sum)return output;
 
+		if(sum==0)return output;
+ 
+		if(nrOfSummands==0)return output;
+
 		if(sum==1)
 		{
 			List<Integer> list = new ArrayList<>();
@@ -32,14 +36,17 @@ public class Partitions
 			return output;
 		}
 		
-		for(int i=minSizeOfSummand;i<nrOfSummands*minSizeOfSummand;i++)
+		for(int i=minSizeOfSummand;i<sum;i++)
 		{
+			
+			if(i*(nrOfSummands-1)>sum)continue;
+			
 			List<Integer> list = new ArrayList<>();
 			list.add(i);
 			Set<List<Integer>> set =summandsBiggerSet(i, nrOfSummands-1, sum-i);
 			if(set.isEmpty())continue;
 			
-			for(List<Integer> listLeft: set)list.addAll(listLeft);
+			for(List<Integer> listRight: set)list.addAll(listRight);
 			
 			output.add(list);
 		}

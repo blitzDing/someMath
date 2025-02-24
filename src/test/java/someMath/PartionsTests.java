@@ -17,7 +17,7 @@ public class PartionsTests
 		
 		int minSize = 1;
 		int nrOfSummands = 3;
-		int sum = 6;
+		int sum = 10;
 		Set<List<Integer>> set =Partitions.summandsBiggerSet(minSize, nrOfSummands, sum);
 		
 		System.out.println(set);
